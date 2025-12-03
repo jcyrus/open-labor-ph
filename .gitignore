@@ -1,0 +1,7 @@
+__pycache__/
+*.pdf
+.env
+.DS_Store
+venv/
+data/processed/*.json
+!data/processed/.gitkeep
