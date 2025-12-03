@@ -1,0 +1,51 @@
+[package]
+name = "labor-ingestion"
+version = "0.1.0"
+edition = "2021"
+authors = ["Hipstaff.asia <hello@hipstaff.asia>"]
+description = "High-performance PDF parsers for Philippine Labor Law documents"
+license = "MIT"
+
+[dependencies]
+# PDF Processing
+pdf-extract = "0.7"
+lopdf = "0.32"
+
+# Text Processing & Parsing
+regex = "1.10"
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Date/Time
+chrono = { workspace = true }
+
+# Error Handling
+anyhow = { workspace = true }
+thiserror = "1.0"
+
+# Logging
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+# JSON Schema Validation
+jsonschema = "0.17"
+
+# Parallel Processing
+rayon = "1.8"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[[bin]]
+name = "parse-dole"
+path = "src/bin/parse_dole.rs"
+
+[[bin]]
+name = "parse-labor-code"
+path = "src/bin/parse_labor_code.rs"
+
+[[bin]]
+name = "validate"
+path = "src/bin/validate.rs"

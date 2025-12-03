@@ -30,7 +30,16 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 ## 🛠️ Code Standards
 
-### Python
+### Rust (Primary Language)
+
+- **Type Safety**: Use strong typing with `serde` for all data structures
+- **Error Handling**: Use `anyhow` or `thiserror` for proper error propagation
+- **Documentation**: Add doc comments (`///`) for all public functions/structs
+- **Formatting**: Use `cargo fmt` before committing
+- **Linting**: Ensure `cargo clippy` passes with no warnings
+- **Testing**: Write unit tests for parsers and validators
+
+### Python (Bindings & Examples)
 
 - **Type Safety**: Use type hints for all function signatures
 - **Documentation**: Add docstrings for public functions/classes

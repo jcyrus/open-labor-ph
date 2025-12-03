@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/jcyrus/open-labor-ph/schemas/benchmark_question.json",
+  "title": "RAG Evaluation Benchmark Question",
+  "description": "Schema for benchmark questions used to evaluate LLM understanding of Philippine Labor Law",
+  "type": "object",
+  "required": [
+    "id",
+    "question",
+    "expected_answer",
+    "citations"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique question identifier (e.g., 'q001', 'termination_001')",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "category": {
+      "type": "string",
+      "description": "Topic category for organization",
+      "enum": [
+        "termination",
+        "probationary",
+        "wages",
+        "benefits",
+        "leave",
+        "osh",
+        "labor_relations",
+        "contracts",
+        "telecommuting",
+        "discrimination",
+        "other"
+      ]
+    },
+    "difficulty": {
+      "type": "string",
+      "description": "Difficulty level of the question",
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ]
+    },
+    "question": {
+      "type": "string",
+      "description": "The question to be asked to the LLM"
+    },
+    "expected_answer": {
+      "type": "string",
+      "description": "The expected correct answer or key points that should be covered"
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Legal references that support the answer (e.g., 'Labor Code Art. 281', 'DO-147-15 Sec. 6')",
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Keywords for filtering and search"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Where this question originated (e.g., 'hipstaff_users', 'dole_faq', 'legal_forum')"
+        },
+        "requires_context": {
+          "type": "boolean",
+          "description": "Whether this question requires RAG context to answer correctly",
+          "default": true
+        },
+        "common_mistakes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Common incorrect answers or misconceptions"
+        }
+      }
+    }
+  }
+}

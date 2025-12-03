@@ -1,0 +1,252 @@
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+
+/// Represents a DOLE Department Order
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DoleOrder {
+    /// Order number (e.g., "DO-219-21")
+    pub order_number: String,
+    
+    /// Full title of the order
+    pub title: String,
+    
+    /// Date when the order becomes effective
+    pub effective_date: DateTime<Utc>,
+    
+    /// Official source URL
+    pub source_url: String,
+    
+    /// Additional metadata
+    #[serde(default)]
+    pub metadata: OrderMetadata,
+    
+    /// Hierarchical sections
+    pub sections: Vec<Section>,
+}
+
+/// Metadata for a DOLE Order
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct OrderMetadata {
+    /// Issuing authority name and title
+    #[serde(default = "default_issuing_authority")]
+    pub issuing_authority: String,
+    
+    /// Previous orders that this supersedes
+    #[serde(default)]
+    pub supersedes: Vec<String>,
+    
+    /// Related laws and regulations
+    #[serde(default)]
+    pub related_laws: Vec<String>,
+    
+    /// Topical tags
+    #[serde(default)]
+    pub tags: Vec<String>,
+    
+    /// Publication date
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub published_date: Option<DateTime<Utc>>,
+}
+
+fn default_issuing_authority() -> String {
+    "Secretary of Labor and Employment".to_string()
+}
+
+/// A section within a DOLE Order
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Section {
+    /// Section identifier (e.g., "Section 1", "Article III")
+    pub section_number: String,
+    
+    /// Section title or heading
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    
+    /// Full text content
+    pub content: String,
+    
+    /// Nested subsections
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub subsections: Vec<Subsection>,
+}
+
+/// A subsection or paragraph
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Subsection {
+    /// Subsection label (e.g., "a", "1", "i")
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
+    
+    /// Text content
+    pub content: String,
+}
+
+/// Represents an article from the Labor Code
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct LaborCodeArticle {
+    /// Article number
+    pub article_number: u32,
+    
+    /// Book classification
+    pub book: LaborCodeBook,
+    
+    /// Title within the book
+    pub title_name: String,
+    
+    /// Chapter (if applicable)
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub chapter: Option<String>,
+    
+    /// Article heading
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub heading: Option<String>,
+    
+    /// Full text content
+    pub content: String,
+    
+    /// Metadata
+    #[serde(default)]
+    pub metadata: LaborCodeMetadata,
+    
+    /// Subsections
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub subsections: Vec<Subsection>,
+}
+
+/// Labor Code book classifications
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum LaborCodeBook {
+    #[serde(rename = "Book I: Pre-Employment")]
+    BookI,
+    
+    #[serde(rename = "Book II: Human Resources Development")]
+    BookII,
+    
+    #[serde(rename = "Book III: Conditions of Employment")]
+    BookIII,
+    
+    #[serde(rename = "Book IV: Health, Safety and Social Welfare Benefits")]
+    BookIV,
+    
+    #[serde(rename = "Book V: Labor Relations")]
+    BookV,
+    
+    #[serde(rename = "Book VI: Post-Employment")]
+    BookVI,
+}
+
+/// Metadata for Labor Code articles
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct LaborCodeMetadata {
+    /// Whether this is from original PD 442
+    #[serde(default = "default_true")]
+    pub original_pd_442: bool,
+    
+    /// Amendments to this article
+    #[serde(default)]
+    pub amendments: Vec<Amendment>,
+    
+    /// Related article numbers
+    #[serde(default)]
+    pub related_articles: Vec<u32>,
+    
+    /// Implementing DOLE Orders
+    #[serde(default)]
+    pub implementing_orders: Vec<String>,
+    
+    /// Topical tags
+    #[serde(default)]
+    pub tags: Vec<String>,
+}
+
+fn default_true() -> bool {
+    true
+}
+
+/// An amendment to a Labor Code article
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Amendment {
+    /// Law that made the amendment (e.g., "RA 6715")
+    pub law: String,
+    
+    /// Effectivity date
+    pub date: DateTime<Utc>,
+    
+    /// Description of the change
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
+}
+
+/// A benchmark question for RAG evaluation
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BenchmarkQuestion {
+    /// Unique identifier
+    pub id: String,
+    
+    /// Topic category
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub category: Option<QuestionCategory>,
+    
+    /// Difficulty level
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub difficulty: Option<Difficulty>,
+    
+    /// The question text
+    pub question: String,
+    
+    /// Expected answer
+    pub expected_answer: String,
+    
+    /// Legal citations
+    pub citations: Vec<String>,
+    
+    /// Tags for filtering
+    #[serde(default)]
+    pub tags: Vec<String>,
+    
+    /// Additional metadata
+    #[serde(default)]
+    pub metadata: QuestionMetadata,
+}
+
+/// Question categories
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum QuestionCategory {
+    Termination,
+    Probationary,
+    Wages,
+    Benefits,
+    Leave,
+    Osh,
+    LaborRelations,
+    Contracts,
+    Telecommuting,
+    Discrimination,
+    Other,
+}
+
+/// Difficulty levels
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Difficulty {
+    Easy,
+    Medium,
+    Hard,
+}
+
+/// Metadata for benchmark questions
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct QuestionMetadata {
+    /// Where the question originated
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source: Option<String>,
+    
+    /// Whether RAG context is required
+    #[serde(default = "default_true")]
+    pub requires_context: bool,
+    
+    /// Common incorrect answers
+    #[serde(default)]
+    pub common_mistakes: Vec<String>,
+}

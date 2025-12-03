@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/jcyrus/open-labor-ph/schemas/dole_order.json",
+  "title": "DOLE Department Order",
+  "description": "Schema for Philippine Department of Labor and Employment (DOLE) Department Orders",
+  "type": "object",
+  "required": [
+    "order_number",
+    "title",
+    "effective_date",
+    "source_url",
+    "sections"
+  ],
+  "properties": {
+    "order_number": {
+      "type": "string",
+      "description": "DOLE Order number (e.g., 'DO-219-21', 'DO-174-17')",
+      "pattern": "^DO-[0-9]+-[0-9]{2}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Full title of the Department Order"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the order becomes effective (ISO 8601 format: YYYY-MM-DD)"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Official source URL (Official Gazette, DOLE website, etc.)"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "issuing_authority": {
+          "type": "string",
+          "description": "Name and title of the issuing official",
+          "default": "Secretary of Labor and Employment"
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of previous order numbers that this order supersedes or amends"
+        },
+        "related_laws": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Related Republic Acts, Labor Code articles, or other legal references"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Topical tags for categorization (e.g., 'telecommuting', 'probationary', 'OSH')"
+        },
+        "published_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when the order was officially published"
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Hierarchical structure of the order's content",
+      "items": {
+        "$ref": "#/definitions/section"
+      }
+    }
+  },
+  "definitions": {
+    "section": {
+      "type": "object",
+      "required": [
+        "section_number",
+        "content"
+      ],
+      "properties": {
+        "section_number": {
+          "type": "string",
+          "description": "Section identifier (e.g., 'Section 1', 'Article III', 'Rule 2')"
+        },
+        "title": {
+          "type": "string",
+          "description": "Section title or heading"
+        },
+        "content": {
+          "type": "string",
+          "description": "Full text content of the section"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection"
+          },
+          "description": "Nested subsections or paragraphs"
+        }
+      }
+    },
+    "subsection": {
+      "type": "object",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Subsection label (e.g., 'a', '1', 'i')"
+        },
+        "content": {
+          "type": "string",
+          "description": "Text content of the subsection"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/jcyrus/open-labor-ph/schemas/labor_code.json",
+  "title": "Philippine Labor Code Article",
+  "description": "Schema for articles from the Labor Code of the Philippines (Presidential Decree No. 442)",
+  "type": "object",
+  "required": [
+    "article_number",
+    "content",
+    "book",
+    "title_name"
+  ],
+  "properties": {
+    "article_number": {
+      "type": "integer",
+      "description": "Article number (e.g., 281, 282, 283)",
+      "minimum": 1
+    },
+    "book": {
+      "type": "string",
+      "description": "Book number and name",
+      "enum": [
+        "Book I: Pre-Employment",
+        "Book II: Human Resources Development",
+        "Book III: Conditions of Employment",
+        "Book IV: Health, Safety and Social Welfare Benefits",
+        "Book V: Labor Relations",
+        "Book VI: Post-Employment"
+      ]
+    },
+    "title_name": {
+      "type": "string",
+      "description": "Title within the book (e.g., 'Title I: Termination of Employment')"
+    },
+    "chapter": {
+      "type": "string",
+      "description": "Chapter within the title, if applicable"
+    },
+    "heading": {
+      "type": "string",
+      "description": "Article heading or short title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full text of the article"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "original_pd_442": {
+          "type": "boolean",
+          "description": "Whether this is from the original Presidential Decree 442 (1974)",
+          "default": true
+        },
+        "amendments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/amendment"
+          },
+          "description": "List of amendments to this article"
+        },
+        "related_articles": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Article numbers of related provisions"
+        },
+        "implementing_orders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "DOLE Orders that implement or clarify this article"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Topical tags (e.g., 'termination', 'probationary', 'just_cause')"
+        }
+      }
+    },
+    "subsections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/subsection"
+      },
+      "description": "Subsections or paragraphs within the article"
+    }
+  },
+  "definitions": {
+    "amendment": {
+      "type": "object",
+      "required": [
+        "law",
+        "date"
+      ],
+      "properties": {
+        "law": {
+          "type": "string",
+          "description": "Republic Act or other law that amended this article (e.g., 'RA 6715', 'RA 10151')"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Effectivity date of the amendment"
+        },
+        "description": {
+          "type": "string",
+          "description": "Summary of what was changed"
+        }
+      }
+    },
+    "subsection": {
+      "type": "object",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Subsection label (e.g., 'a', '1', 'paragraph 1')"
+        },
+        "content": {
+          "type": "string",
+          "description": "Text content of the subsection"
+        }
+      }
+    }
+  }
+}

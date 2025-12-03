@@ -5,3 +5,16 @@ __pycache__/
 venv/
 data/processed/*.json
 !data/processed/.gitkeep
+
+# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# Python bindings
+*.so
+*.pyd
+dist/
+build/
+*.egg-info/
