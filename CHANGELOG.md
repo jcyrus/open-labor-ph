@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **PDF Parser Core Module**: High-performance PDF text extraction for labor law documents.
+  - Implementation: `engine/ingestion/src/parser.rs`, `engine/ingestion/src/errors.rs`
+  - Features: Full text extraction, metadata extraction, page-by-page parsing
+  - Dependencies: `pdf-extract`, `lopdf`, `thiserror`
+  - Impact: Foundation for DOLE Order and Labor Code ingestion pipeline
 - **Project Initialization**: Repository scaffolding for open-labor-ph.
+
   - Implementation: Directory structure (`data/raw`, `data/processed`, `engine/ingestion`, `engine/evals`)
   - Impact: Foundation for Philippine Labor Law dataset creation and RAG optimization.
+
 - **Documentation**: Core documentation files (README.md, DISCLAIMER.md, LICENSE, CONTRIBUTING.md)
   - Impact: Clear project mission, legal compliance, and contribution guidelines.
 - **Rust-First Architecture**: Committed to Rust as primary language for data processing.
