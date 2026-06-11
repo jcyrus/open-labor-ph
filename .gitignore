@@ -1,10 +1,11 @@
 __pycache__/
+# Stray PDFs are ignored, but source documents under data/raw are the
+# corpus and are committed (see data/raw/manifest.json for provenance).
 *.pdf
+!data/raw/*.pdf
 .env
 .DS_Store
 venv/
-data/processed/*.json
-!data/processed/.gitkeep
 
 # Rust
 target/

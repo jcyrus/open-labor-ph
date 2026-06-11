@@ -320,15 +320,49 @@ pub fn extract_metadata<P: AsRef<Path>>(path: P) -> IngestionResult<PdfMetadata>
 ///   single synthetic page carrying the full text is emitted.
 ///
 /// Both fallbacks are recorded in `warnings` rather than silently applied.
+///
+/// `lopdf` failures (e.g. the invalid cross-reference tables found in some
+/// government PDFs) degrade to default metadata / no pages rather than
+/// aborting, because `pdf-extract` may still recover the text. The only
+/// hard error is a missing file.
 #[instrument(level = "info", skip_all, fields(path = %path.as_ref().display()))]
 pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
     let path = path.as_ref();
 
-    let metadata = extract_metadata(path)?;
-    let PageExtraction {
-        mut pages,
-        mut warnings,
-    } = extract_pages(path)?;
+    if !path.exists() {
+        return Err(IngestionError::FileNotFound(path.to_path_buf()));
+    }
+
+    let mut warnings: Vec<ExtractionWarning> = Vec::new();
+
+    let metadata = match extract_metadata(path) {
+        Ok(m) => m,
+        Err(e) => {
+            warnings.push(ExtractionWarning {
+                page: 0,
+                kind: WarningKind::FallbackUsed,
+                message: format!("metadata unavailable ({e}); continuing with defaults"),
+            });
+            PdfMetadata::default()
+        }
+    };
+
+    let mut pages = match extract_pages(path) {
+        Ok(extraction) => {
+            warnings.extend(extraction.warnings);
+            extraction.pages
+        }
+        Err(e) => {
+            warnings.push(ExtractionWarning {
+                page: 0,
+                kind: WarningKind::FallbackUsed,
+                message: format!(
+                    "lopdf could not load the document ({e}); relying on pdf-extract only"
+                ),
+            });
+            Vec::new()
+        }
+    };
 
     let mut full_text = match extract_text(path) {
         Ok(raw) => clean_text(&raw),
@@ -748,6 +782,24 @@ mod tests {
             result.unwrap_err(),
             IngestionError::FileNotFound(_)
         ));
+    }
+
+    #[test]
+    fn test_parse_document_degrades_on_corrupt_pdf() {
+        // A file that is not a PDF at all: both extractors fail, but
+        // parse_document must degrade to an empty document with warnings
+        // (mirrors truncated/invalid-xref government PDFs) instead of
+        // returning a hard error.
+        let dir = tempfile::tempdir().expect("create temp dir");
+        let path = dir.path().join("corrupt.pdf");
+        std::fs::write(&path, b"this is not a pdf").expect("write temp file");
+
+        let doc = parse_document(&path).expect("degraded parse should succeed");
+        assert!(doc.full_text.trim().is_empty());
+        assert!(doc
+            .warnings
+            .iter()
+            .any(|w| w.kind == WarningKind::FallbackUsed));
     }
 
     #[test]

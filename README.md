@@ -52,8 +52,12 @@ cargo check --workspace
   - JSON schemas for DOLE Orders, Labor Code, and benchmarks
   - Rust type definitions with serde
   - Data source inventory
-- 🔲 **Phase 2: Data Ingestion Pipeline** - Not started
-- 🔲 **Phase 3: Evaluation Framework** - Not started
+- ✅ **Phase 2: Data Ingestion Pipeline** - Complete
+  - Page-by-page PDF extraction (lopdf + pdf-extract, rayon-parallel)
+  - Structural parsers: `parse-dole`, `parse-labor-code`
+  - Draft-07 schema validation: `validate`
+- 🟡 **Phase 3: Corpus & Evaluation Framework** - In progress
+  - Tier 1 source acquisition with provenance manifest (`data/raw/manifest.json`)
 - 🔲 **Phase 4: Documentation & Community** - Not started
 - 🔲 **Phase 5: Initial Release** - Not started
 

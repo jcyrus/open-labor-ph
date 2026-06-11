@@ -8,28 +8,30 @@ This document catalogs the priority sources for the open-labor-ph dataset.
 
 Most frequently referenced in HR/employment scenarios:
 
-1. **DO-174-17**: Guidelines on the Prevention of Sexual Harassment in Employment
-   - Source: [DOLE Official](https://www.dole.gov.ph/news/department-order-no-174-17-guidelines-on-the-prevention-of-sexual-harassment-in-employment/)
-   - Status: 🔴 Not yet processed
-2. **DO-219-21**: Implementing Rules on Telecommuting
+1. **DO-174-17**: Rules Implementing Articles 106 to 109 of the Labor Code, as Amended (contracting/subcontracting)
+   - Source: [DOLE Official](https://www.dole.gov.ph/news/department-order-no-174-17-rules-implementing-articles-106-to-109-of-the-labor-code-as-amended/)
+   - Status: 🟡 Acquired (`data/raw/DO-174-17.pdf`) — scanned image PDF, OCR required
+2. **DO-202-19**: Implementing Rules and Regulations of RA 11165 (Telecommuting Act)
 
-   - Source: [Official Gazette](https://www.officialgazette.gov.ph/)
-   - Status: 🔴 Not yet processed
-   - Note: Highly relevant post-COVID
+   - Source: [DOLE](https://www.dole.gov.ph/) (retrieved via Wayback snapshot, see `data/raw/manifest.json`)
+   - Status: 🟡 Acquired (`data/raw/DO-202-19.pdf`) — scanned image PDF, OCR required
+   - Note: Highly relevant post-COVID. Earlier revisions of this list cited a
+     "DO-219-21" for telecommuting; DO-219 is actually a 2020 TUPAD order and
+     the telecommuting IRR is DO-202-19.
 
-3. **DO-147-15**: Guidelines Governing the Employment of Workers in the Retail and Service Establishments (Probationary Employment)
-
-   - Source: [DOLE](https://www.dole.gov.ph/)
-   - Status: 🔴 Not yet processed
-
-4. **DO-18-A-11**: Occupational Safety and Health Standards (as amended by DO-198-18)
+3. **DO-147-15**: Amending the Implementing Rules and Regulations of Book VI of the Labor Code (termination of employment)
 
    - Source: [DOLE](https://www.dole.gov.ph/)
    - Status: 🔴 Not yet processed
 
-5. **DO-198-18**: Omnibus Rules on Apprenticeship and Learnership
+4. **DO-18-A-11**: Rules Implementing Articles 106 to 109 of the Labor Code (contracting/subcontracting; superseded by DO-174-17)
+
    - Source: [DOLE](https://www.dole.gov.ph/)
    - Status: 🔴 Not yet processed
+
+5. **DO-198-18**: Implementing Rules and Regulations of RA 11058 (Occupational Safety and Health Standards Law)
+   - Source: [DOLE](https://www.dole.gov.ph/) (retrieved via Wayback snapshot, see `data/raw/manifest.json`)
+   - Status: 🟡 Acquired (`data/raw/DO-198-18.pdf`) — scanned image PDF, OCR required
 
 ### Tier 2 (Medium Priority)
 
@@ -119,10 +121,25 @@ Important for specific industries or scenarios:
 
 ## Notes on Data Collection
 
-- **PDF Availability**: Some older Department Orders may only be available as scanned PDFs requiring OCR
+- **PDF Availability**: Official DOLE uploads are predominantly *scanned image
+  PDFs with no text layer* — this is the rule, not the exception. Every
+  document acquired so far (DO-174-17, DO-198-18, DO-202-19, and both the
+  2015 and 2017 renumbered Labor Code editions) is a scan requiring OCR.
+- **Site Access**: `dole.gov.ph` and its bureau/regional subdomains serve a
+  Cloudflare browser challenge to non-browser clients. Acquisition uses
+  Wayback Machine snapshots (`id_` raw captures) of the official URLs; both
+  the official URL and the snapshot URL are recorded per document in
+  `data/raw/manifest.json`. Beware truncated captures — verify file
+  integrity (`startxref` present, hash recorded) before trusting a snapshot.
 - **Official Sources**: Prioritize Official Gazette and DOLE official website
 - **Amendments**: Track which orders supersede previous versions
-- **Metadata Tracking**: Record crawl date, source URL, and file hash for provenance
+- **Metadata Tracking**: Record crawl date, source URL, and file hash for provenance in `data/raw/manifest.json`
+
+## Labor Code Source
+
+- **Department Advisory No. 1, Series of 2015** (Labor Code of the
+  Philippines, Renumbered) is the canonical renumbered edition.
+- Status: 🟡 Acquired (`data/raw/LaborCode-2015-Renumbered.pdf`, 154 pages) — scanned image PDF, OCR required
 
 ## Status Legend
 

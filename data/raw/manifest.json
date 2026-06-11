@@ -1,0 +1,57 @@
+{
+  "$comment": "Provenance manifest for source documents in data/raw/. Every PDF committed here must have an entry. 'official_source' is the canonical government URL; 'retrieved_from' is the URL the bytes were actually downloaded from (Wayback Machine snapshots of the official URLs, because dole.gov.ph serves a Cloudflare browser challenge to non-browser clients). Status values: text_extracted | ocr_required | pending.",
+  "documents": [
+    {
+      "id": "DO-174-17",
+      "file": "DO-174-17.pdf",
+      "doc_type": "dole_order",
+      "title": "Rules Implementing Articles 106 to 109 of the Labor Code, as Amended (contracting and subcontracting)",
+      "official_source": "https://www.dole.gov.ph/php_assets/uploads/2017/07/DO-174-17-Rules-Implementing-Articles-106-to-109-of-the-Labor-Code-As-Amended1.pdf",
+      "retrieved_from": "https://web.archive.org/web/20210126043855id_/https://www.dole.gov.ph/php_assets/uploads/2017/07/DO-174-17-Rules-Implementing-Articles-106-to-109-of-the-Labor-Code-As-Amended1.pdf",
+      "retrieved_date": "2026-06-11",
+      "sha256": "8d1b8827aac41d5be16546107dcd9f18ea9dfe559b0dff308646f5eb4125da67",
+      "pages": 13,
+      "status": "ocr_required",
+      "notes": "Official upload is a scanned image PDF with no text layer (13/13 pages empty)."
+    },
+    {
+      "id": "DO-198-18",
+      "file": "DO-198-18.pdf",
+      "doc_type": "dole_order",
+      "title": "Implementing Rules and Regulations of Republic Act No. 11058 (Occupational Safety and Health Standards Law)",
+      "official_source": "https://www.dole.gov.ph/php_assets/uploads/2019/01/DO-198-Implementing-Rules-and-Regulations-of-Republic-Act-No_-11058-An-Act-Strengthening-Compliance-with-Occupational-Safety-and-Health-Standards-and-Providing-Penalties-for-Violations-Thereof.pdf",
+      "retrieved_from": "https://web.archive.org/web/20210307235230id_/https://www.dole.gov.ph/php_assets/uploads/2019/01/DO-198-Implementing-Rules-and-Regulations-of-Republic-Act-No_-11058-An-Act-Strengthening-Compliance-with-Occupational-Safety-and-Health-Standards-and-Providing-Penalties-for-Violations-Thereof.pdf",
+      "retrieved_date": "2026-06-11",
+      "sha256": "84482b27043e2eb01ecb7f047c50ff60043255aec7192b1a2173440a6fb3bc84",
+      "pages": 23,
+      "status": "ocr_required",
+      "notes": "Scanned image PDF, no embedded fonts. The 2020-10-22 Wayback snapshot of the same URL is truncated at exactly 1 MiB; use the 2021-03-07 snapshot recorded here."
+    },
+    {
+      "id": "DO-202-19",
+      "file": "DO-202-19.pdf",
+      "doc_type": "dole_order",
+      "title": "Implementing Rules and Regulations of Republic Act No. 11165 (Telecommuting Act)",
+      "official_source": "https://www.dole.gov.ph/php_assets/uploads/2019/04/DO-202-19-Implementing-Rules-and-Reulations-of-Republic-Act-No.-11165-otherwise-known-as-the-Telecommuting-Act.pdf",
+      "retrieved_from": "https://web.archive.org/web/20210421181358id_/https://www.dole.gov.ph/php_assets/uploads/2019/04/DO-202-19-Implementing-Rules-and-Reulations-of-Republic-Act-No.-11165-otherwise-known-as-the-Telecommuting-Act.pdf",
+      "retrieved_date": "2026-06-11",
+      "sha256": "b3109ea1e6085db9a5d0bf65c1098c55c56d8cf35230fc09e396175ac7905ecb",
+      "pages": 5,
+      "status": "ocr_required",
+      "notes": "Scanned image PDF, no embedded fonts. ('Reulations' typo is in the official filename.) This is the telecommuting IRR; DATA_SOURCES.md previously misattributed telecommuting to a 'DO-219-21'."
+    },
+    {
+      "id": "LaborCode-2015-Renumbered",
+      "file": "LaborCode-2015-Renumbered.pdf",
+      "doc_type": "labor_code",
+      "title": "Labor Code of the Philippines, Renumbered (DOLE Department Advisory No. 1, Series of 2015)",
+      "official_source": "http://www.dole.gov.ph/files/Department-Advisory-No_1-2015_Labor-Code-of-the-Philippines-Renumbered.pdf",
+      "retrieved_from": "https://web.archive.org/web/20160611035800id_/http://www.dole.gov.ph/files/Department-Advisory-No_1-2015_Labor-Code-of-the-Philippines-Renumbered.pdf",
+      "retrieved_date": "2026-06-11",
+      "sha256": "597bf4274628bb4044603f6e5c7151279c4ba333b4f38e27ba6a625d11655545",
+      "pages": 154,
+      "status": "ocr_required",
+      "notes": "Canonical renumbered edition. Scanned image PDF (154/154 pages empty). The 2017 DOLE edition (LaborCodeofthePhilippines20171.pdf, 141 pages, 25 MB) is also a scan and was not kept to limit repo size."
+    }
+  ]
+}
