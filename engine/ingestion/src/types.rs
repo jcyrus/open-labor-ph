@@ -1,25 +1,88 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
+/// Serde adapter for date fields whose JSON schemas declare
+/// `format: "date"` (plain `YYYY-MM-DD`). The domain types keep the richer
+/// `DateTime<Utc>`; serialization truncates to the calendar date and
+/// deserialization accepts both the plain date and full RFC 3339 forms.
+pub mod schema_date {
+    use chrono::{DateTime, NaiveDate, NaiveTime, TimeZone, Utc};
+    use serde::{Deserialize, Deserializer, Serializer};
+
+    pub fn serialize<S: Serializer>(
+        date: &DateTime<Utc>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error> {
+        serializer.serialize_str(&date.format("%Y-%m-%d").to_string())
+    }
+
+    pub fn deserialize<'de, D: Deserializer<'de>>(
+        deserializer: D,
+    ) -> Result<DateTime<Utc>, D::Error> {
+        let raw = String::deserialize(deserializer)?;
+        parse(&raw).ok_or_else(|| {
+            serde::de::Error::custom(format!("invalid date (expected YYYY-MM-DD): {raw}"))
+        })
+    }
+
+    pub(super) fn parse(raw: &str) -> Option<DateTime<Utc>> {
+        if let Ok(dt) = DateTime::parse_from_rfc3339(raw) {
+            return Some(dt.with_timezone(&Utc));
+        }
+        NaiveDate::parse_from_str(raw, "%Y-%m-%d")
+            .ok()
+            .map(|d| Utc.from_utc_datetime(&d.and_time(NaiveTime::MIN)))
+    }
+}
+
+/// [`schema_date`] for `Option<DateTime<Utc>>` fields.
+pub mod schema_date_opt {
+    use chrono::{DateTime, Utc};
+    use serde::{Deserialize, Deserializer, Serializer};
+
+    pub fn serialize<S: Serializer>(
+        date: &Option<DateTime<Utc>>,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error> {
+        match date {
+            Some(d) => super::schema_date::serialize(d, serializer),
+            None => serializer.serialize_none(),
+        }
+    }
+
+    pub fn deserialize<'de, D: Deserializer<'de>>(
+        deserializer: D,
+    ) -> Result<Option<DateTime<Utc>>, D::Error> {
+        let raw = Option::<String>::deserialize(deserializer)?;
+        match raw {
+            None => Ok(None),
+            Some(s) => super::schema_date::parse(&s).map(Some).ok_or_else(|| {
+                serde::de::Error::custom(format!("invalid date (expected YYYY-MM-DD): {s}"))
+            }),
+        }
+    }
+}
+
 /// Represents a DOLE Department Order
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DoleOrder {
     /// Order number (e.g., "DO-219-21")
     pub order_number: String,
-    
+
     /// Full title of the order
     pub title: String,
-    
+
     /// Date when the order becomes effective
+    #[serde(with = "schema_date")]
     pub effective_date: DateTime<Utc>,
-    
+
     /// Official source URL
     pub source_url: String,
-    
+
     /// Additional metadata
     #[serde(default)]
     pub metadata: OrderMetadata,
-    
+
     /// Hierarchical sections
     pub sections: Vec<Section>,
 }
@@ -30,21 +93,25 @@ pub struct OrderMetadata {
     /// Issuing authority name and title
     #[serde(default = "default_issuing_authority")]
     pub issuing_authority: String,
-    
+
     /// Previous orders that this supersedes
     #[serde(default)]
     pub supersedes: Vec<String>,
-    
+
     /// Related laws and regulations
     #[serde(default)]
     pub related_laws: Vec<String>,
-    
+
     /// Topical tags
     #[serde(default)]
     pub tags: Vec<String>,
-    
+
     /// Publication date
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        with = "schema_date_opt",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub published_date: Option<DateTime<Utc>>,
 }
 
@@ -57,14 +124,14 @@ fn default_issuing_authority() -> String {
 pub struct Section {
     /// Section identifier (e.g., "Section 1", "Article III")
     pub section_number: String,
-    
+
     /// Section title or heading
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
-    
+
     /// Full text content
     pub content: String,
-    
+
     /// Nested subsections
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub subsections: Vec<Subsection>,
@@ -76,7 +143,7 @@ pub struct Subsection {
     /// Subsection label (e.g., "a", "1", "i")
     #[serde(skip_serializing_if = "Option::is_none")]
     pub label: Option<String>,
-    
+
     /// Text content
     pub content: String,
 }
@@ -86,28 +153,28 @@ pub struct Subsection {
 pub struct LaborCodeArticle {
     /// Article number
     pub article_number: u32,
-    
+
     /// Book classification
     pub book: LaborCodeBook,
-    
+
     /// Title within the book
     pub title_name: String,
-    
+
     /// Chapter (if applicable)
     #[serde(skip_serializing_if = "Option::is_none")]
     pub chapter: Option<String>,
-    
+
     /// Article heading
     #[serde(skip_serializing_if = "Option::is_none")]
     pub heading: Option<String>,
-    
+
     /// Full text content
     pub content: String,
-    
+
     /// Metadata
     #[serde(default)]
     pub metadata: LaborCodeMetadata,
-    
+
     /// Subsections
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub subsections: Vec<Subsection>,
@@ -118,19 +185,19 @@ pub struct LaborCodeArticle {
 pub enum LaborCodeBook {
     #[serde(rename = "Book I: Pre-Employment")]
     BookI,
-    
+
     #[serde(rename = "Book II: Human Resources Development")]
     BookII,
-    
+
     #[serde(rename = "Book III: Conditions of Employment")]
     BookIII,
-    
+
     #[serde(rename = "Book IV: Health, Safety and Social Welfare Benefits")]
     BookIV,
-    
+
     #[serde(rename = "Book V: Labor Relations")]
     BookV,
-    
+
     #[serde(rename = "Book VI: Post-Employment")]
     BookVI,
 }
@@ -141,19 +208,19 @@ pub struct LaborCodeMetadata {
     /// Whether this is from original PD 442
     #[serde(default = "default_true")]
     pub original_pd_442: bool,
-    
+
     /// Amendments to this article
     #[serde(default)]
     pub amendments: Vec<Amendment>,
-    
+
     /// Related article numbers
     #[serde(default)]
     pub related_articles: Vec<u32>,
-    
+
     /// Implementing DOLE Orders
     #[serde(default)]
     pub implementing_orders: Vec<String>,
-    
+
     /// Topical tags
     #[serde(default)]
     pub tags: Vec<String>,
@@ -168,10 +235,11 @@ fn default_true() -> bool {
 pub struct Amendment {
     /// Law that made the amendment (e.g., "RA 6715")
     pub law: String,
-    
+
     /// Effectivity date
+    #[serde(with = "schema_date")]
     pub date: DateTime<Utc>,
-    
+
     /// Description of the change
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
@@ -182,28 +250,28 @@ pub struct Amendment {
 pub struct BenchmarkQuestion {
     /// Unique identifier
     pub id: String,
-    
+
     /// Topic category
     #[serde(skip_serializing_if = "Option::is_none")]
     pub category: Option<QuestionCategory>,
-    
+
     /// Difficulty level
     #[serde(skip_serializing_if = "Option::is_none")]
     pub difficulty: Option<Difficulty>,
-    
+
     /// The question text
     pub question: String,
-    
+
     /// Expected answer
     pub expected_answer: String,
-    
+
     /// Legal citations
     pub citations: Vec<String>,
-    
+
     /// Tags for filtering
     #[serde(default)]
     pub tags: Vec<String>,
-    
+
     /// Additional metadata
     #[serde(default)]
     pub metadata: QuestionMetadata,
@@ -241,11 +309,11 @@ pub struct QuestionMetadata {
     /// Where the question originated
     #[serde(skip_serializing_if = "Option::is_none")]
     pub source: Option<String>,
-    
+
     /// Whether RAG context is required
     #[serde(default = "default_true")]
     pub requires_context: bool,
-    
+
     /// Common incorrect answers
     #[serde(default)]
     pub common_mistakes: Vec<String>,
