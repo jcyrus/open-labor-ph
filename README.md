@@ -57,7 +57,22 @@ cargo check --workspace
   - Structural parsers: `parse-dole`, `parse-labor-code`
   - Draft-07 schema validation: `validate`
 - 🟡 **Phase 3: Corpus & Evaluation Framework** - In progress
-  - Tier 1 source acquisition with provenance manifest (`data/raw/manifest.json`)
+  - ✅ Source acquisition with provenance manifest (`data/raw/manifest.json`)
+  - ✅ OCR ingestion of the scanned official corpus (ocrmypdf/tesseract)
+  - ✅ First dataset release: Labor Code (317 articles, Books I–VII) + 3 DOLE Orders, all schema-validated
+  - 🔲 Benchmark question dataset
+  - 🔲 Evaluation runner (`engine/evals`)
+
+### OCR Prerequisite
+
+The official DOLE corpus consists of scanned PDFs. Reproducing `data/processed/`
+from the raw scans requires [ocrmypdf](https://ocrmypdf.readthedocs.io/) and
+tesseract (`brew install ocrmypdf` on macOS), then:
+
+```bash
+cargo build --workspace
+python3 scripts/ingest.py
+```
 - 🔲 **Phase 4: Documentation & Community** - Not started
 - 🔲 **Phase 5: Initial Release** - Not started
 

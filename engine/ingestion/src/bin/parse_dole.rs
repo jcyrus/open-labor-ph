@@ -46,37 +46,66 @@ const TAG_KEYWORDS: &[(&str, &str)] = &[
     ("migrant worker", "ofw"),
 ];
 
+const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> [--source-url <url>] \
+[--order-number <DO-NNN-YY>] [--title <title>] [--effective-date <YYYY-MM-DD>]";
+
 struct Cli {
     input: PathBuf,
     output: PathBuf,
     source_url: Option<String>,
+    /// Authoritative metadata overrides (typically from data/raw/manifest.json).
+    /// OCR'd scans garble digits and dates often enough that the heuristics
+    /// cannot always be trusted for identity-level fields; explicit overrides
+    /// win over extraction.
+    order_number: Option<String>,
+    title: Option<String>,
+    effective_date: Option<NaiveDate>,
 }
 
 fn parse_args() -> Result<Cli> {
     let mut args = std::env::args().skip(1);
     let mut positional: Vec<String> = Vec::new();
     let mut source_url = None;
+    let mut order_number = None;
+    let mut title = None;
+    let mut effective_date = None;
 
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--source-url" => {
                 source_url = Some(args.next().context("--source-url requires a value")?);
             }
+            "--order-number" => {
+                order_number = Some(args.next().context("--order-number requires a value")?);
+            }
+            "--title" => {
+                title = Some(args.next().context("--title requires a value")?);
+            }
+            "--effective-date" => {
+                let raw = args.next().context("--effective-date requires a value")?;
+                effective_date = Some(
+                    NaiveDate::parse_from_str(&raw, "%Y-%m-%d")
+                        .with_context(|| format!("invalid --effective-date (YYYY-MM-DD): {raw}"))?,
+                );
+            }
             "-h" | "--help" => {
-                bail!("Usage: parse-dole <input.pdf> <output.json> [--source-url <url>]");
+                bail!("{USAGE}");
             }
             _ => positional.push(arg),
         }
     }
 
     if positional.len() != 2 {
-        bail!("Usage: parse-dole <input.pdf> <output.json> [--source-url <url>]");
+        bail!("{USAGE}");
     }
 
     Ok(Cli {
         input: PathBuf::from(&positional[0]),
         output: PathBuf::from(&positional[1]),
         source_url,
+        order_number,
+        title,
+        effective_date,
     })
 }
 
@@ -135,16 +164,25 @@ fn run() -> Result<()> {
 fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
     let text = &doc.full_text;
 
-    let order_number = extract_order_number(text, &cli.input).context(
-        "could not find a Department Order number (e.g. \"Department Order No. 174-17\") \
-         in the document text or filename",
-    )?;
+    let order_number = match &cli.order_number {
+        Some(n) => n.clone(),
+        None => extract_order_number(text, &cli.input).context(
+            "could not find a Department Order number (e.g. \"Department Order No. 174-17\") \
+             in the document text or filename; pass --order-number to override",
+        )?,
+    };
 
-    let title = extract_title(text)
+    let title = cli
+        .title
+        .clone()
+        .or_else(|| extract_title(text))
         .or_else(|| doc.metadata.title.clone())
         .unwrap_or_else(|| format!("Department Order {order_number}"));
 
-    let effective_date = extract_effective_date(text, &order_number)?;
+    let effective_date = match cli.effective_date {
+        Some(d) => d,
+        None => extract_effective_date(text, &order_number)?,
+    };
 
     // Default to a file:// URL of the source PDF when no official URL is
     // given — honest provenance beats a fabricated dole.gov.ph link.
@@ -255,14 +293,24 @@ fn extract_order_number(text: &str, input: &Path) -> Option<String> {
     Some(format!("DO-{}-{yy}", &caps[1]))
 }
 
+fn do_header_line_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // Matches the header line even when OCR garbled the number itself
+    // ("DEPARTMENT ORDER NO. 222 they"), so title extraction can still
+    // anchor below it.
+    RE.get_or_init(|| Regex::new(r"(?i)^\s*department\s+order\s+no\b").expect("static regex"))
+}
+
 /// Extract the title: the run of mostly-uppercase lines immediately after
 /// the "DEPARTMENT ORDER NO. …" line. Philippine DOs print the full title
 /// in capitals directly under the order number on the cover page.
 fn extract_title(text: &str) -> Option<String> {
     let lines: Vec<&str> = text.lines().take(60).collect();
-    let header_idx = lines
-        .iter()
-        .position(|l| order_number_dash_re().is_match(l) || order_number_series_re().is_match(l))?;
+    let header_idx = lines.iter().position(|l| {
+        do_header_line_re().is_match(l)
+            || order_number_dash_re().is_match(l)
+            || order_number_series_re().is_match(l)
+    })?;
 
     let mut title_lines: Vec<&str> = Vec::new();
     for line in lines.iter().skip(header_idx + 1) {

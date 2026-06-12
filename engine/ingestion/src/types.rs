@@ -200,6 +200,12 @@ pub enum LaborCodeBook {
 
     #[serde(rename = "Book VI: Post-Employment")]
     BookVI,
+
+    /// Penal provisions, prescription of offenses/claims, and transitory
+    /// provisions (Articles 303–317 renumbered). Present in the official
+    /// renumbered edition; added when ingesting Department Advisory 1-15.
+    #[serde(rename = "Book VII: Transitory and Final Provisions")]
+    BookVII,
 }
 
 /// Metadata for Labor Code articles

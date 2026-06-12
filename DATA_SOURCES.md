@@ -10,11 +10,11 @@ Most frequently referenced in HR/employment scenarios:
 
 1. **DO-174-17**: Rules Implementing Articles 106 to 109 of the Labor Code, as Amended (contracting/subcontracting)
    - Source: [DOLE Official](https://www.dole.gov.ph/news/department-order-no-174-17-rules-implementing-articles-106-to-109-of-the-labor-code-as-amended/)
-   - Status: 🟡 Acquired (`data/raw/DO-174-17.pdf`) — scanned image PDF, OCR required
+   - Status: 🟢 Processed (`data/processed/DO-174-17.json`, 37 sections) — OCR'd from official scan
 2. **DO-202-19**: Implementing Rules and Regulations of RA 11165 (Telecommuting Act)
 
    - Source: [DOLE](https://www.dole.gov.ph/) (retrieved via Wayback snapshot, see `data/raw/manifest.json`)
-   - Status: 🟡 Acquired (`data/raw/DO-202-19.pdf`) — scanned image PDF, OCR required
+   - Status: 🟢 Processed (`data/processed/DO-202-19.json`, 13 sections) — OCR'd from official scan
    - Note: Highly relevant post-COVID. Earlier revisions of this list cited a
      "DO-219-21" for telecommuting; DO-219 is actually a 2020 TUPAD order and
      the telecommuting IRR is DO-202-19.
@@ -31,7 +31,7 @@ Most frequently referenced in HR/employment scenarios:
 
 5. **DO-198-18**: Implementing Rules and Regulations of RA 11058 (Occupational Safety and Health Standards Law)
    - Source: [DOLE](https://www.dole.gov.ph/) (retrieved via Wayback snapshot, see `data/raw/manifest.json`)
-   - Status: 🟡 Acquired (`data/raw/DO-198-18.pdf`) — scanned image PDF, OCR required
+   - Status: 🟢 Processed (`data/processed/DO-198-18.json`, 34 sections) — OCR'd from official scan
 
 ### Tier 2 (Medium Priority)
 
@@ -63,14 +63,14 @@ Important for specific industries or scenarios:
 - **Priority Articles**:
   - Art. 12-20: Recruitment and placement
   - Art. 21-39: Regulation of recruitment activities
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ### Book II: Human Resources Development (Articles 40-80)
 
 - **Priority Articles**:
   - Art. 40-59: Training and employment of special workers
   - Art. 60-80: Apprenticeship
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ### Book III: Conditions of Employment (Articles 81-141)
 
@@ -79,14 +79,14 @@ Important for specific industries or scenarios:
   - Art. 97-111: Wages
   - Art. 112-128: Holiday pay, service charges
   - Art. 129-141: Wage administration
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ### Book IV: Health, Safety and Social Welfare Benefits (Articles 142-175)
 
 - **Priority Articles**:
   - Art. 142-162: Occupational health and safety
   - Art. 163-175: Social welfare benefits
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ### Book V: Labor Relations (Articles 212-302)
 
@@ -94,7 +94,7 @@ Important for specific industries or scenarios:
   - Art. 212-221: General provisions
   - Art. 222-237: Unfair labor practices
   - Art. 263-276: Strikes and lockouts
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ### Book VI: Post-Employment (Articles 277-302)
 
@@ -102,7 +102,7 @@ Important for specific industries or scenarios:
   - **Art. 279-286**: Termination of employment (most queried!)
   - Art. 287-291: Retirement
   - Art. 292-301: Retirement benefits
-- Status: 🔴 Not yet processed
+- Status: 🟢 Processed (in `data/processed/labor_code.json`)
 
 ## Additional Sources to Consider
 
@@ -139,7 +139,7 @@ Important for specific industries or scenarios:
 
 - **Department Advisory No. 1, Series of 2015** (Labor Code of the
   Philippines, Renumbered) is the canonical renumbered edition.
-- Status: 🟡 Acquired (`data/raw/LaborCode-2015-Renumbered.pdf`, 154 pages) — scanned image PDF, OCR required
+- Status: 🟢 Processed (`data/processed/labor_code.json`, 317 articles, Books I–VII) — OCR'd from official scan
 
 ## Status Legend
 

@@ -3,6 +3,7 @@ __pycache__/
 # corpus and are committed (see data/raw/manifest.json for provenance).
 *.pdf
 !data/raw/*.pdf
+!data/raw/ocr/*.pdf
 .env
 .DS_Store
 venv/

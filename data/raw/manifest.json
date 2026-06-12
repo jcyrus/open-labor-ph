@@ -1,5 +1,5 @@
 {
-  "$comment": "Provenance manifest for source documents in data/raw/. Every PDF committed here must have an entry. 'official_source' is the canonical government URL; 'retrieved_from' is the URL the bytes were actually downloaded from (Wayback Machine snapshots of the official URLs, because dole.gov.ph serves a Cloudflare browser challenge to non-browser clients). Status values: text_extracted | ocr_required | pending.",
+  "$comment": "Provenance manifest for source documents in data/raw/. Every PDF committed here must have an entry. 'official_source' is the canonical government URL; 'retrieved_from' is the URL the bytes were actually downloaded from (Wayback Machine snapshots of the official URLs, because dole.gov.ph serves a Cloudflare browser challenge to non-browser clients). 'ocr_file' is the tesseract/ocrmypdf-processed copy that the parsers actually read; the original scan stays as the provenance artifact. 'overrides' holds authoritative metadata passed to the parser via CLI flags, because OCR garbles identity-level fields (digits in order numbers, multi-line titles). Status values: processed | ocr_required | pending.",
   "documents": [
     {
       "id": "DO-174-17",
@@ -11,8 +11,15 @@
       "retrieved_date": "2026-06-11",
       "sha256": "8d1b8827aac41d5be16546107dcd9f18ea9dfe559b0dff308646f5eb4125da67",
       "pages": 13,
-      "status": "ocr_required",
-      "notes": "Official upload is a scanned image PDF with no text layer (13/13 pages empty)."
+      "status": "processed",
+      "ocr_file": "ocr/DO-174-17.ocr.pdf",
+      "output": "data/processed/DO-174-17.json",
+      "overrides": {
+        "order_number": "DO-174-17",
+        "title": "Rules Implementing Articles 106 to 109 of the Labor Code, as Amended",
+        "effective_date": "2017-03-15"
+      },
+      "notes": "Official upload is a scanned image PDF with no text layer. The scan contains a stamped duplicate of the first pages; the OCR copy is sliced to the complete clean copy (original pages 2-13) via qpdf. effective_date is the document's received-stamp date '15 MAR 2017' (OCR shows the year garbled as 2317; repaired from context)."
     },
     {
       "id": "DO-198-18",
@@ -24,8 +31,15 @@
       "retrieved_date": "2026-06-11",
       "sha256": "84482b27043e2eb01ecb7f047c50ff60043255aec7192b1a2173440a6fb3bc84",
       "pages": 23,
-      "status": "ocr_required",
-      "notes": "Scanned image PDF, no embedded fonts. The 2020-10-22 Wayback snapshot of the same URL is truncated at exactly 1 MiB; use the 2021-03-07 snapshot recorded here."
+      "status": "processed",
+      "ocr_file": "ocr/DO-198-18.ocr.pdf",
+      "output": "data/processed/DO-198-18.json",
+      "overrides": {
+        "order_number": "DO-198-18",
+        "title": "Implementing Rules and Regulations of Republic Act No. 11058 (An Act Strengthening Compliance with Occupational Safety and Health Standards and Providing Penalties for Violations Thereof)",
+        "effective_date": "2018-12-06"
+      },
+      "notes": "Scanned image PDF, no embedded fonts. The 2020-10-22 Wayback snapshot of the same URL is truncated at exactly 1 MiB; use the 2021-03-07 snapshot recorded here. The signature block reads 'December 2018' with the day illegible under a stamp; the 06 day is taken from DOLE's published records for this order."
     },
     {
       "id": "DO-202-19",
@@ -37,8 +51,14 @@
       "retrieved_date": "2026-06-11",
       "sha256": "b3109ea1e6085db9a5d0bf65c1098c55c56d8cf35230fc09e396175ac7905ecb",
       "pages": 5,
-      "status": "ocr_required",
-      "notes": "Scanned image PDF, no embedded fonts. ('Reulations' typo is in the official filename.) This is the telecommuting IRR; DATA_SOURCES.md previously misattributed telecommuting to a 'DO-219-21'."
+      "status": "processed",
+      "ocr_file": "ocr/DO-202-19.ocr.pdf",
+      "output": "data/processed/DO-202-19.json",
+      "overrides": {
+        "order_number": "DO-202-19",
+        "title": "Implementing Rules and Regulations of Republic Act No. 11165, Otherwise Known as the \"Telecommuting Act\""
+      },
+      "notes": "Scanned image PDF, no embedded fonts. ('Reulations' typo is in the official filename.) This is the telecommuting IRR; DATA_SOURCES.md previously misattributed telecommuting to a 'DO-219-21'. OCR misreads the order number on the cover as '222', hence the override."
     },
     {
       "id": "LaborCode-2015-Renumbered",
@@ -50,8 +70,10 @@
       "retrieved_date": "2026-06-11",
       "sha256": "597bf4274628bb4044603f6e5c7151279c4ba333b4f38e27ba6a625d11655545",
       "pages": 154,
-      "status": "ocr_required",
-      "notes": "Canonical renumbered edition. Scanned image PDF (154/154 pages empty). The 2017 DOLE edition (LaborCodeofthePhilippines20171.pdf, 141 pages, 25 MB) is also a scan and was not kept to limit repo size."
+      "status": "processed",
+      "ocr_file": "ocr/LaborCode-2015-Renumbered.ocr.pdf",
+      "output": "data/processed/labor_code.json",
+      "notes": "Canonical renumbered edition. Scanned image PDF (154/154 pages empty). The 2017 DOLE edition (LaborCodeofthePhilippines20171.pdf, 141 pages, 25 MB) is also a scan and was not kept to limit repo size. Parses to 317 unique articles across Books I-VII; the repealed pre-RA 10151 Articles 130/131 reprints are dropped in favor of the renumbered provisions."
     }
   ]
 }

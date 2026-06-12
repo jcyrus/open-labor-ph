@@ -91,8 +91,31 @@ fn run() -> Result<()> {
 
     // Article construction (subsection carving, heading parsing) is
     // independent per article, so it parallelizes cleanly with rayon.
-    let mut articles: Vec<LaborCodeArticle> =
-        raw_articles.into_par_iter().map(build_article).collect();
+    // rayon's indexed collect preserves scan order, which the dedup below
+    // relies on.
+    let built: Vec<LaborCodeArticle> = raw_articles.into_par_iter().map(build_article).collect();
+
+    // The renumbered edition reprints repealed provisions under their old
+    // numbers (e.g. the pre-RA 10151 Articles 130/131 on nightwork follow
+    // the current 130 [132]/131 [133]). The current provision always
+    // appears first, so on duplicate numbers keep the first occurrence in
+    // scan order and report the rest.
+    let mut articles: Vec<LaborCodeArticle> = Vec::with_capacity(built.len());
+    for article in built {
+        if let Some(kept) = articles
+            .iter()
+            .find(|a| a.article_number == article.article_number)
+        {
+            warn!(
+                article = article.article_number,
+                kept_heading = kept.heading.as_deref().unwrap_or(""),
+                dropped_heading = article.heading.as_deref().unwrap_or(""),
+                "duplicate article number; keeping first occurrence (repealed reprint dropped)"
+            );
+            continue;
+        }
+        articles.push(article);
+    }
 
     // Deterministic output order regardless of scan/parallel ordering.
     articles.sort_by_key(|a| a.article_number);
@@ -112,11 +135,17 @@ fn run() -> Result<()> {
 
 fn book_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    // "BOOK" is required in capitals: book headers are typeset in full caps,
-    // and the case requirement rejects prose like "this book provides".
+    // Headers appear as "BOOK ONE" in tables of contents and "Book One -
+    // PRE-EMPLOYMENT" in the body of the renumbered edition, so matching is
+    // case-insensitive. The number word must be followed by a dash separator
+    // (OCR renders em dashes as "-", "~", or mixes) or the end of the line —
+    // this rejects wrapped footnote prose like
+    // "Book Four on Employees Compensation…".
     RE.get_or_init(|| {
-        Regex::new(r"^\s*BOOK\s+(?P<num>ONE|TWO|THREE|FOUR|FIVE|SIX|VI|IV|V|III|II|I|[1-6])\b")
-            .expect("static regex")
+        Regex::new(
+            r"(?i)^\s*Book\s+(?P<num>ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|VII|VI|IV|V|III|II|I|[1-7])\s*(?:[-\u{2013}\u{2014}~]+|$)",
+        )
+        .expect("static regex")
     })
 }
 
@@ -126,6 +155,11 @@ fn title_re() -> &'static Regex {
         Regex::new(r"^\s*(?:TITLE|Title)\s+(?P<num>[IVXLCDM]{1,7}|\d{1,2})\s*(?:[.:\u{2013}\u{2014}-]\s*)?(?P<rest>.*)$")
             .expect("static regex")
     })
+}
+
+fn preliminary_title_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| Regex::new(r"(?i)^\s*PRELIMINARY\s+TITLE\s*$").expect("static regex"))
 }
 
 fn chapter_re() -> &'static Regex {
@@ -159,6 +193,7 @@ fn book_from_token(token: &str) -> Option<LaborCodeBook> {
         "FOUR" | "IV" | "4" => Some(LaborCodeBook::BookIV),
         "FIVE" | "V" | "5" => Some(LaborCodeBook::BookV),
         "SIX" | "VI" | "6" => Some(LaborCodeBook::BookVI),
+        "SEVEN" | "VII" | "7" => Some(LaborCodeBook::BookVII),
         _ => None,
     }
 }
@@ -234,6 +269,19 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
     let mut i = 0;
     while i < lines.len() {
         let line = lines[i];
+
+        // "PRELIMINARY TITLE" immediately precedes Art. 1 in the body and
+        // resets the context: the preliminary articles legally sit before
+        // Book I, so they must not inherit whatever book header the table
+        // of contents pass left behind.
+        if preliminary_title_re().is_match(line) {
+            flush(&mut current, &mut body_lines, &mut articles);
+            book = LaborCodeBook::BookI;
+            title_name = String::from("Preliminary Title");
+            chapter = None;
+            i += 1;
+            continue;
+        }
 
         if let Some(caps) = book_re().captures(line) {
             if let Some(b) = book_from_token(&caps["num"]) {

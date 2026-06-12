@@ -468,10 +468,19 @@ pub fn clean_text(raw: &str) -> String {
         .collect();
 
     text = hyphen_break_re().replace_all(&text, "$1$2").into_owned();
+    text = multi_space_re().replace_all(&text, "$1 ").into_owned();
     text = trailing_ws_re().replace_all(&text, "").into_owned();
     text = excess_newlines_re().replace_all(&text, "\n\n").into_owned();
 
     text.trim().to_string()
+}
+
+fn multi_space_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // OCR layers pad text with runs of spaces ("Definition  of  Terms");
+    // collapse interior runs but leave line-leading indentation alone so
+    // structural markers anchored at line starts are unaffected.
+    RE.get_or_init(|| Regex::new(r"(\S)[ \t]{2,}").expect("static regex"))
 }
 
 // ---------------------------------------------------------------------------
@@ -518,9 +527,11 @@ fn marker_re() -> &'static Regex {
     // Anchored at line start to reject mid-sentence references. The keyword
     // spellings cover Philippine legal drafting conventions: full word,
     // abbreviated with period, upper- and title-case.
+    // The whitespace between keyword and number is optional because OCR
+    // layers frequently drop it ("Section1. Declaration of Policy").
     RE.get_or_init(|| {
         Regex::new(
-            r"(?m)^[ \t]*(?P<kw>RULE|Rule|ARTICLE|Article|ART\.|Art\.|SECTION|Section|SEC\.|Sec\.)[ \t]+(?P<num>\d{1,4}[A-Za-z]?(?:-[A-Za-z0-9]+)?|[IVXLCDM]{1,7})(?P<sep>[ \t]*[.:\u{2013}\u{2014}-])?(?P<rest>[^\n]*)",
+            r"(?m)^[ \t]*(?P<kw>RULE|Rule|ARTICLE|Article|ART\.|Art\.|SECTION|Section|SEC\.|Sec\.)[ \t]*(?P<num>\d{1,4}[A-Za-z]?(?:-[A-Za-z0-9]+)?|[IVXLCDM]{1,7})(?P<sep>[ \t]*[.:\u{2013}\u{2014}-])?(?P<rest>[^\n]*)",
         )
         .expect("static regex")
     })
@@ -630,6 +641,26 @@ fn split_heading_line(rest: &str) -> (Option<String>, String) {
         return (Some(rest.trim_end_matches('.').to_string()), String::new());
     }
 
+    // No dash at all ("Section 2. Coverage. These Rules shall apply…"):
+    // some orders separate title from body with just a period. Take the
+    // first sentence as the title when it is short and starts uppercase —
+    // genuine titles ("Coverage", "Definition of Terms") are brief, while
+    // body-first headings run long.
+    if let Some(idx) = rest.find(". ") {
+        let candidate = rest[..idx].trim();
+        if candidate.len() <= 60
+            && candidate
+                .chars()
+                .next()
+                .is_some_and(|c| c.is_uppercase() || c.is_ascii_digit())
+        {
+            return (
+                Some(candidate.to_string()),
+                rest[idx + 2..].trim().to_string(),
+            );
+        }
+    }
+
     (None, rest.to_string())
 }
 
@@ -693,47 +724,42 @@ pub fn extract_subsections(content: &str) -> (String, Vec<Subsection>) {
 // Date parsing
 // ---------------------------------------------------------------------------
 
+/// Month alternation accepting full and abbreviated names ("March", "MAR",
+/// "Sept") — date stamps in signing blocks frequently use abbreviations.
+const MONTH_PATTERN: &str = "Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?";
+
 fn date_mdy_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    // "March 1, 2021" / "March 1 2021"
+    // "March 1, 2021" / "MAR 1 2021"
     RE.get_or_init(|| {
-        Regex::new(
-            r"(?i)\b(?P<month>January|February|March|April|May|June|July|August|September|October|November|December)\s+(?P<day>\d{1,2}),?\s+(?P<year>\d{4})",
-        )
+        Regex::new(&format!(
+            r"(?i)\b(?P<month>{MONTH_PATTERN})\.?\s+(?P<day>\d{{1,2}})[.,]?\s+(?P<year>\d{{4}})"
+        ))
         .expect("static regex")
     })
 }
 
 fn date_dmy_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    // "1st day of March, 2021" / "01 March 2021" — common in signing blocks.
+    // "1st day of March, 2021" / "01 March 2021" / "26 MAR, 2019" — the
+    // styles found in signing blocks and date stamps.
     RE.get_or_init(|| {
-        Regex::new(
-            r"(?i)\b(?P<day>\d{1,2})(?:st|nd|rd|th)?\s+(?:day\s+of\s+)?(?P<month>January|February|March|April|May|June|July|August|September|October|November|December),?\s+(?P<year>\d{4})",
-        )
+        Regex::new(&format!(
+            r"(?i)\b(?P<day>\d{{1,2}})(?:st|nd|rd|th)?\s+(?:day\s+of\s+)?(?P<month>{MONTH_PATTERN})\.?[.,]?\s+(?P<year>\d{{4}})"
+        ))
         .expect("static regex")
     })
 }
 
 fn month_number(name: &str) -> Option<u32> {
-    const MONTHS: [&str; 12] = [
-        "january",
-        "february",
-        "march",
-        "april",
-        "may",
-        "june",
-        "july",
-        "august",
-        "september",
-        "october",
-        "november",
-        "december",
+    // Match on the first three letters so abbreviations resolve too.
+    const MONTH_PREFIXES: [&str; 12] = [
+        "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
     ];
     let lower = name.to_ascii_lowercase();
-    MONTHS
+    MONTH_PREFIXES
         .iter()
-        .position(|m| *m == lower)
+        .position(|m| lower.starts_with(m))
         .map(|i| i as u32 + 1)
 }
 
@@ -741,6 +767,12 @@ fn date_from_captures(caps: &regex::Captures<'_>) -> Option<NaiveDate> {
     let month = month_number(caps.name("month")?.as_str())?;
     let day: u32 = caps.name("day")?.as_str().parse().ok()?;
     let year: i32 = caps.name("year")?.as_str().parse().ok()?;
+    // OCR misreads digits ("15 MAR 2317" for a 2017 stamp); reject years
+    // outside the plausible range for Philippine labor issuances rather
+    // than emit a nonsense date.
+    if !(1900..=2099).contains(&year) {
+        return None;
+    }
     NaiveDate::from_ymd_opt(year, month, day)
 }
 
@@ -884,6 +916,54 @@ mod tests {
         let (intro, subs) = extract_subsections(content);
         assert!(subs.is_empty());
         assert_eq!(intro, content.trim());
+    }
+
+    #[test]
+    fn test_clean_text_collapses_ocr_space_runs() {
+        assert_eq!(clean_text("Definition  of   Terms"), "Definition of Terms");
+        // Line-leading indentation is preserved.
+        assert_eq!(clean_text("intro\n   (a) item"), "intro\n   (a) item");
+    }
+
+    #[test]
+    fn test_split_into_blocks_ocr_missing_space() {
+        // OCR layers drop the keyword/number space: "Section1. …".
+        let text = "Section1. Declaration of Policy. \u{2014} It is hereby declared.\n\n\
+                    Section 2. Definition of Terms. \u{2014} As used here:\n";
+        let blocks = split_into_blocks(text);
+        assert_eq!(blocks.len(), 2);
+        assert_eq!(blocks[0].label, "Section 1");
+        assert_eq!(blocks[0].title.as_deref(), Some("Declaration of Policy"));
+    }
+
+    #[test]
+    fn test_parse_first_date_rejects_implausible_year() {
+        // OCR digit garble: "2317" must not become a date.
+        assert_eq!(parse_first_date("Manila, 15 MAR 2317"), None);
+    }
+
+    #[test]
+    fn test_split_heading_line_period_separator() {
+        // Period-only separation between title and body.
+        let text = "Section 2. Coverage. These Rules shall apply to all parties.\n\n\
+                    Section 3. Definition of terms. The following terms shall mean:\n";
+        let blocks = split_into_blocks(text);
+        assert_eq!(blocks[0].title.as_deref(), Some("Coverage"));
+        assert!(blocks[0].content.starts_with("These Rules shall apply"));
+        assert_eq!(blocks[1].title.as_deref(), Some("Definition of terms"));
+    }
+
+    #[test]
+    fn test_parse_first_date_abbreviated_month() {
+        // Date-stamp style from OCR'd signing blocks.
+        assert_eq!(
+            parse_first_date("Manila, Philippines, 26 MAR, 2019"),
+            NaiveDate::from_ymd_opt(2019, 3, 26)
+        );
+        assert_eq!(
+            parse_first_date("issued on Sept. 5, 2018 in Manila"),
+            NaiveDate::from_ymd_opt(2018, 9, 5)
+        );
     }
 
     #[test]
