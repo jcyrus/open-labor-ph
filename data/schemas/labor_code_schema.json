@@ -8,7 +8,8 @@
     "article_number",
     "content",
     "book",
-    "title_name"
+    "title_name",
+    "provenance"
   ],
   "properties": {
     "article_number": {
@@ -86,6 +87,26 @@
             "type": "string"
           },
           "description": "Topical tags (e.g., 'termination', 'probationary', 'just_cause')"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Where the record came from and what produced it",
+      "required": [
+        "source_sha256",
+        "parser"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "Lowercase hex SHA-256 of the source PDF; matches the pin in data/sources.toml"
+        },
+        "parser": {
+          "type": "string",
+          "description": "Parser name and version that produced the record (e.g. 'labor-ingestion 0.1.0')"
         }
       }
     },

@@ -156,7 +156,8 @@ article as `article_number` and records the former number as a
 - **PDF Availability**: Some older Department Orders exist only as scanned PDFs and need OCR
 - **Official Sources**: Prefer the Official Gazette and DOLE sites (dole.gov.ph, bwc.dole.gov.ph, blr.dole.gov.ph, oshc.dole.gov.ph)
 - **Amendments**: Record which orders supersede earlier ones (see Historical above)
-- **Metadata Tracking**: Record the crawl date, source URL, and file hash for provenance
+- **Metadata Tracking**: Every document is listed in [`data/sources.toml`](data/sources.toml) with its official URL and pinned SHA-256. Parsed records carry `provenance.source_sha256` and the parser version. No timestamps are stored, so re-parsing the same PDF gives byte-identical output
+- **Automated Downloads**: dole.gov.ph hosts (including BWC, BLR and OSHC) sit behind a Cloudflare JavaScript challenge, so their PDFs are saved by hand and then verified by `fetch`. The renumbered Labor Code downloads automatically from ILO NATLEX
 
 ## Status Legend
 

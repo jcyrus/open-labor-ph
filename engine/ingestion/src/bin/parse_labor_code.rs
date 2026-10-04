@@ -6,8 +6,12 @@
 //!
 //! Usage:
 //! ```text
-//! parse-labor-code <input.pdf> <output.json>
+//! parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>]
 //! ```
+//!
+//! Every article records the PDF's SHA-256 and the parser version in
+//! `provenance`. If the PDF is pinned in the source manifest
+//! (`data/sources.toml`), the entry must be a `labor_code` document.
 
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
@@ -19,9 +23,12 @@ use rayon::prelude::*;
 use regex::Regex;
 use tracing::{info, warn};
 
+use labor_ingestion::manifest::{lookup_entry, sha256_file, DocumentKind};
 use labor_ingestion::parser::{self, extract_subsections};
 use labor_ingestion::parser::{date_to_utc, parse_first_date};
-use labor_ingestion::types::{Amendment, LaborCodeArticle, LaborCodeBook, LaborCodeMetadata};
+use labor_ingestion::types::{
+    Amendment, LaborCodeArticle, LaborCodeBook, LaborCodeMetadata, Provenance,
+};
 
 /// An article delimited during the sequential scan, before the (parallel)
 /// conversion into a `LaborCodeArticle`.
@@ -38,18 +45,41 @@ struct RawArticle {
     chapter: Option<String>,
 }
 
-const USAGE: &str = "Usage: parse-labor-code <input.pdf> <output.json>";
+const USAGE: &str = "Usage: parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>]";
+
+struct Cli {
+    input: PathBuf,
+    output: PathBuf,
+    /// Explicit manifest path; defaults to `data/sources.toml` found upward.
+    manifest: Option<PathBuf>,
+}
 
 /// Parse CLI arguments. `Ok(None)` means help was requested.
-fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<(PathBuf, PathBuf)>> {
-    let args: Vec<String> = args.into_iter().collect();
-    if args.iter().any(|a| a == "-h" || a == "--help") {
-        return Ok(None);
+fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
+    let mut args = args.into_iter();
+    let mut positional: Vec<String> = Vec::new();
+    let mut manifest = None;
+
+    while let Some(arg) = args.next() {
+        match arg.as_str() {
+            "--manifest" => {
+                manifest = Some(PathBuf::from(
+                    args.next().context("--manifest requires a value")?,
+                ));
+            }
+            "-h" | "--help" => return Ok(None),
+            _ => positional.push(arg),
+        }
     }
-    if args.len() != 2 {
+
+    if positional.len() != 2 {
         bail!(USAGE);
     }
-    Ok(Some((PathBuf::from(&args[0]), PathBuf::from(&args[1]))))
+    Ok(Some(Cli {
+        input: PathBuf::from(&positional[0]),
+        output: PathBuf::from(&positional[1]),
+        manifest,
+    }))
 }
 
 fn main() -> ExitCode {
@@ -71,10 +101,28 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    let Some((input, output)) = parse_args(std::env::args().skip(1))? else {
+    let Some(Cli {
+        input,
+        output,
+        manifest,
+    }) = parse_args(std::env::args().skip(1))?
+    else {
         println!("{USAGE}");
         return Ok(());
     };
+
+    let sha256 =
+        sha256_file(&input).with_context(|| format!("failed to hash {}", input.display()))?;
+    match lookup_entry(manifest.as_deref(), &sha256)? {
+        Some(entry) if entry.kind != DocumentKind::LaborCode => bail!(
+            "manifest entry {} is a {:?}, not the Labor Code; use the matching parser",
+            entry.id,
+            entry.kind
+        ),
+        Some(entry) => info!(id = %entry.id, "matched source manifest entry by SHA-256"),
+        None => info!(%sha256, "PDF is not pinned in the source manifest"),
+    }
+    let provenance = Provenance::new(sha256);
 
     let doc = parser::parse_document(&input)
         .with_context(|| format!("failed to parse PDF {}", input.display()))?;
@@ -104,8 +152,10 @@ fn run() -> Result<()> {
 
     // Article construction (subsection carving, heading parsing) is
     // independent per article, so it parallelizes cleanly with rayon.
-    let mut articles: Vec<LaborCodeArticle> =
-        raw_articles.into_par_iter().map(build_article).collect();
+    let mut articles: Vec<LaborCodeArticle> = raw_articles
+        .into_par_iter()
+        .map(|raw| build_article(raw, &provenance))
+        .collect();
 
     // Deterministic output order regardless of scan/parallel ordering.
     articles.sort_by_key(|a| a.article_number);
@@ -375,7 +425,7 @@ fn dedupe_articles(articles: Vec<RawArticle>) -> Vec<RawArticle> {
 }
 
 /// Convert a delimited raw article into the typed domain struct.
-fn build_article(raw: RawArticle) -> LaborCodeArticle {
+fn build_article(raw: RawArticle, provenance: &Provenance) -> LaborCodeArticle {
     // Heading style is "Security of Tenure. – In cases of regular
     // employment…": short title, dash, then the body starts inline.
     let (heading, inline_body) = split_article_heading(&raw.heading_rest);
@@ -413,6 +463,7 @@ fn build_article(raw: RawArticle) -> LaborCodeArticle {
             implementing_orders: Vec::new(),
             tags: Vec::new(),
         },
+        provenance: provenance.clone(),
         subsections,
     }
 }
@@ -600,6 +651,10 @@ mod tests {
         PRESCRIPTION OF OFFENSES AND CLAIMS\n\
         Art. 306. [291] Money Claims. - All money claims shall be filed within three (3) years.\n";
 
+    fn build(raw: RawArticle) -> LaborCodeArticle {
+        build_article(raw, &Provenance::new("0".repeat(64)))
+    }
+
     fn book_of(articles: &[RawArticle], number: u32) -> LaborCodeBook {
         articles
             .iter()
@@ -655,7 +710,7 @@ mod tests {
                     an employment for any of the following causes:\n\
                     (a) Serious misconduct;\n\
                     (b) Gross and habitual neglect of duties;\n";
-        let article = build_article(scan_articles(text).remove(0));
+        let article = build(scan_articles(text).remove(0));
         assert!(article.content.contains("(b) Gross and habitual neglect"));
         assert_eq!(article.subsections.len(), 2);
     }
@@ -663,7 +718,7 @@ mod tests {
     #[test]
     fn test_former_number_is_a_field_not_a_tag() {
         let text = "Art. 294. [279] Security of Tenure. - In cases of regular employment.\n";
-        let article = build_article(scan_articles(text).remove(0));
+        let article = build(scan_articles(text).remove(0));
         assert_eq!(article.former_article_number, Some(279));
         assert!(article.metadata.tags.is_empty());
     }
@@ -700,8 +755,7 @@ mod tests {
         let text = "Art. 128. Visitorial power. - The Secretary may inspect.\n\
                     (As inserted by Republic Act No. 7730, June 2, 1994)\n\
                     Art. 129. Recovery of wages. - Upon complaint.\n";
-        let articles: Vec<LaborCodeArticle> =
-            scan_articles(text).into_iter().map(build_article).collect();
+        let articles: Vec<LaborCodeArticle> = scan_articles(text).into_iter().map(build).collect();
         assert!(!articles[0].metadata.original_pd_442);
         assert_eq!(articles[0].metadata.amendments[0].law, "RA 7730");
         assert!(articles[1].metadata.original_pd_442);

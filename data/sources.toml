@@ -1,0 +1,77 @@
+# Source manifest: every document the dataset is built from.
+#
+# Fields (see engine/ingestion/src/manifest.rs):
+#   id              Dataset identifier and local file name (data/raw/<id>.pdf).
+#                   Department Orders use the normalized order number.
+#   kind            "dole_order" (parse-dole) or "labor_code" (parse-labor-code).
+#   title           Human-readable title.
+#   source_url      Official page for the document; recorded as `source_url`.
+#   download_url    Direct PDF URL that `fetch` downloads. Omitted when the host
+#                   blocks automated downloads (all dole.gov.ph hosts sit behind
+#                   a Cloudflare JavaScript challenge): save the PDF by hand from
+#                   source_url as data/raw/<id>.pdf instead.
+#   published_date  Official publication date, YYYY-MM-DD, when verified. Used to
+#                   resolve "N days after publication" effectivity clauses.
+#   sha256          Pinned hash of the exact PDF. Written by `fetch --pin` after
+#                   you have checked the file; a mismatch is a hard error.
+#
+# Workflow:
+#   cargo run --release --bin fetch            # download / verify everything
+#   cargo run --release --bin fetch -- --pin   # record hashes of new files
+
+# --- Labor Code -------------------------------------------------------------
+
+[[document]]
+id = "labor-code-renumbered"
+kind = "labor_code"
+title = "Labor Code of the Philippines (Presidential Decree No. 442), as amended and renumbered"
+# ILO NATLEX hosts the DOLE renumbered edition and allows direct download.
+source_url = "https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=15242"
+download_url = "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/15242/PHL15242%202022.pdf"
+sha256 = "d9abd6f8eb3fb329456e926aa46ce05fbfe75f562f8aa6a60e7f421de97295c6"
+
+# --- Tier 1 Department Orders (see DATA_SOURCES.md) -------------------------
+
+[[document]]
+id = "DO-147-15"
+kind = "dole_order"
+title = "Amending the Implementing Rules and Regulations of Book VI of the Labor Code"
+source_url = "https://blr.dole.gov.ph/2015/11/12/dole-clarifies-rules-on-termination-of-employment/"
+
+[[document]]
+id = "DO-174-17"
+kind = "dole_order"
+title = "Rules Implementing Articles 106 to 109 of the Labor Code, as Amended"
+source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+
+[[document]]
+id = "DO-202-19"
+kind = "dole_order"
+title = "Implementing Rules and Regulations of Republic Act No. 11165 (Telecommuting Act)"
+source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+
+[[document]]
+id = "DO-252-25"
+kind = "dole_order"
+title = "Revised Implementing Rules and Regulations of Republic Act No. 11058 (Occupational Safety and Health Standards)"
+source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+
+[[document]]
+id = "DO-183-17"
+kind = "dole_order"
+title = "Revised Rules on the Administration and Enforcement of Labor Laws Pursuant to Article 128 of the Labor Code, as Renumbered"
+source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+
+# --- Tier 2 Department Orders -----------------------------------------------
+
+[[document]]
+id = "DO-53-03"
+kind = "dole_order"
+title = "Guidelines for the Implementation of a Drug-Free Workplace Policies and Programs for the Private Sector"
+source_url = "https://oshc.dole.gov.ph/wp-content/uploads/2020/09/Department-Order-No.-53-03.pdf"
+
+[[document]]
+id = "DO-230-21"
+kind = "dole_order"
+title = "Guidelines on Support for Workers in the Informal Economy under Republic Act No. 11313 (Safe Spaces Act)"
+source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"

@@ -6,9 +6,16 @@
 //!
 //! Usage:
 //! ```text
-//! parse-dole <input.pdf> <output.json> --source-url <https-url>
+//! parse-dole <input.pdf> <output.json> [--source-url <https-url>]
 //!            [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD]
+//!            [--manifest <sources.toml>]
 //! ```
+//!
+//! The PDF's SHA-256 is looked up in the source manifest
+//! (`data/sources.toml`). A matching entry supplies `--source-url` and
+//! `--published-date` (flags still override) and must agree with the
+//! extracted order number. Without a manifest entry, `--source-url` is
+//! required.
 //!
 //! Department Orders usually take effect a fixed number of days after
 //! publication, and the publication date is not printed in the Order itself.
@@ -26,11 +33,12 @@ use chrono::{Days, NaiveDate};
 use regex::Regex;
 use tracing::{info, warn};
 
+use labor_ingestion::manifest::{lookup_entry, sha256_file, DocumentKind, SourceDocument};
 use labor_ingestion::parser::{
     self, date_to_utc, extract_subsections, parse_first_date, split_into_blocks, MarkerKind,
     PdfDocument,
 };
-use labor_ingestion::types::{DoleOrder, OrderMetadata, Section};
+use labor_ingestion::types::{DoleOrder, OrderMetadata, Provenance, Section};
 
 /// Topical tag rules: (pattern, tag). Patterns are matched
 /// case-insensitively on word boundaries. Tags are lowercase snake_case and
@@ -85,18 +93,22 @@ fn tag_rules() -> &'static [(Regex, &'static str)] {
     })
 }
 
-const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> --source-url <https-url> \
-                     [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD]";
+const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> [--source-url <https-url>] \
+                     [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD] \
+                     [--manifest <sources.toml>]";
 
 struct Cli {
     input: PathBuf,
     output: PathBuf,
-    /// Official URL the PDF was obtained from (http/https only).
-    source_url: String,
+    /// Official URL the PDF was obtained from (http/https only). Falls back
+    /// to the manifest entry's `source_url`.
+    source_url: Option<String>,
     /// Official publication date, used to resolve "N days after publication".
     published_date: Option<NaiveDate>,
     /// Operator-supplied effective date; overrides anything derived from text.
     effective_date: Option<NaiveDate>,
+    /// Explicit manifest path; defaults to `data/sources.toml` found upward.
+    manifest: Option<PathBuf>,
 }
 
 /// Parse CLI arguments. `Ok(None)` means help was requested.
@@ -106,6 +118,7 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
     let mut source_url = None;
     let mut published_date = None;
     let mut effective_date = None;
+    let mut manifest = None;
 
     while let Some(arg) = args.next() {
         match arg.as_str() {
@@ -118,6 +131,11 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
             "--effective-date" => {
                 effective_date = Some(parse_date_arg("--effective-date", args.next())?);
             }
+            "--manifest" => {
+                manifest = Some(PathBuf::from(
+                    args.next().context("--manifest requires a value")?,
+                ));
+            }
             "-h" | "--help" => return Ok(None),
             _ => positional.push(arg),
         }
@@ -127,15 +145,12 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
         bail!(USAGE);
     }
 
-    // The source URL is the dataset's provenance, so it is mandatory and must
-    // be a public web address — a local file:// path would publish the
-    // operator's filesystem layout and point nowhere for everyone else.
-    let source_url = source_url.context(
-        "--source-url is required: pass the official URL the PDF was downloaded from \
-         (Official Gazette or a dole.gov.ph page)",
-    )?;
-    if !(source_url.starts_with("https://") || source_url.starts_with("http://")) {
-        bail!("--source-url must be an http(s) URL, got {source_url:?}");
+    // A local file:// path would publish the operator's filesystem layout
+    // and point nowhere for everyone else.
+    if let Some(url) = &source_url {
+        if !(url.starts_with("https://") || url.starts_with("http://")) {
+            bail!("--source-url must be an http(s) URL, got {url:?}");
+        }
     }
 
     Ok(Some(Cli {
@@ -144,7 +159,20 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
         source_url,
         published_date,
         effective_date,
+        manifest,
     }))
+}
+
+/// The record's `source_url`: the flag, else the manifest entry's. One of
+/// them is mandatory because the source URL is the dataset's provenance.
+fn resolve_source_url(flag: Option<&str>, entry: Option<&SourceDocument>) -> Result<String> {
+    flag.map(str::to_string)
+        .or_else(|| entry.map(|e| e.source_url.clone()))
+        .context(
+            "--source-url is required: pass the official URL the PDF was downloaded from \
+             (Official Gazette or a dole.gov.ph page), or add the PDF to data/sources.toml \
+             and pin it with `fetch --pin`",
+        )
 }
 
 fn parse_date_arg(flag: &str, value: Option<String>) -> Result<NaiveDate> {
@@ -192,7 +220,15 @@ fn run() -> Result<()> {
         );
     }
 
-    let order = build_dole_order(&doc, &cli)?;
+    let sha256 = sha256_file(&cli.input)
+        .with_context(|| format!("failed to hash {}", cli.input.display()))?;
+    let entry = lookup_entry(cli.manifest.as_deref(), &sha256)?;
+    match &entry {
+        Some(e) => info!(id = %e.id, "matched source manifest entry by SHA-256"),
+        None => info!(%sha256, "PDF is not pinned in the source manifest"),
+    }
+
+    let order = build_dole_order(&doc, &cli, entry.as_ref(), sha256)?;
 
     let json = serde_json::to_string_pretty(&order).context("failed to serialize DoleOrder")?;
     std::fs::write(&cli.output, json + "\n")
@@ -208,13 +244,42 @@ fn run() -> Result<()> {
 }
 
 /// Assemble a `DoleOrder` from extracted text using deterministic heuristics.
-fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
+fn build_dole_order(
+    doc: &PdfDocument,
+    cli: &Cli,
+    entry: Option<&SourceDocument>,
+    sha256: String,
+) -> Result<DoleOrder> {
     let text = &doc.full_text;
 
     let order_number = extract_order_number(text, &cli.input).context(
         "could not find a Department Order number (e.g. \"Department Order No. 174-17\") \
          in the document text or filename",
     )?;
+
+    // A pinned PDF must be what the manifest says it is; a mismatch means
+    // either the wrong file was pinned or the order number was misread, and
+    // either way the record must not be published under the wrong id.
+    if let Some(entry) = entry {
+        if entry.kind != DocumentKind::DoleOrder {
+            bail!(
+                "manifest entry {} is a {:?}, not a Department Order; use the matching parser",
+                entry.id,
+                entry.kind
+            );
+        }
+        if entry.id != order_number {
+            bail!(
+                "extracted order number {order_number} does not match manifest entry {}",
+                entry.id
+            );
+        }
+    }
+
+    let source_url = resolve_source_url(cli.source_url.as_deref(), entry)?;
+    let published_date = cli
+        .published_date
+        .or_else(|| entry.and_then(SourceDocument::published_date));
 
     let title = extract_title(text)
         .or_else(|| doc.metadata.title.clone())
@@ -229,11 +294,7 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
     let signed_date = extract_signed_date(text);
     let effectivity_clause = extract_effectivity_clause(&sections, text);
     let effective_date = cli.effective_date.or_else(|| {
-        resolve_effective_date(
-            effectivity_clause.as_deref(),
-            cli.published_date,
-            signed_date,
-        )
+        resolve_effective_date(effectivity_clause.as_deref(), published_date, signed_date)
     });
     if effective_date.is_none() {
         warn!(
@@ -249,7 +310,7 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
         supersedes: extract_supersedes(text, &order_number),
         related_laws: extract_related_laws(text),
         tags: extract_tags(text, &title),
-        published_date: cli.published_date.map(date_to_utc),
+        published_date: published_date.map(date_to_utc),
         signed_date: signed_date.map(date_to_utc),
         effectivity_clause,
     };
@@ -270,7 +331,8 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
         order_number,
         title,
         effective_date: effective_date.map(date_to_utc),
-        source_url: cli.source_url.clone(),
+        source_url,
+        provenance: Provenance::new(sha256),
         metadata,
         sections,
     })
@@ -1043,10 +1105,35 @@ mod tests {
         assert_eq!(signature_block_start(text), None);
     }
 
+    fn manifest_entry() -> SourceDocument {
+        SourceDocument {
+            id: "DO-174-17".to_string(),
+            kind: DocumentKind::DoleOrder,
+            title: "Contracting".to_string(),
+            source_url: "https://bwc.dole.gov.ph/issuances/department-orders/".to_string(),
+            download_url: None,
+            published_date: Some("2017-03-20".to_string()),
+            sha256: None,
+        }
+    }
+
     #[test]
-    fn test_source_url_required() {
-        let err = parse_args(args(&["in.pdf", "out.json"])).err().unwrap();
+    fn test_source_url_required_without_manifest_entry() {
+        let err = resolve_source_url(None, None).unwrap_err();
         assert!(err.to_string().contains("--source-url is required"));
+    }
+
+    #[test]
+    fn test_source_url_falls_back_to_manifest_entry() {
+        let entry = manifest_entry();
+        assert_eq!(
+            resolve_source_url(None, Some(&entry)).unwrap(),
+            entry.source_url
+        );
+        assert_eq!(
+            resolve_source_url(Some("https://override.example/"), Some(&entry)).unwrap(),
+            "https://override.example/"
+        );
     }
 
     #[test]
@@ -1072,7 +1159,7 @@ mod tests {
         ]))
         .unwrap()
         .expect("not a help request");
-        assert!(cli.source_url.starts_with("https://"));
+        assert!(cli.source_url.unwrap().starts_with("https://"));
     }
 
     #[test]

@@ -36,11 +36,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`parse-dole --source-url` is optional for pinned PDFs**: the manifest entry supplies it (and `published_date`); it is still required for unpinned PDFs. `validate` reuses the shared upward path search.
+
 - **Documentation brought in line with the code**: README status (Phase 2 tooling complete, no documents ingested), usage for all three binaries, removed the nonexistent `/bindings` directory (PyO3 bindings are planned for Phase 4), fixed the hipstaff.asia link. CONTRIBUTING data rules and pre-submit checks now name real commands and fields instead of `json.dumps` and an undefined `last_updated`.
 - **`Cargo.lock` is committed** for reproducible builds of the binaries (`cargo build --locked`).
 - **Schema `$id`s resolve**: they now point at the raw files on `main` instead of non-existent GitHub paths.
 
 ### Added
+
+- **Source manifest and `fetch` binary**: `data/sources.toml` lists every source document (official `source_url`, optional `download_url`, `published_date`, pinned `sha256`).
+  - Implementation: `engine/ingestion/src/manifest.rs`, `engine/ingestion/src/bin/fetch.rs`, `data/sources.toml`
+  - `fetch` downloads entries with a `download_url` (rejecting non-PDF bodies such as bot-challenge pages), verifies every local PDF against its pin, writes atomically, and reports challenge-protected entries as manual downloads with the exact target path. `--pin` records new hashes, preserving the manifest's comments. Any mismatch is an error and the exit code is non-zero.
+  - Parsers look up the input's SHA-256 in the manifest: a match supplies `source_url`/`published_date` and must agree on document kind and order number.
+  - Seeded with the Tier 1/2 Department Orders (manual: dole.gov.ph blocks automated downloads) and the renumbered Labor Code from ILO NATLEX (downloaded and pinned).
+- **Provenance on every record** (`provenance.source_sha256`, `provenance.parser`), required by both schemas. No timestamps, so output stays deterministic.
 
 - **Phase 2: Data Ingestion Pipeline** (`ee17ed5`): Three CLI binaries on top of the PDF parser core.
   - Implementation: `engine/ingestion/src/bin/parse_dole.rs`, `parse_labor_code.rs`, `validate.rs`; structure detection (`split_into_blocks`, `extract_subsections`, `parse_first_date`) and text cleanup (`clean_text`) in `engine/ingestion/src/parser.rs`; schema-compatible date serialization in `engine/ingestion/src/types.rs`

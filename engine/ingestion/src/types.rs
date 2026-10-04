@@ -63,6 +63,29 @@ pub mod schema_date_opt {
     }
 }
 
+/// Where a dataset record came from and what produced it. Deliberately
+/// free of timestamps: re-parsing the same PDF with the same parser yields
+/// byte-identical output, so dataset diffs show only real changes.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Provenance {
+    /// Lowercase hex SHA-256 of the source PDF
+    pub source_sha256: String,
+
+    /// Parser that produced the record, e.g. "labor-ingestion 0.1.0"
+    pub parser: String,
+}
+
+impl Provenance {
+    /// Provenance for a record parsed from a PDF with this hash by this
+    /// crate's current version.
+    pub fn new(source_sha256: String) -> Self {
+        Provenance {
+            source_sha256,
+            parser: concat!(env!("CARGO_PKG_NAME"), " ", env!("CARGO_PKG_VERSION")).to_string(),
+        }
+    }
+}
+
 /// Represents a DOLE Department Order
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DoleOrder {
@@ -84,6 +107,9 @@ pub struct DoleOrder {
 
     /// Official source URL
     pub source_url: String,
+
+    /// Source PDF hash and parser version
+    pub provenance: Provenance,
 
     /// Additional metadata
     #[serde(default)]
@@ -200,6 +226,9 @@ pub struct LaborCodeArticle {
     /// Metadata
     #[serde(default)]
     pub metadata: LaborCodeMetadata,
+
+    /// Source PDF hash and parser version
+    pub provenance: Provenance,
 
     /// Subsections
     #[serde(default, skip_serializing_if = "Vec::is_empty")]

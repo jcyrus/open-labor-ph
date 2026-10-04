@@ -26,6 +26,10 @@ pub enum IngestionError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
 
+    /// The source manifest is malformed or inconsistent.
+    #[error("Invalid source manifest: {0}")]
+    Manifest(String),
+
     /// JSON serialization/deserialization error.
     #[error("JSON error: {0}")]
     Json(#[from] serde_json::Error),
