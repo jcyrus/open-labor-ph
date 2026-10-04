@@ -14,7 +14,7 @@
   "properties": {
     "order_number": {
       "type": "string",
-      "description": "DOLE Order number (e.g., 'DO-219-21', 'DO-174-17')",
+      "description": "DOLE Order number (e.g., 'DO-202-19', 'DO-174-17')",
       "pattern": "^DO-[0-9]+-[0-9]{2}$"
     },
     "title": {

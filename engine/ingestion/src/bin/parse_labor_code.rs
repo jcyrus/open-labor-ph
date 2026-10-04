@@ -114,9 +114,13 @@ fn book_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     // "BOOK" is required in capitals: book headers are typeset in full caps,
     // and the case requirement rejects prose like "this book provides".
+    // "VII" must precede "VI" in the alternation, otherwise the trailing
+    // `\b` fails on "VII" and Book Seven is never recognized.
     RE.get_or_init(|| {
-        Regex::new(r"^\s*BOOK\s+(?P<num>ONE|TWO|THREE|FOUR|FIVE|SIX|VI|IV|V|III|II|I|[1-6])\b")
-            .expect("static regex")
+        Regex::new(
+            r"^\s*BOOK\s+(?P<num>ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|VII|VI|IV|V|III|II|I|[1-7])\b",
+        )
+        .expect("static regex")
     })
 }
 
@@ -159,6 +163,7 @@ fn book_from_token(token: &str) -> Option<LaborCodeBook> {
         "FOUR" | "IV" | "4" => Some(LaborCodeBook::BookIV),
         "FIVE" | "V" | "5" => Some(LaborCodeBook::BookV),
         "SIX" | "VI" | "6" => Some(LaborCodeBook::BookVI),
+        "SEVEN" | "VII" | "7" => Some(LaborCodeBook::BookVII),
         _ => None,
     }
 }
@@ -208,11 +213,8 @@ fn is_caps_heading(line: &str) -> bool {
 fn scan_articles(text: &str) -> Vec<RawArticle> {
     let lines: Vec<&str> = text.lines().collect();
 
-    // Articles 1–6 sit in the Preliminary Title, before "BOOK ONE". The
-    // schema's book enum has no "Preliminary" variant, so they are assigned
-    // to Book I with title_name "Preliminary Title" — the title_name keeps
-    // the legal position recoverable.
-    let mut book = LaborCodeBook::BookI;
+    // Articles 1–11 sit in the Preliminary Title, before "BOOK ONE".
+    let mut book = LaborCodeBook::Preliminary;
     let mut seen_book_header = false;
     let mut title_name = String::from("Preliminary Title");
     let mut chapter: Option<String> = None;
@@ -390,4 +392,61 @@ fn split_article_heading(rest: &str) -> (Option<String>, String) {
     }
 
     (None, rest.to_string())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const SAMPLE: &str = "PRELIMINARY TITLE\n\
+        CHAPTER I\n\
+        GENERAL PROVISIONS\n\
+        Art. 1. Name of Decree. - This Decree shall be known as the Labor Code of the Philippines.\n\
+        BOOK ONE\n\
+        PRE-EMPLOYMENT\n\
+        Art. 12. Statement of Objectives. - It is the policy of the State.\n\
+        BOOK SIX\n\
+        POST-EMPLOYMENT\n\
+        Title I\n\
+        TERMINATION OF EMPLOYMENT\n\
+        Art. 294. [279] Security of Tenure. - In cases of regular employment.\n\
+        BOOK SEVEN\n\
+        TRANSITORY AND FINAL PROVISIONS\n\
+        Title II\n\
+        PRESCRIPTION OF OFFENSES AND CLAIMS\n\
+        Art. 306. [291] Money Claims. - All money claims shall be filed within three (3) years.\n";
+
+    fn book_of(articles: &[RawArticle], number: u32) -> LaborCodeBook {
+        articles
+            .iter()
+            .find(|a| a.number == number)
+            .map(|a| a.book.clone())
+            .unwrap_or_else(|| panic!("article {number} not scanned"))
+    }
+
+    #[test]
+    fn test_preliminary_title_articles_are_not_book_one() {
+        let articles = scan_articles(SAMPLE);
+        assert_eq!(book_of(&articles, 1), LaborCodeBook::Preliminary);
+        assert_eq!(book_of(&articles, 12), LaborCodeBook::BookI);
+    }
+
+    #[test]
+    fn test_book_seven_is_recognized() {
+        let articles = scan_articles(SAMPLE);
+        assert_eq!(book_of(&articles, 294), LaborCodeBook::BookVI);
+        let money_claims = articles.iter().find(|a| a.number == 306).unwrap();
+        assert_eq!(money_claims.book, LaborCodeBook::BookVII);
+        assert_eq!(
+            money_claims.title_name,
+            "Title II: PRESCRIPTION OF OFFENSES AND CLAIMS"
+        );
+        assert_eq!(money_claims.original_number, Some(291));
+    }
+
+    #[test]
+    fn test_book_roman_seven_not_truncated_to_six() {
+        let caps = book_re().captures("BOOK VII").expect("BOOK VII matches");
+        assert_eq!(book_from_token(&caps["num"]), Some(LaborCodeBook::BookVII));
+    }
 }

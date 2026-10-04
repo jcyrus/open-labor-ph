@@ -66,7 +66,7 @@ pub mod schema_date_opt {
 /// Represents a DOLE Department Order
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DoleOrder {
-    /// Order number (e.g., "DO-219-21")
+    /// Order number (e.g., "DO-202-19")
     pub order_number: String,
 
     /// Full title of the order
@@ -181,8 +181,12 @@ pub struct LaborCodeArticle {
 }
 
 /// Labor Code book classifications
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum LaborCodeBook {
+    /// Articles 1–11, which precede Book One.
+    #[serde(rename = "Preliminary Title")]
+    Preliminary,
+
     #[serde(rename = "Book I: Pre-Employment")]
     BookI,
 
@@ -200,6 +204,11 @@ pub enum LaborCodeBook {
 
     #[serde(rename = "Book VI: Post-Employment")]
     BookVI,
+
+    /// Penal provisions, prescription of offenses and money claims, and
+    /// transitory provisions (renumbered Arts. 303–317).
+    #[serde(rename = "Book VII: Transitory and Final Provisions")]
+    BookVII,
 }
 
 /// Metadata for Labor Code articles

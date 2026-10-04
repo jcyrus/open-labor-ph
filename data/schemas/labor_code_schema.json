@@ -20,12 +20,14 @@
       "type": "string",
       "description": "Book number and name",
       "enum": [
+        "Preliminary Title",
         "Book I: Pre-Employment",
         "Book II: Human Resources Development",
         "Book III: Conditions of Employment",
         "Book IV: Health, Safety and Social Welfare Benefits",
         "Book V: Labor Relations",
-        "Book VI: Post-Employment"
+        "Book VI: Post-Employment",
+        "Book VII: Transitory and Final Provisions"
       ]
     },
     "title_name": {
