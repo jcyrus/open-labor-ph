@@ -9,6 +9,7 @@
 //! parse-labor-code <input.pdf> <output.json>
 //! ```
 
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::process::ExitCode;
 use std::sync::OnceLock;
@@ -88,6 +89,8 @@ fn run() -> Result<()> {
             input.display()
         );
     }
+
+    let raw_articles = dedupe_articles(raw_articles);
 
     // Article construction (subsection carving, heading parsing) is
     // independent per article, so it parallelizes cleanly with rayon.
@@ -324,6 +327,43 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
     articles
 }
 
+/// Drop repeated article numbers, keeping the longest body of each.
+///
+/// A table of contents ("Art. 294. Security of Tenure ... 112") or a
+/// heading repeated by the page layout produces a near-empty duplicate of
+/// the real article. Scan order is preserved for the kept articles.
+fn dedupe_articles(articles: Vec<RawArticle>) -> Vec<RawArticle> {
+    let size = |a: &RawArticle| a.heading_rest.len() + a.body.len();
+
+    let mut longest: HashMap<u32, usize> = HashMap::new();
+    for (i, article) in articles.iter().enumerate() {
+        longest
+            .entry(article.number)
+            .and_modify(|best| {
+                if size(article) > size(&articles[*best]) {
+                    *best = i;
+                }
+            })
+            .or_insert(i);
+    }
+
+    let keep: HashSet<usize> = longest.into_values().collect();
+    let dropped = articles.len() - keep.len();
+    if dropped > 0 {
+        warn!(
+            dropped,
+            "dropped duplicate articles (table of contents or repeated headings); kept the longest of each"
+        );
+    }
+
+    articles
+        .into_iter()
+        .enumerate()
+        .filter(|(i, _)| keep.contains(i))
+        .map(|(_, a)| a)
+        .collect()
+}
+
 /// Convert a delimited raw article into the typed domain struct.
 fn build_article(raw: RawArticle) -> LaborCodeArticle {
     // Heading style is "Security of Tenure. – In cases of regular
@@ -336,10 +376,9 @@ fn build_article(raw: RawArticle) -> LaborCodeArticle {
         (true, _) => raw.body.clone(),
     };
 
-    let (intro, subsections) = extract_subsections(&content);
-    // Keep the full body in `content` when there is no intro text, so the
-    // article is never hollow; subsections always carry the item breakdown.
-    let content = if intro.is_empty() { content } else { intro };
+    // `content` is the full article body, enumerated items included;
+    // `subsections` repeats the items one by one for fine-grained retrieval.
+    let (_, subsections) = extract_subsections(&content);
 
     // The renumbered edition's original article number is preserved as a
     // tag ("formerly_art_279") — the schema has no dedicated field for it,
@@ -448,5 +487,31 @@ mod tests {
     fn test_book_roman_seven_not_truncated_to_six() {
         let caps = book_re().captures("BOOK VII").expect("BOOK VII matches");
         assert_eq!(book_from_token(&caps["num"]), Some(LaborCodeBook::BookVII));
+    }
+
+    #[test]
+    fn test_toc_duplicate_articles_keep_body() {
+        let text = "BOOK SIX\nPOST-EMPLOYMENT\n\
+                    Art. 294. Security of Tenure.\n\
+                    Art. 295. Regular and Casual Employment.\n\
+                    Art. 294. [279] Security of Tenure. - In cases of regular employment, \
+                    the employer shall not terminate the services of an employee.\n\
+                    Art. 295. [280] Regular and Casual Employment. - The provisions of \
+                    written agreement to the contrary notwithstanding.\n";
+        let articles = dedupe_articles(scan_articles(text));
+        assert_eq!(articles.len(), 2);
+        let tenure = articles.iter().find(|a| a.number == 294).unwrap();
+        assert_eq!(tenure.original_number, Some(279));
+    }
+
+    #[test]
+    fn test_article_content_keeps_enumerated_items() {
+        let text = "Art. 297. [282] Termination by Employer. - An employer may terminate \
+                    an employment for any of the following causes:\n\
+                    (a) Serious misconduct;\n\
+                    (b) Gross and habitual neglect of duties;\n";
+        let article = build_article(scan_articles(text).remove(0));
+        assert!(article.content.contains("(b) Gross and habitual neglect"));
+        assert_eq!(article.subsections.len(), 2);
     }
 }

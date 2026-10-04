@@ -101,7 +101,7 @@
         },
         "content": {
           "type": "string",
-          "description": "Full text content of the section"
+          "description": "Full text content of the section, enumerated items included (they are also broken out in `subsections`)"
         },
         "subsections": {
           "type": "array",
