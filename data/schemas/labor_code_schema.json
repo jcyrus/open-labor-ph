@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/jcyrus/open-labor-ph/schemas/labor_code.json",
+  "$id": "https://raw.githubusercontent.com/jcyrus/open-labor-ph/main/data/schemas/labor_code_schema.json",
   "title": "Philippine Labor Code Article",
   "description": "Schema for articles from the Labor Code of the Philippines (Presidential Decree No. 442)",
   "type": "object",

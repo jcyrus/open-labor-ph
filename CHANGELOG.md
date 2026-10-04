@@ -34,8 +34,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Impact: Ten Department Orders were listed under the wrong topics (e.g. DO-174-17 is contracting, not sexual harassment; telecommuting is DO-202-19). Added DO-252-25 (supersedes DO-198-18), DO-183-17, DO-53-03, DO-230-21; Labor Code ranges now use renumbered articles with former numbers in brackets
 - **Dataset tracking**: `data/processed/*.json` is no longer gitignored, so the published dataset can be committed. Source PDFs remain ignored.
 
+### Changed
+
+- **Documentation brought in line with the code**: README status (Phase 2 tooling complete, no documents ingested), usage for all three binaries, removed the nonexistent `/bindings` directory (PyO3 bindings are planned for Phase 4), fixed the hipstaff.asia link. CONTRIBUTING data rules and pre-submit checks now name real commands and fields instead of `json.dumps` and an undefined `last_updated`.
+- **`Cargo.lock` is committed** for reproducible builds of the binaries (`cargo build --locked`).
+- **Schema `$id`s resolve**: they now point at the raw files on `main` instead of non-existent GitHub paths.
+
 ### Added
 
+- **Phase 2: Data Ingestion Pipeline** (`ee17ed5`): Three CLI binaries on top of the PDF parser core.
+  - Implementation: `engine/ingestion/src/bin/parse_dole.rs`, `parse_labor_code.rs`, `validate.rs`; structure detection (`split_into_blocks`, `extract_subsections`, `parse_first_date`) and text cleanup (`clean_text`) in `engine/ingestion/src/parser.rs`; schema-compatible date serialization in `engine/ingestion/src/types.rs`
+  - `parse-dole`: Department Order PDF → `DoleOrder` JSON (order number, title, sections, metadata)
+  - `parse-labor-code`: Labor Code PDF → array of `LaborCodeArticle` with Book/Title/Chapter context
+  - `validate`: Draft-07 schema validation with schema inference and per-element array validation; non-zero exit on failure
+  - Impact: End-to-end PDF → validated JSON tooling for the dataset
 - **PDF Parser Core Module**: High-performance PDF text extraction for labor law documents.
   - Implementation: `engine/ingestion/src/parser.rs`, `engine/ingestion/src/errors.rs`
   - Features: Full text extraction, metadata extraction, page-by-page parsing

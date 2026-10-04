@@ -8,7 +8,7 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 - **Source Documents**: Add new DOLE Department Orders or Labor Code amendments to `DATA_SOURCES.md` with their official URL. Source PDFs go in `data/raw/` locally but are gitignored; the validated JSON output in `data/processed/` is what gets committed
 - **Validation**: Review parsed JSON outputs for accuracy against official sources
-- **Benchmarking**: Submit real-world labor law questions to `engine/evals/`
+- **Benchmarking**: Propose real-world labor law questions in an issue with the `benchmark` label, including the question, expected answer, and citations as described in `data/schemas/benchmark_question_schema.json`
 
 ### 2. Code Contribution
 
@@ -39,7 +39,9 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 - **Linting**: Ensure `cargo clippy` passes with no warnings
 - **Testing**: Write unit tests for parsers and validators
 
-### Python (Bindings & Examples)
+### Python (Planned Bindings & Examples)
+
+Python bindings (PyO3) are planned for Phase 4 and do not exist yet. When they land:
 
 - **Type Safety**: Use type hints for all function signatures
 - **Documentation**: Add docstrings for public functions/classes
@@ -48,8 +50,10 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 ### Data Format
 
-- JSON files must be **valid** and **prettified** (use `json.dumps(indent=2)`)
-- Include metadata fields: `source_url`, `effective_date`, `last_updated`
+- Generate dataset JSON with the Rust binaries (`parse-dole`, `parse-labor-code`). They write pretty-printed JSON (2-space indent, trailing newline). Don't hand-write or reformat files in `data/processed/`. Fix the parser instead.
+- Every file must pass `validate` (see Testing below).
+- Provenance is required: DOLE Orders must be parsed with `--source-url` pointing to the official page the PDF came from.
+- Dates are never guessed: pass `--published-date` when you know the official publication date, otherwise let `effective_date` be omitted. Never fill it in by hand.
 
 ## ⚖️ Legal Guidelines
 
@@ -59,11 +63,19 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 ## 🧪 Testing
 
-Before submitting:
+Before submitting, run from the repository root:
 
-- Ensure all scripts run without errors
-- Validate JSON outputs against schema (if available)
-- Test evaluation scripts produce expected results
+```bash
+cargo fmt --all --check
+cargo clippy --workspace --all-targets
+cargo test --workspace
+```
+
+If you changed anything in `data/processed/`, validate every file you touched:
+
+```bash
+for f in data/processed/*.json; do cargo run --release --bin validate -- "$f" || exit 1; done
+```
 
 ## 💬 Questions?
 
