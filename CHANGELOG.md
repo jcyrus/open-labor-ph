@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Labor Code metadata is derived from the text** instead of hard-coded: "(As amended by …)" notes become `amendments` (law normalized to `RA`/`PD`/`BP`/`EO`; date kept only when the note cites a single law), articles "inserted/added/incorporated by" a later law get `original_pd_442: false`, and cross-references ("Articles 106 to 109 of this Code") fill `related_articles` (references to other codes are skipped). `Amendment.date` is now optional. `implementing_orders` stays empty by design: it needs cross-linking with the DOLE dataset.
+- **`former_article_number`** field replaces the `formerly_art_N` tag for the pre-2015 article number.
+- **DOLE tags are precise and consistently named**: a tag needs its keyword in the title or ≥ 3 word-bounded mentions; tags are lowercase snake_case aligned with benchmark categories (`osh`, not `OSH`). Added `harassment` and `drug_free_workplace`.
+- **Issuing authority** is read from the signature block (scanning from the end) instead of the first "Secretary …" line, which could be a preamble citation.
+- **Nested subsections**: "(a) … (1) … (i) …" lists keep their hierarchy via a recursive `subsections` field; "(i)" after "(h)" is read as a letter, and as a roman numeral when "(ii)" follows.
+- **`--help` exits 0** and prints usage to stdout in all three binaries.
 - **DOLE title extraction**: titles are found when the order number and "Series of" sit on separate lines (previously fell back to "Department Order DO-NNN-YY").
 - **Signature block** is cut off before section splitting, so the last section no longer ends with "Done in the City of Manila… / SIGNATORY / Secretary". Signatory and signing date are still read from the full text.
 - **`--source-url` is now required and must be http(s)** (breaking CLI change): the `file://` fallback published the operator's local path into the dataset.

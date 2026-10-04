@@ -124,7 +124,14 @@
         },
         "content": {
           "type": "string",
-          "description": "Text content of the subsection"
+          "description": "Text content of this item only (nested items are in `subsections`)"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection"
+          },
+          "description": "Nested items (e.g. '(1)' items under '(a)')"
         }
       }
     }

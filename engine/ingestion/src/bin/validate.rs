@@ -21,12 +21,15 @@ use rayon::prelude::*;
 use serde_json::Value;
 use tracing::info;
 
+const USAGE: &str = "Usage: validate <data.json> [--schema <schema.json>]";
+
 struct Cli {
     data: PathBuf,
     schema: Option<PathBuf>,
 }
 
-fn parse_args() -> Result<Cli> {
+/// Parse CLI arguments. `Ok(None)` means help was requested.
+fn parse_args() -> Result<Option<Cli>> {
     let mut args = std::env::args().skip(1);
     let mut positional: Vec<String> = Vec::new();
     let mut schema = None;
@@ -38,9 +41,7 @@ fn parse_args() -> Result<Cli> {
                     args.next().context("--schema requires a value")?,
                 ));
             }
-            "-h" | "--help" => {
-                bail!("Usage: validate <data.json> [--schema <schema.json>]");
-            }
+            "-h" | "--help" => return Ok(None),
             _ => positional.push(arg),
         }
     }
@@ -48,15 +49,15 @@ fn parse_args() -> Result<Cli> {
     // Second positional argument is accepted as the schema path for
     // ergonomics: `validate out.json data/schemas/dole_order_schema.json`.
     match positional.len() {
-        1 => Ok(Cli {
+        1 => Ok(Some(Cli {
             data: PathBuf::from(&positional[0]),
             schema,
-        }),
-        2 if schema.is_none() => Ok(Cli {
+        })),
+        2 if schema.is_none() => Ok(Some(Cli {
             data: PathBuf::from(&positional[0]),
             schema: Some(PathBuf::from(&positional[1])),
-        }),
-        _ => bail!("Usage: validate <data.json> [--schema <schema.json>]"),
+        })),
+        _ => bail!(USAGE),
     }
 }
 
@@ -78,7 +79,10 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    let cli = parse_args()?;
+    let Some(cli) = parse_args()? else {
+        println!("{USAGE}");
+        return Ok(());
+    };
 
     let data_raw = std::fs::read_to_string(&cli.data)
         .with_context(|| format!("failed to read {}", cli.data.display()))?;

@@ -162,15 +162,23 @@ pub struct Subsection {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub label: Option<String>,
 
-    /// Text content
+    /// Text content of this item only (nested items live in `subsections`)
     pub content: String,
+
+    /// Nested items, e.g. "(1)" items under "(a)", or "(i)" under "(1)"
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub subsections: Vec<Subsection>,
 }
 
 /// Represents an article from the Labor Code
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LaborCodeArticle {
-    /// Article number
+    /// Article number in the renumbered Labor Code (DOLE, 2015)
     pub article_number: u32,
+
+    /// Article number before the 2015 renumbering ("Art. 294 [279]" → 279)
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub former_article_number: Option<u32>,
 
     /// Book classification
     pub book: LaborCodeBook,
@@ -244,7 +252,9 @@ pub struct LaborCodeMetadata {
     #[serde(default)]
     pub related_articles: Vec<u32>,
 
-    /// Implementing DOLE Orders
+    /// Implementing DOLE Orders. The Labor Code text does not cite them, so
+    /// the PDF parser leaves this empty; it is filled by cross-linking with
+    /// the DOLE Order dataset.
     #[serde(default)]
     pub implementing_orders: Vec<String>,
 
@@ -263,9 +273,13 @@ pub struct Amendment {
     /// Law that made the amendment (e.g., "RA 6715")
     pub law: String,
 
-    /// Effectivity date
-    #[serde(with = "schema_date")]
-    pub date: DateTime<Utc>,
+    /// Effectivity date, when the amendment note states one
+    #[serde(
+        default,
+        with = "schema_date_opt",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub date: Option<DateTime<Utc>>,
 
     /// Description of the change
     #[serde(skip_serializing_if = "Option::is_none")]
