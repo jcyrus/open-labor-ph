@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **DOLE effective dates are no longer fabricated** (breaking schema change): `effective_date` is now optional and set only when the document determines it.
+  - Implementation: `engine/ingestion/src/bin/parse_dole.rs`, `engine/ingestion/src/types.rs`, `data/schemas/dole_order_schema.json`
+  - Resolution: explicit date in the effectivity clause → "N days after publication/signing" (requires `--published-date` for publication) → "upon publication" → "immediately" (signing date). Working-day offsets are never resolved. `--effective-date` overrides.
+  - New `metadata.signed_date` and `metadata.effectivity_clause`; `metadata.published_date` is filled from `--published-date`. Removed the January-1-of-series-year fallback (and its `2000 + yy` century bug).
+  - Signing date now prefers the last signing keyword, so preamble citations ("issued on March 1, 2010") are no longer mistaken for it.
+- **Lettered Department Orders** (`DO-18-A-11`) are now recognized in the header, `Series of` notation, filename fallback, and `supersedes`; the schema pattern accepts `DO-NNN-X-YY`.
+  - `supersedes` now also catches references placed before the verb ("D.O. No. 18-A, Series of 2011 is hereby superseded"), scoped to the keyword's paragraph.
 - **Labor Code book coverage**: Added `Preliminary Title` and `Book VII: Transitory and Final Provisions` to the book enum.
   - Implementation: `engine/ingestion/src/types.rs`, `data/schemas/labor_code_schema.json`, `engine/ingestion/src/bin/parse_labor_code.rs`
   - Impact: Arts. 1–11 are no longer misfiled under Book I, and Arts. 303–317 (penalties, prescription of offenses and money claims) are no longer misfiled under Book VI. `BOOK VII` headings now match (`VII` was previously truncated by the `VI` alternative)

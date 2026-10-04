@@ -66,15 +66,21 @@ pub mod schema_date_opt {
 /// Represents a DOLE Department Order
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DoleOrder {
-    /// Order number (e.g., "DO-202-19")
+    /// Order number (e.g., "DO-202-19", or "DO-18-A-11" for lettered amendments)
     pub order_number: String,
 
     /// Full title of the order
     pub title: String,
 
-    /// Date when the order becomes effective
-    #[serde(with = "schema_date")]
-    pub effective_date: DateTime<Utc>,
+    /// Date when the order becomes effective. `None` when the document does
+    /// not determine it (e.g. "fifteen days after publication" with no known
+    /// publication date) — never guessed.
+    #[serde(
+        default,
+        with = "schema_date_opt",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub effective_date: Option<DateTime<Utc>>,
 
     /// Official source URL
     pub source_url: String,
@@ -113,6 +119,18 @@ pub struct OrderMetadata {
         skip_serializing_if = "Option::is_none"
     )]
     pub published_date: Option<DateTime<Utc>>,
+
+    /// Date the order was signed, from the signature block
+    #[serde(
+        default,
+        with = "schema_date_opt",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub signed_date: Option<DateTime<Utc>>,
+
+    /// The sentence stating when the order takes effect, whitespace-normalized
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub effectivity_clause: Option<String>,
 }
 
 fn default_issuing_authority() -> String {

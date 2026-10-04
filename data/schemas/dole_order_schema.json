@@ -7,15 +7,14 @@
   "required": [
     "order_number",
     "title",
-    "effective_date",
     "source_url",
     "sections"
   ],
   "properties": {
     "order_number": {
       "type": "string",
-      "description": "DOLE Order number (e.g., 'DO-202-19', 'DO-174-17')",
-      "pattern": "^DO-[0-9]+-[0-9]{2}$"
+      "description": "DOLE Order number (e.g., 'DO-202-19', 'DO-174-17'; lettered amendments as 'DO-18-A-11')",
+      "pattern": "^DO-[0-9]+(-[A-Z])?-[0-9]{2}$"
     },
     "title": {
       "type": "string",
@@ -24,7 +23,7 @@
     "effective_date": {
       "type": "string",
       "format": "date",
-      "description": "Date when the order becomes effective (ISO 8601 format: YYYY-MM-DD)"
+      "description": "Date when the order becomes effective (ISO 8601 format: YYYY-MM-DD). Omitted when the document alone does not determine it, e.g. 'fifteen (15) days after publication' with no known publication date"
     },
     "source_url": {
       "type": "string",
@@ -64,6 +63,15 @@
           "type": "string",
           "format": "date",
           "description": "Date when the order was officially published"
+        },
+        "signed_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the order was signed, taken from the signature block"
+        },
+        "effectivity_clause": {
+          "type": "string",
+          "description": "Sentence stating when the order takes effect, whitespace-normalized (e.g. 'This Order shall take effect fifteen (15) days after its publication in a newspaper of general circulation.')"
         }
       }
     },
