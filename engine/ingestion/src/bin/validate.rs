@@ -21,6 +21,8 @@ use rayon::prelude::*;
 use serde_json::Value;
 use tracing::info;
 
+use labor_ingestion::manifest::find_upward;
+
 const USAGE: &str = "Usage: validate <data.json> [--schema <schema.json>]";
 
 struct Cli {
@@ -189,22 +191,15 @@ fn infer_schema_name(data: &Value) -> Result<&'static str> {
     }
 }
 
-/// Locate `data/schemas/<name>` by walking up from the current directory,
-/// so the binary works from the workspace root or any crate subdirectory.
+/// Locate `data/schemas/<name>` in the current directory or the nearest
+/// ancestor, so the binary works from the workspace root or any crate
+/// subdirectory.
 fn locate_schema(name: &str) -> Result<PathBuf> {
-    let cwd = std::env::current_dir().context("cannot determine current directory")?;
-    let mut dir: Option<&Path> = Some(cwd.as_path());
-
-    while let Some(current) = dir {
-        let candidate = current.join("data").join("schemas").join(name);
-        if candidate.is_file() {
-            return Ok(candidate);
-        }
-        dir = current.parent();
-    }
-
-    bail!(
-        "schema {name} not found in any data/schemas/ directory above {}; pass --schema",
-        cwd.display()
-    )
+    let relative = Path::new("data").join("schemas").join(name);
+    find_upward(&relative).with_context(|| {
+        format!(
+            "schema {name} not found in any data/schemas/ directory above the current \
+             directory; pass --schema"
+        )
+    })
 }

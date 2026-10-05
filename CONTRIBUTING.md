@@ -6,7 +6,7 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 ### 1. Data Contribution
 
-- **Source Documents**: Add new DOLE Department Orders or Labor Code amendments to `DATA_SOURCES.md` with their official URL. Source PDFs go in `data/raw/` locally but are gitignored; the validated JSON output in `data/processed/` is what gets committed
+- **Source Documents**: Add new DOLE Department Orders or Labor Code amendments to `data/sources.toml` (official `source_url`, plus a `download_url` if the host allows automated downloads) and to `DATA_SOURCES.md`. Run `fetch`, check the PDF, then `fetch --pin` to record its hash. Source PDFs stay local in `data/raw/` (gitignored); the manifest and the validated JSON in `data/processed/` are what get committed
 - **Validation**: Review parsed JSON outputs for accuracy against official sources
 - **Benchmarking**: Propose real-world labor law questions in an issue with the `benchmark` label, including the question, expected answer, and citations as described in `data/schemas/benchmark_question_schema.json`
 
@@ -52,7 +52,7 @@ Python bindings (PyO3) are planned for Phase 4 and do not exist yet. When they l
 
 - Generate dataset JSON with the Rust binaries (`parse-dole`, `parse-labor-code`). They write pretty-printed JSON (2-space indent, trailing newline). Don't hand-write or reformat files in `data/processed/`. Fix the parser instead.
 - Every file must pass `validate` (see Testing below).
-- Provenance is required: DOLE Orders must be parsed with `--source-url` pointing to the official page the PDF came from.
+- Provenance is required: parse only PDFs that are pinned in `data/sources.toml`, so every record's `provenance.source_sha256` traces back to a manifest entry and its official `source_url`.
 - Dates are never guessed: pass `--published-date` when you know the official publication date, otherwise let `effective_date` be omitted. Never fill it in by hand.
 
 ## ⚖️ Legal Guidelines

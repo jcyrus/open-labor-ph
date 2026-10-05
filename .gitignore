@@ -2,6 +2,7 @@ __pycache__/
 # Source PDFs are re-downloadable from DATA_SOURCES.md and stay out of git.
 # Processed JSON in data/processed/ is the published dataset and IS committed.
 *.pdf
+data/raw/*.part
 .env
 .DS_Store
 venv/

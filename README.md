@@ -11,11 +11,12 @@ _Note: This is the open-research arm of [hipstaff.asia](https://hipstaff.asia)._
 ## 📂 Project Structure
 
 - `/data`: The clean, structured JSON datasets (The Product).
+  - `/data/sources.toml`: Source manifest listing every document with its official URL and pinned SHA-256
   - `/data/schemas`: JSON Schema (Draft-07) definitions for validation
-  - `/data/raw`: Source PDFs (local only, gitignored; sources are listed in [DATA_SOURCES.md](DATA_SOURCES.md))
+  - `/data/raw`: Source PDFs (local only, gitignored; fetched and verified against `sources.toml`)
   - `/data/processed`: Validated JSON outputs (committed)
 - `/engine`: The Rust workspace for ingestion and evaluation pipelines.
-  - `/engine/ingestion`: PDF parsers (`parse-dole`, `parse-labor-code`) and the schema validator (`validate`)
+  - `/engine/ingestion`: Source fetcher (`fetch`), PDF parsers (`parse-dole`, `parse-labor-code`), and the schema validator (`validate`)
   - `/engine/evals`: RAG evaluation framework (Phase 3, not yet implemented)
 
 ## 🚀 Getting Started
@@ -47,20 +48,37 @@ cargo clippy --workspace --all-targets
 cargo fmt --all --check
 ```
 
+### Fetch the Source PDFs
+
+Every document is listed in [`data/sources.toml`](data/sources.toml) with its official page and the SHA-256 of the exact PDF the dataset is built from.
+
+```bash
+# Download what can be downloaded, verify everything already in data/raw/
+cargo run --release --bin fetch
+
+# After checking a newly added file, record its hash in the manifest
+cargo run --release --bin fetch -- --pin
+```
+
+- Entries with a `download_url` are downloaded automatically. Each download must be a real PDF and must match the pinned hash, or nothing is written.
+- All dole.gov.ph hosts sit behind a Cloudflare JavaScript challenge that blocks automated downloads. For those entries, `fetch` prints a `manual` line with the official page and the exact path to save the PDF to (`data/raw/<id>.pdf`). It verifies the file on the next run.
+- A hash mismatch is always an error and never overwrites a file. The exit code is non-zero if any entry failed.
+
 ### Parse a DOLE Department Order
 
 ```bash
 cargo run --release --bin parse-dole -- \
-  data/raw/DO-174-17.pdf data/processed/DO-174-17.json \
-  --source-url https://bwc.dole.gov.ph/issuances/department-orders/ \
-  --published-date 2017-03-20
+  data/raw/DO-174-17.pdf data/processed/DO-174-17.json
 ```
 
-- `--source-url` (**required**, `http`/`https` only): the official page the PDF came from. It is recorded as the record's provenance.
-- `--published-date YYYY-MM-DD` (optional): the official publication date. Department Orders usually take effect a fixed number of days after publication, and that date is not printed in the Order itself. If you leave it out, `effective_date` is **omitted** and a warning is logged, rather than the parser guessing.
-- `--effective-date YYYY-MM-DD` (optional): overrides the derived effective date.
+The PDF's SHA-256 is looked up in `data/sources.toml`. A pinned entry supplies the `source_url` and `published_date`, and parsing fails if the extracted order number doesn't match the entry's `id`. Flags override the manifest:
 
-The output keeps the effectivity sentence (`metadata.effectivity_clause`) and the signing date (`metadata.signed_date`) so that every date can be audited.
+- `--source-url <url>` (`http`/`https` only): the official page the PDF came from, recorded as provenance. **Required** when the PDF isn't pinned in the manifest.
+- `--published-date YYYY-MM-DD`: the official publication date. Department Orders usually take effect a fixed number of days after publication, and that date is not printed in the Order itself. If no publication date is available, `effective_date` is **omitted** and a warning is logged, rather than the parser guessing.
+- `--effective-date YYYY-MM-DD`: overrides the derived effective date.
+- `--manifest <path>`: use a manifest other than `data/sources.toml`.
+
+The output keeps the effectivity sentence (`metadata.effectivity_clause`) and the signing date (`metadata.signed_date`) so that every date can be audited. It also includes `provenance` (the source PDF's SHA-256 and the parser version), so any record can be traced to its exact source file.
 
 ### Parse the Labor Code
 
@@ -69,7 +87,7 @@ cargo run --release --bin parse-labor-code -- \
   data/raw/labor-code-renumbered.pdf data/processed/labor_code.json
 ```
 
-Writes a JSON array with one object per article, using the 2015 renumbering. The former number goes in `former_article_number`. Amendment notes ("As amended by …") are parsed into `metadata.amendments`.
+Writes a JSON array with one object per article, using the 2015 renumbering. The former number goes in `former_article_number`. Amendment notes ("As amended by …") are parsed into `metadata.amendments`. Each article carries the same `provenance` as DOLE records.
 
 ### Validate Output
 
@@ -89,7 +107,8 @@ Every binary accepts `--help`.
   - Verified data source inventory ([DATA_SOURCES.md](DATA_SOURCES.md))
 - 🟡 **Phase 2: Data Ingestion Pipeline**: Tooling complete, no documents ingested yet
   - ✅ `parse-dole`, `parse-labor-code`, `validate`
-  - 🔲 Source download pipeline and OCR for scanned PDFs
+  - ✅ Source manifest and `fetch` (hash-pinned; the Labor Code is pinned)
+  - 🔲 OCR for scanned PDFs
   - 🔲 First processed documents in `data/processed/`
 - 🔲 **Phase 3: Evaluation Framework**: Not started
 - 🔲 **Phase 4: Documentation & Community**: Not started (Python bindings via PyO3 are planned here)
