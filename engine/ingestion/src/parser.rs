@@ -7,10 +7,10 @@
 //! The module is organized in three layers:
 //!
 //! 1. **Extraction** — raw text out of the PDF (`extract_text`,
-//!    `extract_pages`, `extract_metadata`, `parse_document`). Page-by-page
-//!    extraction uses `lopdf` directly because `pdf-extract` cannot split
-//!    pages; full-document extraction prefers `pdf-extract` because its
-//!    font/encoding handling is more robust.
+//!    `extract_text_pages`, `extract_pages`, `extract_metadata`,
+//!    `parse_document`). `pdf-extract` is preferred for both whole-document
+//!    and page-by-page text because its font/encoding handling is far more
+//!    robust; `extract_pages` (`lopdf`) is the fallback.
 //! 2. **Cleanup** — deterministic normalization of the erratic formatting
 //!    found in Philippine government PDFs (`clean_text`): mojibake repair,
 //!    de-hyphenation across line breaks, control-character stripping.
@@ -186,8 +186,8 @@ pub fn extract_text<P: AsRef<Path>>(path: P) -> IngestionResult<String> {
 
 /// Extract text from a PDF file with a true page-by-page breakdown.
 ///
-/// Uses `lopdf` directly (rather than `pdf-extract`) because only `lopdf`
-/// exposes per-page content streams. Pages are extracted in parallel with
+/// Uses `lopdf` directly; this is the fallback when `pdf-extract` fails (see
+/// [`extract_text_pages`]). Pages are extracted in parallel with
 /// `rayon`; output order is still ascending page number.
 ///
 /// Pages that fail to extract, or that produce no/low text (scanned image
@@ -309,47 +309,91 @@ pub fn extract_metadata<P: AsRef<Path>>(path: P) -> IngestionResult<PdfMetadata>
     Ok(metadata)
 }
 
+/// Extract cleaned text page by page with `pdf-extract`, whose font and
+/// encoding handling is far more robust than `lopdf`'s (`lopdf` cannot
+/// decode Identity-H fonts and emits placeholder text for them). Each page
+/// is cleaned on its own and checked for scanned/empty content.
+///
+/// # Errors
+/// Returns an error if the file doesn't exist or `pdf-extract` fails.
+#[instrument(level = "debug", skip_all, fields(path = %path.as_ref().display()))]
+pub fn extract_text_pages<P: AsRef<Path>>(path: P) -> IngestionResult<PageExtraction> {
+    let path = path.as_ref();
+    if !path.exists() {
+        return Err(IngestionError::FileNotFound(path.to_path_buf()));
+    }
+
+    let raw_pages = pdf_extract::extract_text_by_pages(path).map_err(|e| {
+        warn!(error = %e, "PDF page text extraction failed");
+        IngestionError::ExtractionFailed(e.to_string())
+    })?;
+
+    let mut pages = Vec::with_capacity(raw_pages.len());
+    let mut warnings = Vec::new();
+    for (index, raw) in raw_pages.iter().enumerate() {
+        let number = index + 1;
+        let content = clean_text(raw);
+        if let Some(w) = page_quality_warning(number, &content) {
+            warn!(page = w.page, kind = ?w.kind, "{}", w.message);
+            warnings.push(w);
+        }
+        pages.push(PdfPage { number, content });
+    }
+    Ok(PageExtraction { pages, warnings })
+}
+
 /// Parse a PDF document, extracting both text and metadata.
 ///
-/// This is the main entry point for PDF parsing. The full text comes from
-/// `pdf-extract` (better encoding handling); the per-page breakdown comes
-/// from `lopdf`. Each extractor acts as the fallback for the other:
-///
-/// * If `pdf-extract` fails or returns nothing, the concatenated `lopdf`
-///   pages become the full text.
-/// * If every `lopdf` page is empty but `pdf-extract` recovered text, a
-///   single synthetic page carrying the full text is emitted.
-///
-/// Both fallbacks are recorded in `warnings` rather than silently applied.
+/// This is the main entry point for PDF parsing. Text comes from
+/// `pdf-extract`, page by page: `full_text` is the cleaned concatenation of
+/// the raw pages (identical to whole-document extraction), and `pages`
+/// keeps the boundaries for consumers that need page position (footnotes
+/// sit at the foot of each page). If `pdf-extract` fails, `lopdf`
+/// page-by-page extraction is used instead and the fallback is recorded in
+/// `warnings`.
 #[instrument(level = "info", skip_all, fields(path = %path.as_ref().display()))]
 pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
     let path = path.as_ref();
 
     let metadata = extract_metadata(path)?;
-    let PageExtraction {
-        mut pages,
-        mut warnings,
-    } = extract_pages(path)?;
 
-    let mut full_text = match extract_text(path) {
-        Ok(raw) => clean_text(&raw),
+    let (mut pages, mut warnings, mut full_text) = match pdf_extract::extract_text_by_pages(path) {
+        Ok(raw_pages) => {
+            let mut pages = Vec::with_capacity(raw_pages.len());
+            let mut warnings = Vec::new();
+            for (index, raw) in raw_pages.iter().enumerate() {
+                let number = index + 1;
+                let content = clean_text(raw);
+                if let Some(w) = page_quality_warning(number, &content) {
+                    warn!(page = w.page, kind = ?w.kind, "{}", w.message);
+                    warnings.push(w);
+                }
+                pages.push(PdfPage { number, content });
+            }
+            // Cleaning the concatenated raw pages (rather than joining the
+            // cleaned ones) keeps `full_text` identical to whole-document
+            // extraction, including words hyphenated across a page break.
+            let full_text = clean_text(&raw_pages.concat());
+            (pages, warnings, full_text)
+        }
         Err(e) => {
+            let PageExtraction {
+                pages,
+                mut warnings,
+            } = extract_pages(path)?;
             warnings.push(ExtractionWarning {
                 page: 0,
                 kind: WarningKind::FallbackUsed,
-                message: format!("pdf-extract failed ({e}); using concatenated lopdf pages"),
+                message: format!("pdf-extract failed ({e}); using lopdf page text"),
             });
-            String::new()
+            let full_text = pages
+                .iter()
+                .map(|p| p.content.as_str())
+                .collect::<Vec<_>>()
+                .join("\n\n");
+            (pages, warnings, full_text)
         }
     };
-
-    if full_text.trim().is_empty() {
-        full_text = pages
-            .iter()
-            .map(|p| p.content.as_str())
-            .collect::<Vec<_>>()
-            .join("\n\n");
-    }
 
     // Running headers/footers ("Department Order No. 174, s. 2017" on every
     // page) would otherwise be spliced into whatever section spans the page
@@ -364,13 +408,11 @@ pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
         }
     }
 
-    let pages_empty = pages.iter().all(|p| p.content.trim().is_empty());
-    if pages_empty && !full_text.trim().is_empty() {
+    if pages.is_empty() && !full_text.trim().is_empty() {
         warnings.push(ExtractionWarning {
             page: 0,
             kind: WarningKind::FallbackUsed,
-            message: "lopdf produced no per-page text; emitting full text as a single page"
-                .to_string(),
+            message: "no per-page text; emitting full text as a single page".to_string(),
         });
         pages = vec![PdfPage {
             number: 1,
@@ -469,6 +511,14 @@ fn trailing_ws_re() -> &'static Regex {
     RE.get_or_init(|| Regex::new(r"(?m)[ \t]+$").expect("static regex"))
 }
 
+fn inner_space_run_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // Two or more spaces/tabs *after* visible text: justified-text padding
+    // ("Termination  by  Employer"). Leading indentation is left alone —
+    // it marks continuation paragraphs (e.g. of footnotes).
+    RE.get_or_init(|| Regex::new(r"(\S)[ \t]{2,}").expect("static regex"))
+}
+
 fn excess_newlines_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r"\n{3,}").expect("static regex"))
@@ -484,7 +534,8 @@ fn excess_newlines_re() -> &'static Regex {
 /// 4. Page-number lines ("Page 3 of 12", "- 3 -") and table-of-contents
 ///    lines with dot leaders ("Section 1. Coverage ...... 3").
 /// 5. Words hyphenated across line breaks ("termina-\ntion" → "termination").
-/// 6. Trailing whitespace and runs of 3+ blank lines.
+/// 6. Trailing whitespace, runs of spaces inside a line (justified-text
+///    padding; leading indentation is kept), and runs of 3+ blank lines.
 pub fn clean_text(raw: &str) -> String {
     let mut text = raw.replace("\r\n", "\n").replace('\r', "\n");
 
@@ -503,6 +554,7 @@ pub fn clean_text(raw: &str) -> String {
     text = toc_leader_line_re().replace_all(&text, "").into_owned();
     text = hyphen_break_re().replace_all(&text, "$1$2").into_owned();
     text = trailing_ws_re().replace_all(&text, "").into_owned();
+    text = inner_space_run_re().replace_all(&text, "$1 ").into_owned();
     text = excess_newlines_re().replace_all(&text, "\n\n").into_owned();
 
     text.trim().to_string()
@@ -1211,5 +1263,13 @@ mod tests {
         assert_eq!(labels(&subs[0].subsections), ["a", "b"]);
         assert_eq!(labels(&subs[1].subsections), ["a", "b"]);
         assert_eq!(subs[1].subsections[0].content, "z");
+    }
+
+    #[test]
+    fn test_clean_text_collapses_inner_spaces_but_keeps_indentation() {
+        assert_eq!(
+            clean_text("Termination  by   Employer\n  (a)  Serious misconduct"),
+            "Termination by Employer\n  (a) Serious misconduct"
+        );
     }
 }

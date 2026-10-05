@@ -281,15 +281,30 @@ pub struct LaborCodeMetadata {
     #[serde(default)]
     pub related_articles: Vec<u32>,
 
-    /// Implementing DOLE Orders. The Labor Code text does not cite them, so
-    /// the PDF parser leaves this empty; it is filled by cross-linking with
-    /// the DOLE Order dataset.
+    /// Implementing DOLE Orders cited in the article's editorial footnotes
+    /// ("Refer to D.O. No. 147-15"), as normalized order numbers.
+    /// Cross-linking with the DOLE Order dataset can add more.
     #[serde(default)]
     pub implementing_orders: Vec<String>,
+
+    /// Editorial footnotes the source edition attaches to this article
+    /// (amendment history, superseding laws, implementing rules)
+    #[serde(default)]
+    pub footnotes: Vec<Footnote>,
 
     /// Topical tags
     #[serde(default)]
     pub tags: Vec<String>,
+}
+
+/// An editorial footnote from the source edition of the Labor Code
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Footnote {
+    /// Footnote number as printed
+    pub number: u32,
+
+    /// Footnote text, whitespace-normalized
+    pub text: String,
 }
 
 fn default_true() -> bool {

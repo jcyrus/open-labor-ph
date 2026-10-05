@@ -79,7 +79,7 @@
           "items": {
             "type": "string"
           },
-          "description": "DOLE Orders that implement or clarify this article; filled by cross-linking with the DOLE Order dataset, not by the PDF parser"
+          "description": "DOLE Orders that implement or clarify this article, as normalized order numbers (e.g. 'DO-147-15'); taken from the article's editorial footnotes, and may be extended by cross-linking with the DOLE Order dataset"
         },
         "tags": {
           "type": "array",
@@ -87,6 +87,29 @@
             "type": "string"
           },
           "description": "Topical tags (e.g., 'termination', 'probationary', 'just_cause')"
+        },
+        "footnotes": {
+          "type": "array",
+          "description": "Editorial footnotes the source edition attaches to this article (amendment history, superseding laws, implementing rules)",
+          "items": {
+            "type": "object",
+            "required": [
+              "number",
+              "text"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "number": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Footnote number as printed"
+              },
+              "text": {
+                "type": "string",
+                "description": "Footnote text, whitespace-normalized"
+              }
+            }
+          }
         }
       }
     },
