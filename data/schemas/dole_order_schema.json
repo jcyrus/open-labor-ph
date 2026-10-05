@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/jcyrus/open-labor-ph/schemas/dole_order.json",
+  "$id": "https://raw.githubusercontent.com/jcyrus/open-labor-ph/main/data/schemas/dole_order_schema.json",
   "title": "DOLE Department Order",
   "description": "Schema for Philippine Department of Labor and Employment (DOLE) Department Orders",
   "type": "object",
