@@ -20,7 +20,8 @@ use regex::Regex;
 use tracing::{info, warn};
 
 use labor_ingestion::parser::{self, extract_subsections};
-use labor_ingestion::types::{LaborCodeArticle, LaborCodeBook, LaborCodeMetadata};
+use labor_ingestion::parser::{date_to_utc, parse_first_date};
+use labor_ingestion::types::{Amendment, LaborCodeArticle, LaborCodeBook, LaborCodeMetadata};
 
 /// An article delimited during the sequential scan, before the (parallel)
 /// conversion into a `LaborCodeArticle`.
@@ -37,12 +38,18 @@ struct RawArticle {
     chapter: Option<String>,
 }
 
-fn parse_args() -> Result<(PathBuf, PathBuf)> {
-    let args: Vec<String> = std::env::args().skip(1).collect();
-    if args.len() != 2 || args.iter().any(|a| a == "-h" || a == "--help") {
-        bail!("Usage: parse-labor-code <input.pdf> <output.json>");
+const USAGE: &str = "Usage: parse-labor-code <input.pdf> <output.json>";
+
+/// Parse CLI arguments. `Ok(None)` means help was requested.
+fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<(PathBuf, PathBuf)>> {
+    let args: Vec<String> = args.into_iter().collect();
+    if args.iter().any(|a| a == "-h" || a == "--help") {
+        return Ok(None);
     }
-    Ok((PathBuf::from(&args[0]), PathBuf::from(&args[1])))
+    if args.len() != 2 {
+        bail!(USAGE);
+    }
+    Ok(Some((PathBuf::from(&args[0]), PathBuf::from(&args[1]))))
 }
 
 fn main() -> ExitCode {
@@ -64,7 +71,10 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    let (input, output) = parse_args()?;
+    let Some((input, output)) = parse_args(std::env::args().skip(1))? else {
+        println!("{USAGE}");
+        return Ok(());
+    };
 
     let doc = parser::parse_document(&input)
         .with_context(|| format!("failed to parse PDF {}", input.display()))?;
@@ -380,30 +390,165 @@ fn build_article(raw: RawArticle) -> LaborCodeArticle {
     // `subsections` repeats the items one by one for fine-grained retrieval.
     let (_, subsections) = extract_subsections(&content);
 
-    // The renumbered edition's original article number is preserved as a
-    // tag ("formerly_art_279") — the schema has no dedicated field for it,
-    // and burying it in free text would make it unqueryable.
-    let mut tags = Vec::new();
-    if let Some(orig) = raw.original_number {
-        tags.push(format!("formerly_art_{orig}"));
-    }
+    let amendments = extract_amendments(&content);
+    let original_pd_442 = !amendment_note_re()
+        .captures_iter(&content)
+        .any(|caps| is_insertion_note(&caps["note"]));
+    let related_articles = extract_related_articles(&content, raw.number);
 
     LaborCodeArticle {
         article_number: raw.number,
+        former_article_number: raw.original_number,
         book: raw.book,
         title_name: raw.title_name,
         chapter: raw.chapter,
         heading,
         content,
         metadata: LaborCodeMetadata {
-            original_pd_442: true,
-            amendments: Vec::new(),
-            related_articles: Vec::new(),
+            original_pd_442,
+            amendments,
+            related_articles,
+            // The Labor Code text never cites the DOLE Orders that implement
+            // it; this is filled by cross-linking with the DOLE dataset.
             implementing_orders: Vec::new(),
-            tags,
+            tags: Vec::new(),
         },
         subsections,
     }
+}
+
+fn amendment_note_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // Editorial notes printed after amended articles:
+    // "(As amended by Section 34, Republic Act No. 6715, March 21, 1989)",
+    // "(As inserted by Republic Act No. 10151, June 21, 2011)".
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?i)\(\s*(?P<note>(?:as\s+)?(?:amended|inserted|added|incorporated)\s+by\b[^)]*)\)",
+        )
+        .expect("static regex")
+    })
+}
+
+fn law_citation_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // "Republic Act No. 6715", "R.A. 6715", "P.D. 570-A", "B.P. Blg. 130",
+    // "Executive Order No. 111".
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?i)\b(?:(?P<ra>republic\s+act|r\.\s*a\.|ra)|(?P<pd>presidential\s+decree|p\.\s*d\.|pd)|(?P<bp>batas\s+pambansa|b\.\s*p\.|bp)|(?P<eo>executive\s+order|e\.\s*o\.|eo))\s*(?:no\.?|blg\.?|bilang)?\s*(?P<num>\d{1,5}(?:-[a-z])?)\b",
+        )
+        .expect("static regex")
+    })
+}
+
+/// Whether an amendment note records an article added after 1974 rather
+/// than a change to an original PD 442 article.
+fn is_insertion_note(note: &str) -> bool {
+    let lower = note.trim_start().to_ascii_lowercase();
+    let verb = lower.strip_prefix("as ").unwrap_or(&lower).trim_start();
+    ["inserted", "added", "incorporated"]
+        .iter()
+        .any(|v| verb.starts_with(v))
+}
+
+/// Parse "(As amended by …)" notes into amendments, one per cited law.
+///
+/// The note's date is attached only when the note cites a single law; with
+/// several laws ("As amended by PD 570-A and PD 643, …") it is ambiguous
+/// which law the date belongs to, so it is left unset rather than guessed.
+fn extract_amendments(content: &str) -> Vec<Amendment> {
+    let mut amendments: Vec<Amendment> = Vec::new();
+    for caps in amendment_note_re().captures_iter(content) {
+        let note = caps["note"]
+            .split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ");
+        let laws: Vec<String> = law_citation_re()
+            .captures_iter(&note)
+            .map(|law| {
+                let prefix = if law.name("ra").is_some() {
+                    "RA"
+                } else if law.name("pd").is_some() {
+                    "PD"
+                } else if law.name("bp").is_some() {
+                    "BP"
+                } else {
+                    "EO"
+                };
+                format!("{prefix} {}", law["num"].to_ascii_uppercase())
+            })
+            .collect();
+        let date = if laws.len() == 1 {
+            parse_first_date(&note).map(date_to_utc)
+        } else {
+            None
+        };
+        for law in laws {
+            if amendments.iter().any(|a| a.law == law) {
+                continue;
+            }
+            amendments.push(Amendment {
+                law,
+                date,
+                description: Some(note.clone()),
+            });
+        }
+    }
+    amendments
+}
+
+fn article_reference_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // "Article 297", "Art. 298", "Articles 106 to 109", "Articles 297 and 298".
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?i)\bart(?:icle)?s?\.?\s+(?P<a>\d{1,3})(?:\s*(?P<sep>to|and|-|\u{2013})\s*(?P<b>\d{1,3}))?\b",
+        )
+        .expect("static regex")
+    })
+}
+
+/// Ranges wider than this ("Articles 1 to 300") are treated as typos or
+/// book-level references and only their endpoints are recorded.
+const MAX_ARTICLE_RANGE: u32 = 20;
+
+/// Collect Labor Code articles cross-referenced in `content`, excluding the
+/// article itself. A reference followed by "of" a different instrument
+/// ("Article 1700 of the Civil Code") is skipped; "of this Code" and "of the
+/// Labor Code" are kept.
+fn extract_related_articles(content: &str, self_number: u32) -> Vec<u32> {
+    let mut related: Vec<u32> = Vec::new();
+    for caps in article_reference_re().captures_iter(content) {
+        let whole = caps.get(0).expect("match group 0 always present");
+        let after: String = content[whole.end()..]
+            .chars()
+            .take(40)
+            .collect::<String>()
+            .to_ascii_lowercase();
+        let after = after.trim_start_matches([',', ' ', '\n']);
+        if after.starts_with("of ") && !after.contains("this code") && !after.contains("labor code")
+        {
+            continue;
+        }
+
+        let Ok(a) = caps["a"].parse::<u32>() else {
+            continue;
+        };
+        let b = caps.name("b").and_then(|m| m.as_str().parse::<u32>().ok());
+        let is_range = caps
+            .name("sep")
+            .is_some_and(|s| !s.as_str().eq_ignore_ascii_case("and"));
+        match b {
+            Some(b) if is_range && b > a && b - a <= MAX_ARTICLE_RANGE => related.extend(a..=b),
+            Some(b) => related.extend([a, b]),
+            None => related.push(a),
+        }
+    }
+    related.retain(|n| *n != self_number);
+    related.sort_unstable();
+    related.dedup();
+    related
 }
 
 /// Split the heading remainder into (short title, inline body).
@@ -513,5 +658,67 @@ mod tests {
         let article = build_article(scan_articles(text).remove(0));
         assert!(article.content.contains("(b) Gross and habitual neglect"));
         assert_eq!(article.subsections.len(), 2);
+    }
+
+    #[test]
+    fn test_former_number_is_a_field_not_a_tag() {
+        let text = "Art. 294. [279] Security of Tenure. - In cases of regular employment.\n";
+        let article = build_article(scan_articles(text).remove(0));
+        assert_eq!(article.former_article_number, Some(279));
+        assert!(article.metadata.tags.is_empty());
+    }
+
+    #[test]
+    fn test_amendment_note_with_single_law_keeps_date() {
+        let content = "The employer shall not terminate.\n\
+                       (As amended by Section 34, Republic Act No. 6715, March 21, 1989)";
+        let amendments = extract_amendments(content);
+        assert_eq!(amendments.len(), 1);
+        assert_eq!(amendments[0].law, "RA 6715");
+        assert_eq!(
+            amendments[0].date.map(|d| d.date_naive()),
+            chrono::NaiveDate::from_ymd_opt(1989, 3, 21)
+        );
+        assert_eq!(
+            amendments[0].description.as_deref(),
+            Some("As amended by Section 34, Republic Act No. 6715, March 21, 1989")
+        );
+    }
+
+    #[test]
+    fn test_amendment_note_with_several_laws_leaves_date_unset() {
+        let content = "(As amended by Presidential Decree No. 570-A and \
+                       Batas Pambansa Blg. 130, November 1, 1974)";
+        let amendments = extract_amendments(content);
+        let laws: Vec<&str> = amendments.iter().map(|a| a.law.as_str()).collect();
+        assert_eq!(laws, ["PD 570-A", "BP 130"]);
+        assert!(amendments.iter().all(|a| a.date.is_none()));
+    }
+
+    #[test]
+    fn test_inserted_article_is_not_original_pd_442() {
+        let text = "Art. 128. Visitorial power. - The Secretary may inspect.\n\
+                    (As inserted by Republic Act No. 7730, June 2, 1994)\n\
+                    Art. 129. Recovery of wages. - Upon complaint.\n";
+        let articles: Vec<LaborCodeArticle> =
+            scan_articles(text).into_iter().map(build_article).collect();
+        assert!(!articles[0].metadata.original_pd_442);
+        assert_eq!(articles[0].metadata.amendments[0].law, "RA 7730");
+        assert!(articles[1].metadata.original_pd_442);
+    }
+
+    #[test]
+    fn test_related_articles_ranges_and_foreign_codes() {
+        let content = "Subject to Articles 106 to 109 and Article 297 of this Code, \
+                       and to Article 19 of the Civil Code, see also Article 294.";
+        assert_eq!(
+            extract_related_articles(content, 294),
+            [106, 107, 108, 109, 297]
+        );
+    }
+
+    #[test]
+    fn test_help_is_not_an_error() {
+        assert!(parse_args(["--help".to_string()]).unwrap().is_none());
     }
 }

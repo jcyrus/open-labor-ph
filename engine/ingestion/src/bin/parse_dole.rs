@@ -32,27 +32,58 @@ use labor_ingestion::parser::{
 };
 use labor_ingestion::types::{DoleOrder, OrderMetadata, Section};
 
-/// Keyword → tag mapping for coarse topical tagging. Keys are matched
-/// case-insensitively against the full document text.
-const TAG_KEYWORDS: &[(&str, &str)] = &[
-    ("telecommuting", "telecommuting"),
-    ("contracting", "contracting"),
-    ("subcontracting", "contracting"),
-    ("occupational safety", "OSH"),
-    ("safety and health", "OSH"),
-    ("wage", "wages"),
-    ("termination", "termination"),
-    ("security of tenure", "termination"),
-    ("probationary", "probationary"),
-    ("apprentice", "apprenticeship"),
-    ("maternity", "leave"),
-    ("paternity", "leave"),
-    ("collective bargaining", "labor_relations"),
-    ("kasambahay", "kasambahay"),
-    ("domestic worker", "kasambahay"),
-    ("overseas filipino", "ofw"),
-    ("migrant worker", "ofw"),
+/// Topical tag rules: (pattern, tag). Patterns are matched
+/// case-insensitively on word boundaries. Tags are lowercase snake_case and
+/// reuse the benchmark question categories (`wages`, `termination`, `osh`,
+/// …) wherever the concept is the same.
+const TAG_RULES: &[(&str, &str)] = &[
+    (r"telecommut\w*", "telecommuting"),
+    (r"(?:sub)?contracting|(?:sub)?contractors?", "contracting"),
+    (r"occupational\s+safety|safety\s+and\s+health", "osh"),
+    (r"(?:minimum\s+)?wages?", "wages"),
+    (
+        r"termination|dismissal|security\s+of\s+tenure",
+        "termination",
+    ),
+    (r"probationary", "probationary"),
+    (r"apprentices?(?:hip)?|learners?(?:hip)?", "apprenticeship"),
+    (
+        r"maternity|paternity|service\s+incentive\s+leave|solo\s+parents?",
+        "leave",
+    ),
+    (
+        r"collective\s+bargaining|labor\s+organizations?|unfair\s+labor\s+practices?",
+        "labor_relations",
+    ),
+    (r"kasambahay|domestic\s+workers?", "kasambahay"),
+    (r"overseas\s+filipinos?|migrant\s+workers?|ofws?", "ofw"),
+    (
+        r"sexual\s+harassment|safe\s+spaces|gender-based",
+        "harassment",
+    ),
+    (
+        r"drug-free|dangerous\s+drugs|drug\s+test(?:ing|s)?",
+        "drug_free_workplace",
+    ),
 ];
+
+/// A topic must appear in the title or at least this many times in the
+/// body to earn a tag; a single passing mention ("…including wages…") is
+/// not what the Order is about.
+const TAG_MIN_MENTIONS: usize = 3;
+
+fn tag_rules() -> &'static [(Regex, &'static str)] {
+    static RULES: OnceLock<Vec<(Regex, &'static str)>> = OnceLock::new();
+    RULES.get_or_init(|| {
+        TAG_RULES
+            .iter()
+            .map(|(pattern, tag)| {
+                let re = Regex::new(&format!(r"(?i)\b(?:{pattern})\b")).expect("static regex");
+                (re, *tag)
+            })
+            .collect()
+    })
+}
 
 const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> --source-url <https-url> \
                      [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD]";
@@ -68,7 +99,8 @@ struct Cli {
     effective_date: Option<NaiveDate>,
 }
 
-fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Cli> {
+/// Parse CLI arguments. `Ok(None)` means help was requested.
+fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
     let mut args = args.into_iter();
     let mut positional: Vec<String> = Vec::new();
     let mut source_url = None;
@@ -86,7 +118,7 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Cli> {
             "--effective-date" => {
                 effective_date = Some(parse_date_arg("--effective-date", args.next())?);
             }
-            "-h" | "--help" => bail!(USAGE),
+            "-h" | "--help" => return Ok(None),
             _ => positional.push(arg),
         }
     }
@@ -106,13 +138,13 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Cli> {
         bail!("--source-url must be an http(s) URL, got {source_url:?}");
     }
 
-    Ok(Cli {
+    Ok(Some(Cli {
         input: PathBuf::from(&positional[0]),
         output: PathBuf::from(&positional[1]),
         source_url,
         published_date,
         effective_date,
-    })
+    }))
 }
 
 fn parse_date_arg(flag: &str, value: Option<String>) -> Result<NaiveDate> {
@@ -140,7 +172,10 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    let cli = parse_args(std::env::args().skip(1))?;
+    let Some(cli) = parse_args(std::env::args().skip(1))? else {
+        println!("{USAGE}");
+        return Ok(());
+    };
 
     let doc = parser::parse_document(&cli.input)
         .with_context(|| format!("failed to parse PDF {}", cli.input.display()))?;
@@ -213,7 +248,7 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
             .unwrap_or_else(|| "Secretary of Labor and Employment".to_string()),
         supersedes: extract_supersedes(text, &order_number),
         related_laws: extract_related_laws(text),
-        tags: extract_tags(text),
+        tags: extract_tags(text, &title),
         published_date: cli.published_date.map(date_to_utc),
         signed_date: signed_date.map(date_to_utc),
         effectivity_clause,
@@ -607,10 +642,13 @@ fn secretary_line_re() -> &'static Regex {
 }
 
 /// Extract the signing official: the name line immediately above a
-/// "Secretary of Labor and Employment" line in the signature block.
+/// "Secretary of Labor and Employment" line in the signature block. Lines
+/// are scanned from the **end**: the signature block closes the Order, while
+/// a "Secretary …" line near the top usually belongs to a preamble citation
+/// or attestation.
 fn extract_issuing_authority(text: &str) -> Option<String> {
     let lines: Vec<&str> = text.lines().collect();
-    for (i, line) in lines.iter().enumerate() {
+    for (i, line) in lines.iter().enumerate().rev() {
         if !secretary_line_re().is_match(line) {
             continue;
         }
@@ -706,12 +744,13 @@ fn extract_related_laws(text: &str) -> Vec<String> {
     laws
 }
 
-/// Coarse topical tags from keyword presence in the document body.
-fn extract_tags(text: &str) -> Vec<String> {
-    let lower = text.to_ascii_lowercase();
+/// Topical tags: a rule fires when its pattern appears in the title or at
+/// least [`TAG_MIN_MENTIONS`] times in the text. Tags keep `TAG_RULES` order.
+fn extract_tags(text: &str, title: &str) -> Vec<String> {
     let mut tags: Vec<String> = Vec::new();
-    for (keyword, tag) in TAG_KEYWORDS {
-        if lower.contains(keyword) && !tags.iter().any(|t| t == tag) {
+    for (re, tag) in tag_rules() {
+        let relevant = re.is_match(title) || re.find_iter(text).nth(TAG_MIN_MENTIONS - 1).is_some();
+        if relevant && !tags.iter().any(|t| t == tag) {
             tags.push((*tag).to_string());
         }
     }
@@ -1031,7 +1070,8 @@ mod tests {
             "--source-url",
             "https://bwc.dole.gov.ph/issuances/department-orders/",
         ]))
-        .unwrap();
+        .unwrap()
+        .expect("not a help request");
         assert!(cli.source_url.starts_with("https://"));
     }
 
@@ -1058,5 +1098,36 @@ mod tests {
         assert!(sections[0].content.starts_with("As used in these Rules:"));
         assert!(sections[0].content.contains("(b) Principal refers"));
         assert_eq!(sections[0].subsections.len(), 2);
+    }
+
+    #[test]
+    fn test_tags_need_title_or_repeated_mentions() {
+        let title = "GUIDELINES ON TELECOMMUTING";
+        let text = "Employees on telecommuting arrangements keep their wage. \
+                    Contracting rules apply. Contracting must be registered. \
+                    Contracting violations are penalized.";
+        assert_eq!(extract_tags(text, title), ["telecommuting", "contracting"]);
+    }
+
+    #[test]
+    fn test_tags_are_lowercase_snake_case() {
+        let title = "OCCUPATIONAL SAFETY AND HEALTH STANDARDS";
+        assert_eq!(extract_tags("", title), ["osh"]);
+    }
+
+    #[test]
+    fn test_issuing_authority_from_signature_block_not_preamble() {
+        let text = "PEDRO S. PENDUKO\nSecretary of Labor and Employment (1990)\n\n\
+                    Section 1. Coverage. - These Rules apply to all.\n\n\
+                    SILVESTRE H. BELLO III\nSecretary";
+        assert_eq!(
+            extract_issuing_authority(text).as_deref(),
+            Some("SILVESTRE H. BELLO III, Secretary")
+        );
+    }
+
+    #[test]
+    fn test_help_is_not_an_error() {
+        assert!(parse_args(args(&["--help"])).unwrap().is_none());
     }
 }

@@ -13,8 +13,13 @@
   "properties": {
     "article_number": {
       "type": "integer",
-      "description": "Article number (e.g., 281, 282, 283)",
+      "description": "Article number in the renumbered Labor Code (DOLE, 2015), e.g. 294",
       "minimum": 1
+    },
+    "former_article_number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Article number before the 2015 renumbering (e.g. 279 for Art. 294 [279])"
     },
     "book": {
       "type": "string",
@@ -51,7 +56,7 @@
       "properties": {
         "original_pd_442": {
           "type": "boolean",
-          "description": "Whether this is from the original Presidential Decree 442 (1974)",
+          "description": "False when the article was inserted or added by a later law rather than enacted in the original Presidential Decree 442 (1974)",
           "default": true
         },
         "amendments": {
@@ -66,14 +71,14 @@
           "items": {
             "type": "integer"
           },
-          "description": "Article numbers of related provisions"
+          "description": "Renumbered article numbers cross-referenced in this article's text"
         },
         "implementing_orders": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "DOLE Orders that implement or clarify this article"
+          "description": "DOLE Orders that implement or clarify this article; filled by cross-linking with the DOLE Order dataset, not by the PDF parser"
         },
         "tags": {
           "type": "array",
@@ -96,22 +101,21 @@
     "amendment": {
       "type": "object",
       "required": [
-        "law",
-        "date"
+        "law"
       ],
       "properties": {
         "law": {
           "type": "string",
-          "description": "Republic Act or other law that amended this article (e.g., 'RA 6715', 'RA 10151')"
+          "description": "Law that amended this article, normalized (e.g., 'RA 6715', 'PD 850', 'BP 130', 'EO 111')"
         },
         "date": {
           "type": "string",
           "format": "date",
-          "description": "Effectivity date of the amendment"
+          "description": "Effectivity date of the amendment, when the amendment note states one"
         },
         "description": {
           "type": "string",
-          "description": "Summary of what was changed"
+          "description": "The amendment note as printed (e.g., 'As amended by Section 34, Republic Act No. 6715, March 21, 1989')"
         }
       }
     },
@@ -127,7 +131,14 @@
         },
         "content": {
           "type": "string",
-          "description": "Text content of the subsection"
+          "description": "Text content of this item only (nested items are in `subsections`)"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection"
+          },
+          "description": "Nested items (e.g. '(1)' items under '(a)')"
         }
       }
     }

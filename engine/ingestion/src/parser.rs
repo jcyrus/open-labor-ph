@@ -736,10 +736,79 @@ fn subsection_re() -> &'static Regex {
     // ("2021.") and article numbers never match.
     RE.get_or_init(|| {
         Regex::new(
-            r"(?m)^[ \t]*(?:\((?P<paren>[a-z]{1,2}|\d{1,2}|[ivxl]{1,4})\)|(?P<dot>[a-z]|\d{1,2})[.)])[ \t]+",
+            r"(?m)^[ \t]*(?:\((?P<paren>[a-z]{1,2}|\d{1,2}|[ivxl]{1,4})\)|(?P<bare>[a-z]|\d{1,2})(?P<delim>[.)]))[ \t]+",
         )
         .expect("static regex")
     })
+}
+
+/// Numbering system of an enumeration label.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+enum LabelKind {
+    Letter,
+    Digit,
+    Roman,
+}
+
+/// How the label is punctuated: "(a)", "a." or "a)".
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+enum LabelDelim {
+    Paren,
+    Dot,
+    Close,
+}
+
+/// An enumeration style; each distinct style is one nesting level.
+type ListStyle = (LabelKind, LabelDelim);
+
+fn is_roman(label: &str) -> bool {
+    label.chars().all(|c| matches!(c, 'i' | 'v' | 'x' | 'l'))
+}
+
+/// The letter that precedes `label` alphabetically ("i" → "h").
+fn previous_letter(label: &str) -> Option<String> {
+    let mut chars = label.chars();
+    let c = chars.next()?;
+    if chars.next().is_some() || c == 'a' {
+        return None;
+    }
+    Some(char::from(c as u8 - 1).to_string())
+}
+
+/// Classify a label, resolving the letter/roman ambiguity of "i", "v",
+/// "x" and "l" from context, in order:
+/// 1. "i" immediately followed by "ii" (same delimiter) opens a roman list.
+/// 2. A label right after its alphabetical predecessor in the same
+///    delimiter style ("(i)" after "(h)") continues a letter list.
+/// 3. Otherwise a run of roman characters is a roman numeral when a roman
+///    list is already open, the label is "i", or it is longer than one
+///    character ("ii", "iv").
+fn classify_label(
+    label: &str,
+    delim: LabelDelim,
+    next_label: Option<&str>,
+    last_label: &HashMap<ListStyle, String>,
+) -> LabelKind {
+    if label.chars().all(|c| c.is_ascii_digit()) {
+        return LabelKind::Digit;
+    }
+    if !is_roman(label) {
+        return LabelKind::Letter;
+    }
+    if label == "i" && next_label == Some("ii") {
+        return LabelKind::Roman;
+    }
+    let continues_letters = previous_letter(label)
+        .is_some_and(|prev| last_label.get(&(LabelKind::Letter, delim)) == Some(&prev));
+    if continues_letters {
+        return LabelKind::Letter;
+    }
+    let roman_open = last_label.contains_key(&(LabelKind::Roman, delim));
+    if roman_open || label == "i" || label.len() > 1 {
+        LabelKind::Roman
+    } else {
+        LabelKind::Letter
+    }
 }
 
 /// Carve labeled subsections out of a section body.
@@ -749,17 +818,41 @@ fn subsection_re() -> &'static Regex {
 /// text is treated as an enumeration — a single "(a)" is far more likely to
 /// be an inline reference than a one-item list, and splitting on it would
 /// corrupt the section body.
+///
+/// Lists nest by style, in order of first appearance: the first style seen
+/// is the top level, a new style opens a level under the current item, and
+/// returning to an earlier style closes the deeper levels. So "(a) … (1) …
+/// (2) … (b)" yields items a and b with 1 and 2 nested under a. Each item's
+/// `content` holds only its own text; nested items carry theirs.
 pub fn extract_subsections(content: &str) -> (String, Vec<Subsection>) {
-    let markers: Vec<(usize, usize, String)> = subsection_re()
+    struct Marker {
+        start: usize,
+        body_start: usize,
+        label: String,
+        delim: LabelDelim,
+    }
+
+    let markers: Vec<Marker> = subsection_re()
         .captures_iter(content)
         .map(|caps| {
             let whole = caps.get(0).expect("match group 0 always present");
-            let label = caps
-                .name("paren")
-                .or_else(|| caps.name("dot"))
-                .map(|m| m.as_str().to_string())
-                .unwrap_or_default();
-            (whole.start(), whole.end(), label)
+            let (label, delim) = match caps.name("paren") {
+                Some(m) => (m.as_str(), LabelDelim::Paren),
+                None => {
+                    let delim = if &caps["delim"] == "." {
+                        LabelDelim::Dot
+                    } else {
+                        LabelDelim::Close
+                    };
+                    (caps.name("bare").map_or("", |m| m.as_str()), delim)
+                }
+            };
+            Marker {
+                start: whole.start(),
+                body_start: whole.end(),
+                label: label.to_string(),
+                delim,
+            }
         })
         .collect();
 
@@ -767,21 +860,72 @@ pub fn extract_subsections(content: &str) -> (String, Vec<Subsection>) {
         return (content.trim().to_string(), Vec::new());
     }
 
-    let intro = content[..markers[0].0].trim().to_string();
-    let mut subsections = Vec::with_capacity(markers.len());
-    for (i, (_, body_start, label)) in markers.iter().enumerate() {
-        let body_end = markers.get(i + 1).map_or(content.len(), |next| next.0);
-        let body = content[*body_start..body_end].trim();
+    let intro = content[..markers[0].start].trim().to_string();
+
+    // `levels[k]` is the style of nesting level k; `open[k]` holds the items
+    // collected so far at level k (open[k + 1] belongs to the last item of
+    // open[k]).
+    let mut levels: Vec<ListStyle> = Vec::new();
+    let mut open: Vec<Vec<Subsection>> = vec![Vec::new()];
+    let mut last_label: HashMap<ListStyle, String> = HashMap::new();
+
+    fn close_level(open: &mut Vec<Vec<Subsection>>) {
+        let children = open.pop().expect("level to close");
+        if let Some(parent) = open.last_mut().and_then(|items| items.last_mut()) {
+            parent.subsections.extend(children);
+        } else if let Some(items) = open.last_mut() {
+            // No parent item at the level above (a list that opens on a
+            // nested style): keep the items rather than dropping them.
+            items.extend(children);
+        }
+    }
+
+    for (i, marker) in markers.iter().enumerate() {
+        let body_end = markers.get(i + 1).map_or(content.len(), |next| next.start);
+        let body = content[marker.body_start..body_end].trim();
         if body.is_empty() {
             continue;
         }
-        subsections.push(Subsection {
-            label: Some(label.clone()),
+
+        let next_label = markers
+            .get(i + 1)
+            .filter(|next| next.delim == marker.delim)
+            .map(|next| next.label.as_str());
+        let kind = classify_label(&marker.label, marker.delim, next_label, &last_label);
+        let style = (kind, marker.delim);
+        let level = match levels.iter().position(|s| *s == style) {
+            Some(level) => level,
+            None => {
+                levels.push(style);
+                levels.len() - 1
+            }
+        };
+        // Returning to an outer style forgets the styles nested below it,
+        // so the next new style becomes level + 1 again.
+        for dropped in levels.drain(level + 1..) {
+            last_label.remove(&dropped);
+        }
+
+        while open.len() > level + 1 {
+            close_level(&mut open);
+        }
+        while open.len() < level + 1 {
+            open.push(Vec::new());
+        }
+
+        last_label.insert(style, marker.label.clone());
+        open[level].push(Subsection {
+            label: Some(marker.label.clone()),
             content: body.to_string(),
+            subsections: Vec::new(),
         });
     }
 
-    (intro, subsections)
+    while open.len() > 1 {
+        close_level(&mut open);
+    }
+
+    (intro, open.pop().unwrap_or_default())
 }
 
 // ---------------------------------------------------------------------------
@@ -1026,5 +1170,46 @@ mod tests {
             })
             .collect();
         assert!(detect_running_lines(&pages).is_empty());
+    }
+
+    fn labels(items: &[Subsection]) -> Vec<&str> {
+        items.iter().filter_map(|s| s.label.as_deref()).collect()
+    }
+
+    #[test]
+    fn test_subsections_nest_digits_under_letters() {
+        let content = "Intro:\n(a) First item:\n(1) one\n(2) two\n(b) Second item";
+        let (intro, subs) = extract_subsections(content);
+        assert_eq!(intro, "Intro:");
+        assert_eq!(labels(&subs), ["a", "b"]);
+        assert_eq!(subs[0].content, "First item:");
+        assert_eq!(labels(&subs[0].subsections), ["1", "2"]);
+        assert!(subs[1].subsections.is_empty());
+    }
+
+    #[test]
+    fn test_subsections_letter_i_after_h_is_a_letter() {
+        let content = "(g) g item\n(h) h item\n(i) i item\n(j) j item";
+        let (_, subs) = extract_subsections(content);
+        assert_eq!(labels(&subs), ["g", "h", "i", "j"]);
+        assert!(subs.iter().all(|s| s.subsections.is_empty()));
+    }
+
+    #[test]
+    fn test_subsections_roman_after_h_when_followed_by_ii() {
+        let content = "(h) h item:\n(i) first\n(ii) second\n(j) j item";
+        let (_, subs) = extract_subsections(content);
+        assert_eq!(labels(&subs), ["h", "j"]);
+        assert_eq!(labels(&subs[0].subsections), ["i", "ii"]);
+    }
+
+    #[test]
+    fn test_subsections_nesting_restarts_per_parent() {
+        let content = "(1) one:\n(a) x\n(b) y\n(2) two:\n(a) z\n(b) w";
+        let (_, subs) = extract_subsections(content);
+        assert_eq!(labels(&subs), ["1", "2"]);
+        assert_eq!(labels(&subs[0].subsections), ["a", "b"]);
+        assert_eq!(labels(&subs[1].subsections), ["a", "b"]);
+        assert_eq!(subs[1].subsections[0].content, "z");
     }
 }
