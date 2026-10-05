@@ -105,11 +105,12 @@ Every binary accepts `--help`.
   - JSON schemas for DOLE Orders, Labor Code articles, and benchmark questions
   - Rust type definitions with serde
   - Verified data source inventory ([DATA_SOURCES.md](DATA_SOURCES.md))
-- 🟡 **Phase 2: Data Ingestion Pipeline**: Tooling complete, no documents ingested yet
+- 🟡 **Phase 2: Data Ingestion Pipeline**: Tooling complete; Labor Code ingested
   - ✅ `parse-dole`, `parse-labor-code`, `validate`
   - ✅ Source manifest and `fetch` (hash-pinned; the Labor Code is pinned)
+  - ✅ Labor Code processed: [`data/processed/labor_code.json`](data/processed/labor_code.json) (317 articles, with editorial footnotes and amendment history)
+  - 🔲 Department Orders (PDFs must be downloaded by hand; see `fetch`)
   - 🔲 OCR for scanned PDFs
-  - 🔲 First processed documents in `data/processed/`
 - 🔲 **Phase 3: Evaluation Framework**: Not started
 - 🔲 **Phase 4: Documentation & Community**: Not started (Python bindings via PyO3 are planned here)
 - 🔲 **Phase 5: Initial Release**: Not started

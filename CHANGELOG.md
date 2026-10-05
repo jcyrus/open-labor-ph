@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Labor Code parser handles the real DOLE renumbered edition** (found on the first real-PDF run):
+  - Book headers: the body prints "Book One - PRE-EMPLOYMENT" in title case; table-of-contents lines ending in a page number are skipped, and the body's "PRELIMINARY TITLE" resets any state left by the TOC. Previously all 317 articles landed in Book VII; now every book matches the verified ranges.
+  - Footnotes: the edition's 258 editorial footnotes are split out of the text per page (from a page's first footnote to its end; wide-font remainders that spill onto the next page are moved back), inline markers are resolved per article, and the footnotes are kept in new `metadata.footnotes`. `amendments` (first sentence of "As amended/added by …" footnotes, never PD 442 itself) and `implementing_orders` (cited DOs, normalized) are derived from them.
+  - Headings no longer carry footnote markers ("Security of Tenure.252"); title/chapter names keep wrapped continuations; prose like "Book IV of the Omnibus Rules" or "Chapter II, of this Title" is no longer read as a header.
+- **Text extraction**: `parse_document` takes per-page text from `pdf-extract` (`extract_text_by_pages`; new `extract_text_pages`), falling back to `lopdf` only on failure. `lopdf` cannot decode Identity-H fonts, so its page text (used for running-header detection and page warnings) was placeholder garbage. `clean_text` collapses justified-text space runs inside lines.
+
 - **Labor Code metadata is derived from the text** instead of hard-coded: "(As amended by …)" notes become `amendments` (law normalized to `RA`/`PD`/`BP`/`EO`; date kept only when the note cites a single law), articles "inserted/added/incorporated by" a later law get `original_pd_442: false`, and cross-references ("Articles 106 to 109 of this Code") fill `related_articles` (references to other codes are skipped). `Amendment.date` is now optional. `implementing_orders` stays empty by design: it needs cross-linking with the DOLE dataset.
 - **`former_article_number`** field replaces the `formerly_art_N` tag for the pre-2015 article number.
 - **DOLE tags are precise and consistently named**: a tag needs its keyword in the title or ≥ 3 word-bounded mentions; tags are lowercase snake_case aligned with benchmark categories (`osh`, not `OSH`). Added `harassment` and `drug_free_workplace`.
@@ -44,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **First processed dataset**: `data/processed/labor_code.json`, the renumbered Labor Code (317 articles), parsed from the pinned NATLEX PDF.
 - **Source manifest and `fetch` binary**: `data/sources.toml` lists every source document (official `source_url`, optional `download_url`, `published_date`, pinned `sha256`).
   - Implementation: `engine/ingestion/src/manifest.rs`, `engine/ingestion/src/bin/fetch.rs`, `data/sources.toml`
   - `fetch` downloads entries with a `download_url` (rejecting non-PDF bodies such as bot-challenge pages), verifies every local PDF against its pin, writes atomically, and reports challenge-protected entries as manual downloads with the exact target path. `--pin` records new hashes, preserving the manifest's comments. Any mismatch is an error and the exit code is non-zero.
