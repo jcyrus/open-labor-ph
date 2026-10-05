@@ -6,7 +6,7 @@
 //!
 //! Usage:
 //! ```text
-//! parse-dole <input.pdf> <output.json> [--source-url <url>]
+//! parse-dole <input.pdf> <output.json> --source-url <https-url>
 //!            [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD]
 //! ```
 //!
@@ -16,6 +16,7 @@
 //! to let the parser compute `effective_date`; without it the field is
 //! omitted rather than guessed.
 
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::sync::OnceLock;
@@ -53,21 +54,22 @@ const TAG_KEYWORDS: &[(&str, &str)] = &[
     ("migrant worker", "ofw"),
 ];
 
-const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> [--source-url <url>] \
+const USAGE: &str = "Usage: parse-dole <input.pdf> <output.json> --source-url <https-url> \
                      [--published-date YYYY-MM-DD] [--effective-date YYYY-MM-DD]";
 
 struct Cli {
     input: PathBuf,
     output: PathBuf,
-    source_url: Option<String>,
+    /// Official URL the PDF was obtained from (http/https only).
+    source_url: String,
     /// Official publication date, used to resolve "N days after publication".
     published_date: Option<NaiveDate>,
     /// Operator-supplied effective date; overrides anything derived from text.
     effective_date: Option<NaiveDate>,
 }
 
-fn parse_args() -> Result<Cli> {
-    let mut args = std::env::args().skip(1);
+fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Cli> {
+    let mut args = args.into_iter();
     let mut positional: Vec<String> = Vec::new();
     let mut source_url = None;
     let mut published_date = None;
@@ -91,6 +93,17 @@ fn parse_args() -> Result<Cli> {
 
     if positional.len() != 2 {
         bail!(USAGE);
+    }
+
+    // The source URL is the dataset's provenance, so it is mandatory and must
+    // be a public web address — a local file:// path would publish the
+    // operator's filesystem layout and point nowhere for everyone else.
+    let source_url = source_url.context(
+        "--source-url is required: pass the official URL the PDF was downloaded from \
+         (Official Gazette or a dole.gov.ph page)",
+    )?;
+    if !(source_url.starts_with("https://") || source_url.starts_with("http://")) {
+        bail!("--source-url must be an http(s) URL, got {source_url:?}");
     }
 
     Ok(Cli {
@@ -127,7 +140,7 @@ fn main() -> ExitCode {
 }
 
 fn run() -> Result<()> {
-    let cli = parse_args()?;
+    let cli = parse_args(std::env::args().skip(1))?;
 
     let doc = parser::parse_document(&cli.input)
         .with_context(|| format!("failed to parse PDF {}", cli.input.display()))?;
@@ -172,7 +185,11 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
         .or_else(|| doc.metadata.title.clone())
         .unwrap_or_else(|| format!("Department Order {order_number}"));
 
-    let mut sections = build_sections(text);
+    // The signature block is excluded from the sections so it does not end
+    // up as body text of the last section; the signing date and signatory
+    // are still read from the full text below.
+    let body_end = signature_block_start(text).unwrap_or(text.len());
+    let mut sections = build_sections(&text[..body_end]);
 
     let signed_date = extract_signed_date(text);
     let effectivity_clause = extract_effectivity_clause(&sections, text);
@@ -190,16 +207,6 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
              pass --published-date or --effective-date to resolve it"
         );
     }
-
-    // Default to a file:// URL of the source PDF when no official URL is
-    // given — honest provenance beats a fabricated dole.gov.ph link.
-    let source_url = cli.source_url.clone().unwrap_or_else(|| {
-        let canonical = cli
-            .input
-            .canonicalize()
-            .unwrap_or_else(|_| cli.input.clone());
-        format!("file://{}", canonical.display())
-    });
 
     let metadata = OrderMetadata {
         issuing_authority: extract_issuing_authority(text)
@@ -228,7 +235,7 @@ fn build_dole_order(doc: &PdfDocument, cli: &Cli) -> Result<DoleOrder> {
         order_number,
         title,
         effective_date: effective_date.map(date_to_utc),
-        source_url,
+        source_url: cli.source_url.clone(),
         metadata,
         sections,
     })
@@ -314,9 +321,10 @@ fn extract_order_number(text: &str, input: &Path) -> Option<String> {
 /// in capitals directly under the order number on the cover page.
 fn extract_title(text: &str) -> Option<String> {
     let lines: Vec<&str> = text.lines().take(60).collect();
-    let header_idx = lines
-        .iter()
-        .position(|l| order_number_dash_re().is_match(l) || order_number_series_re().is_match(l))?;
+    // Match the header by its number alone: "DEPARTMENT ORDER NO. 174" is
+    // often followed by "Series of 2017" on the next line, so neither full
+    // order-number pattern matches any single line.
+    let header_idx = lines.iter().position(|l| header_line_re().is_match(l))?;
 
     let mut title_lines: Vec<&str> = Vec::new();
     for line in lines.iter().skip(header_idx + 1) {
@@ -345,6 +353,14 @@ fn extract_title(text: &str) -> Option<String> {
     Some(title_lines.join(" "))
 }
 
+fn header_line_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(r"(?i)^\s*(?:department\s+order|d\.?\s*o\.?)\s*no\.?\s*\d")
+            .expect("static regex")
+    })
+}
+
 /// True if at least 70% of the alphabetic characters are uppercase.
 fn is_mostly_uppercase(line: &str) -> bool {
     let alphabetic: Vec<char> = line.chars().filter(|c| c.is_alphabetic()).collect();
@@ -358,6 +374,32 @@ fn is_mostly_uppercase(line: &str) -> bool {
 fn signing_context_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r"(?i)\b(?:signed|done|issued|approved)\b").expect("static regex"))
+}
+
+fn signature_line_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(r"(?im)^[ \t]*(?:done|signed|given|issued|approved)\b").expect("static regex")
+    })
+}
+
+/// Byte offset where the closing signature block starts ("Done in the City
+/// of Manila, this 16th day of March, 2017." followed by the signatory).
+///
+/// Only lines in the final 3 000 characters that start with a signing verb
+/// **and** carry a date within the next 300 characters qualify, so a body
+/// sentence such as "Issued in accordance with Section 5…" never truncates
+/// the Order.
+fn signature_block_start(text: &str) -> Option<usize> {
+    let tail_start = text.len().saturating_sub(3000);
+    signature_line_re()
+        .find_iter(text)
+        .filter(|m| m.start() >= tail_start)
+        .find(|m| {
+            let end = (m.start() + 300).min(text.len());
+            parse_first_date(char_boundary_slice(text, m.start(), end)).is_some()
+        })
+        .map(|m| m.start())
 }
 
 /// Find the signing date: the date following a signing keyword ("Done in
@@ -404,13 +446,8 @@ fn extract_effectivity_clause(sections: &[Section], text: &str) -> Option<String
                 .as_deref()
                 .is_some_and(|t| t.to_ascii_lowercase().contains("effectiv"))
         })
-        .map(|s| {
-            std::iter::once(s.content.as_str())
-                .chain(s.subsections.iter().map(|sub| sub.content.as_str()))
-                .collect::<Vec<_>>()
-                .join("\n")
-        });
-    let haystack = section_text.as_deref().unwrap_or(text);
+        .map(|s| s.content.as_str());
+    let haystack = section_text.unwrap_or(text);
 
     let m = effectivity_re().find_iter(haystack).last()?;
     let sentence = enclosing_sentence(haystack, m.start(), m.end());
@@ -711,27 +748,65 @@ fn build_sections(text: &str) -> Vec<Section> {
             }
         };
 
-        // `content` keeps the text preceding the first enumeration marker;
-        // the enumerated items live in `subsections`. When the body has no
-        // intro (it opens directly with "(a) …"), the full body stays in
-        // `content` to avoid an empty section, and subsections still carry
-        // the per-item breakdown for fine-grained retrieval.
-        let (intro, subsections) = extract_subsections(&block.content);
-        let content = if intro.is_empty() {
-            block.content.clone()
-        } else {
-            intro
-        };
+        // `content` is the full section body, enumerated items included, so
+        // a consumer reading only `content` never misses text. `subsections`
+        // repeats the items one by one for fine-grained retrieval.
+        let (_, subsections) = extract_subsections(&block.content);
 
         sections.push(Section {
             section_number,
             title: block.title,
-            content,
+            content: block.content,
             subsections,
         });
     }
 
+    dedupe_sections(sections)
+}
+
+/// Drop repeated `section_number`s, keeping the longest body of each.
+///
+/// A table of contents ("Section 1. Coverage ... 3") or a heading repeated
+/// by the page layout yields a second, near-empty block with the same
+/// qualified number as the real section. Qualified numbers ("Rule II,
+/// Section 1") keep legitimately restarted numbering distinct, so only true
+/// duplicates collapse. The kept section stays at its own position.
+fn dedupe_sections(sections: Vec<Section>) -> Vec<Section> {
+    let size = |s: &Section| {
+        s.content.len()
+            + s.subsections
+                .iter()
+                .map(|sub| sub.content.len())
+                .sum::<usize>()
+    };
+
+    let mut longest: HashMap<&str, usize> = HashMap::new();
+    for (i, section) in sections.iter().enumerate() {
+        longest
+            .entry(section.section_number.as_str())
+            .and_modify(|best| {
+                if size(section) > size(&sections[*best]) {
+                    *best = i;
+                }
+            })
+            .or_insert(i);
+    }
+
+    let keep: HashSet<usize> = longest.into_values().collect();
+    let dropped = sections.len() - keep.len();
+    if dropped > 0 {
+        warn!(
+            dropped,
+            "dropped duplicate sections (table of contents or repeated headings); kept the longest of each"
+        );
+    }
+
     sections
+        .into_iter()
+        .enumerate()
+        .filter(|(i, _)| keep.contains(i))
+        .map(|(_, s)| s)
+        .collect()
 }
 
 #[cfg(test)]
@@ -888,5 +963,100 @@ mod tests {
     #[test]
     fn test_effective_date_absent_clause_is_none() {
         assert_eq!(resolve_effective_date(None, date(2020, 6, 1), None), None);
+    }
+
+    fn args(list: &[&str]) -> Vec<String> {
+        list.iter().map(|s| s.to_string()).collect()
+    }
+
+    #[test]
+    fn test_title_after_split_number_and_series_lines() {
+        let text = "DEPARTMENT ORDER NO. 174\nSeries of 2017\n\n\
+                    RULES IMPLEMENTING ARTICLES 106 TO 109\nOF THE LABOR CODE\n\n\
+                    Pursuant to Article 5 of the Labor Code.";
+        assert_eq!(
+            extract_title(text).as_deref(),
+            Some("RULES IMPLEMENTING ARTICLES 106 TO 109 OF THE LABOR CODE")
+        );
+    }
+
+    #[test]
+    fn test_signature_block_excluded_from_sections() {
+        let text = "Section 1. Coverage. - These Rules apply to all.\n\n\
+                    Section 2. Effectivity. - This Order shall take effect immediately.\n\n\
+                    Done in the City of Manila, this 16th day of March, 2017.\n\n\
+                    SILVESTRE H. BELLO III\nSecretary";
+        let start = signature_block_start(text).expect("signature block found");
+        let sections = build_sections(&text[..start]);
+        let last = sections.last().unwrap();
+        assert_eq!(last.content, "This Order shall take effect immediately.");
+        // Signatory and date are still recoverable from the full text.
+        assert_eq!(
+            extract_issuing_authority(text).as_deref(),
+            Some("SILVESTRE H. BELLO III, Secretary")
+        );
+        assert_eq!(extract_signed_date(text), date(2017, 3, 16));
+    }
+
+    #[test]
+    fn test_signature_block_ignores_dateless_issued_sentence() {
+        let text = "Section 9. Forms. -\nIssued in accordance with Section 5 of this Order.";
+        assert_eq!(signature_block_start(text), None);
+    }
+
+    #[test]
+    fn test_source_url_required() {
+        let err = parse_args(args(&["in.pdf", "out.json"])).err().unwrap();
+        assert!(err.to_string().contains("--source-url is required"));
+    }
+
+    #[test]
+    fn test_source_url_rejects_local_paths() {
+        let err = parse_args(args(&[
+            "in.pdf",
+            "out.json",
+            "--source-url",
+            "file:///Users/someone/DO-174-17.pdf",
+        ]))
+        .err()
+        .unwrap();
+        assert!(err.to_string().contains("http(s)"));
+    }
+
+    #[test]
+    fn test_source_url_accepts_https() {
+        let cli = parse_args(args(&[
+            "in.pdf",
+            "out.json",
+            "--source-url",
+            "https://bwc.dole.gov.ph/issuances/department-orders/",
+        ]))
+        .unwrap();
+        assert!(cli.source_url.starts_with("https://"));
+    }
+
+    #[test]
+    fn test_toc_duplicates_dropped_keeping_body() {
+        let text = "Section 1. Coverage.\nSection 2. Scope.\n\n\
+                    Section 1. Coverage. - This Order applies to all employers.\n\n\
+                    Section 2. Scope. - It covers every contracting arrangement.";
+        let sections = build_sections(text);
+        assert_eq!(sections.len(), 2);
+        assert_eq!(sections[0].section_number, "Section 1");
+        assert!(sections[0].content.contains("applies to all employers"));
+        assert!(sections[1]
+            .content
+            .contains("every contracting arrangement"));
+    }
+
+    #[test]
+    fn test_section_content_keeps_enumerated_items() {
+        let text = "Section 2. Definition of Terms. - As used in these Rules:\n\
+                    (a) Contractor refers to any person engaged in contracting.\n\
+                    (b) Principal refers to any employer who puts out a job.";
+        let sections = build_sections(text);
+        assert!(sections[0].content.starts_with("As used in these Rules:"));
+        assert!(sections[0].content.contains("(b) Principal refers"));
+        assert_eq!(sections[0].subsections.len(), 2);
     }
 }

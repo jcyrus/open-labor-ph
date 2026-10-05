@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **DOLE title extraction**: titles are found when the order number and "Series of" sit on separate lines (previously fell back to "Department Order DO-NNN-YY").
+- **Signature block** is cut off before section splitting, so the last section no longer ends with "Done in the City of Manila… / SIGNATORY / Secretary". Signatory and signing date are still read from the full text.
+- **`--source-url` is now required and must be http(s)** (breaking CLI change): the `file://` fallback published the operator's local path into the dataset.
+- **Page furniture removed** (`engine/ingestion/src/parser.rs`): page-number lines ("Page 3 of 12", "- 3 -", bare numbers at page breaks), table-of-contents lines with dot leaders, and running headers/footers (lines on ≥ half of ≥ 3 pages; first occurrence kept). Duplicate sections/articles from a table of contents are dropped, keeping the longest.
+- **`content` holds the full body** of sections and articles, enumerated items included; `subsections` still breaks the items out. Previously `content` held only the text before the first "(a)".
 - **DOLE effective dates are no longer fabricated** (breaking schema change): `effective_date` is now optional and set only when the document determines it.
   - Implementation: `engine/ingestion/src/bin/parse_dole.rs`, `engine/ingestion/src/types.rs`, `data/schemas/dole_order_schema.json`
   - Resolution: explicit date in the effectivity clause → "N days after publication/signing" (requires `--published-date` for publication) → "upon publication" → "immediately" (signing date). Working-day offsets are never resolved. `--effective-date` overrides.

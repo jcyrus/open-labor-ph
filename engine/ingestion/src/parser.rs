@@ -19,6 +19,7 @@
 //!    `parse_first_date`), shared by the `parse-dole` and `parse-labor-code`
 //!    binaries.
 
+use std::collections::{HashMap, HashSet};
 use std::path::Path;
 use std::sync::OnceLock;
 
@@ -350,6 +351,19 @@ pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
             .join("\n\n");
     }
 
+    // Running headers/footers ("Department Order No. 174, s. 2017" on every
+    // page) would otherwise be spliced into whatever section spans the page
+    // break. The first occurrence survives so the cover-page header that
+    // carries the order number is kept.
+    let running = detect_running_lines(&pages);
+    if !running.is_empty() {
+        debug!(lines = running.len(), "stripping running headers/footers");
+        full_text = remove_running_lines(&full_text, &running, true);
+        for (i, page) in pages.iter_mut().enumerate() {
+            page.content = remove_running_lines(&page.content, &running, i == 0);
+        }
+    }
+
     let pages_empty = pages.iter().all(|p| p.content.trim().is_empty());
     if pages_empty && !full_text.trim().is_empty() {
         warnings.push(ExtractionWarning {
@@ -400,6 +414,56 @@ fn hyphen_break_re() -> &'static Regex {
     RE.get_or_init(|| Regex::new(r"([a-zà-öø-ÿ])-\n[ \t]*([a-zà-öø-ÿ])").expect("static regex"))
 }
 
+fn decorated_page_number_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // Page-number lines that announce themselves: "Page 3", "Page 3 of 12",
+    // "- 3 -", "3/12".
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?i)^(?:page[ \t]+\d{1,3}(?:[ \t]*of[ \t]*\d{1,3})?|[-\u{2013}\u{2014}][ \t]*\d{1,3}[ \t]*[-\u{2013}\u{2014}]|\d{1,3}[ \t]*/[ \t]*\d{1,3})$",
+        )
+        .expect("static regex")
+    })
+}
+
+/// Remove page-number lines. Decorated forms ("Page 3 of 12", "- 3 -") go
+/// wherever they appear. A bare number ("3") goes only when it stands alone
+/// between blank lines (or the text edges) — the shape of a page break — so
+/// a number wrapped onto its own line mid-sentence ("DO-174-\n17") survives.
+fn strip_page_number_lines(text: &str) -> String {
+    let lines: Vec<&str> = text.lines().collect();
+    let blank = |i: Option<usize>| {
+        i.and_then(|i| lines.get(i))
+            .is_none_or(|l| l.trim().is_empty())
+    };
+
+    lines
+        .iter()
+        .enumerate()
+        .filter(|(i, line)| {
+            let trimmed = line.trim();
+            if decorated_page_number_re().is_match(trimmed) {
+                return false;
+            }
+            let bare = !trimmed.is_empty()
+                && trimmed.len() <= 3
+                && trimmed.chars().all(|c| c.is_ascii_digit());
+            !(bare && blank(i.checked_sub(1)) && blank(Some(i + 1)))
+        })
+        .map(|(_, line)| *line)
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+fn toc_leader_line_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // A table-of-contents entry: dot leaders ending in a page number,
+    // "Section 1. Coverage ........ 3".
+    RE.get_or_init(|| {
+        Regex::new(r"(?m)^[^\n]*?(?:\.[ \t]?){4,}[ \t]*\d{1,3}[ \t]*$\n?").expect("static regex")
+    })
+}
+
 fn trailing_ws_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r"(?m)[ \t]+$").expect("static regex"))
@@ -417,8 +481,10 @@ fn excess_newlines_re() -> &'static Regex {
 /// 2. Common Latin-1/UTF-8 mojibake sequences (`â€™` → `’`, `Ã±` → `ñ`, …).
 /// 3. Control characters other than newline/tab (PDF extractors leak NULs
 ///    and form feeds from content streams).
-/// 4. Words hyphenated across line breaks ("termina-\ntion" → "termination").
-/// 5. Trailing whitespace and runs of 3+ blank lines.
+/// 4. Page-number lines ("Page 3 of 12", "- 3 -") and table-of-contents
+///    lines with dot leaders ("Section 1. Coverage ...... 3").
+/// 5. Words hyphenated across line breaks ("termina-\ntion" → "termination").
+/// 6. Trailing whitespace and runs of 3+ blank lines.
 pub fn clean_text(raw: &str) -> String {
     let mut text = raw.replace("\r\n", "\n").replace('\r', "\n");
 
@@ -433,11 +499,74 @@ pub fn clean_text(raw: &str) -> String {
         .filter(|c| *c == '\n' || *c == '\t' || !c.is_control())
         .collect();
 
+    text = strip_page_number_lines(&text);
+    text = toc_leader_line_re().replace_all(&text, "").into_owned();
     text = hyphen_break_re().replace_all(&text, "$1$2").into_owned();
     text = trailing_ws_re().replace_all(&text, "").into_owned();
     text = excess_newlines_re().replace_all(&text, "\n\n").into_owned();
 
     text.trim().to_string()
+}
+
+/// Lines longer than this are body text, never a running header/footer.
+const RUNNING_LINE_MAX_LEN: usize = 100;
+
+/// Pages needed before running-line detection is attempted; with fewer, a
+/// repeated line is as likely to be real content as page furniture.
+const RUNNING_LINE_MIN_PAGES: usize = 3;
+
+fn normalize_line(line: &str) -> String {
+    line.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// Find running headers/footers: lines that appear among the first or last
+/// two non-empty lines of at least half the pages (and at least
+/// [`RUNNING_LINE_MIN_PAGES`] pages). Returned lines are
+/// whitespace-normalized.
+pub fn detect_running_lines(pages: &[PdfPage]) -> HashSet<String> {
+    if pages.len() < RUNNING_LINE_MIN_PAGES {
+        return HashSet::new();
+    }
+
+    let mut counts: HashMap<String, usize> = HashMap::new();
+    for page in pages {
+        let lines: Vec<String> = page
+            .content
+            .lines()
+            .map(normalize_line)
+            .filter(|l| !l.is_empty() && l.len() <= RUNNING_LINE_MAX_LEN)
+            .collect();
+        let edge_count = lines.len().min(2);
+        let edges: HashSet<&String> = lines[..edge_count]
+            .iter()
+            .chain(&lines[lines.len() - edge_count..])
+            .collect();
+        for line in edges {
+            *counts.entry(line.clone()).or_default() += 1;
+        }
+    }
+
+    counts
+        .into_iter()
+        .filter(|(_, n)| *n >= RUNNING_LINE_MIN_PAGES && n * 2 >= pages.len())
+        .map(|(line, _)| line)
+        .collect()
+}
+
+/// Remove every occurrence of the given running lines from `text`, except
+/// the first one when `keep_first` is set.
+pub fn remove_running_lines(text: &str, running: &HashSet<String>, keep_first: bool) -> String {
+    let mut seen: HashSet<String> = HashSet::new();
+    text.lines()
+        .filter(|line| {
+            let normalized = normalize_line(line);
+            if !running.contains(&normalized) {
+                return true;
+            }
+            keep_first && seen.insert(normalized)
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 // ---------------------------------------------------------------------------
@@ -845,5 +974,57 @@ mod tests {
             NaiveDate::from_ymd_opt(2021, 3, 16)
         );
         assert_eq!(parse_first_date("no dates here"), None);
+    }
+
+    #[test]
+    fn test_clean_text_strips_page_numbers() {
+        let raw = "Section 1. Coverage.\n\n3\n\nSection 2. Scope.\nPage 4 of 12\nmore text";
+        assert_eq!(
+            clean_text(raw),
+            "Section 1. Coverage.\n\nSection 2. Scope.\nmore text"
+        );
+    }
+
+    #[test]
+    fn test_clean_text_strips_toc_leader_lines() {
+        let raw = "Section 1. Coverage ........ 3\nSection 1. Coverage. - This Order applies.";
+        assert_eq!(
+            clean_text(raw),
+            "Section 1. Coverage. - This Order applies."
+        );
+    }
+
+    #[test]
+    fn test_running_lines_detected_and_first_kept() {
+        let header = "DEPARTMENT ORDER NO. 174, s. 2017";
+        let pages: Vec<PdfPage> = (1..=3)
+            .map(|n| PdfPage {
+                number: n,
+                content: format!("{header}\nBody of page {n} with distinct text."),
+            })
+            .collect();
+        let running = detect_running_lines(&pages);
+        assert!(running.contains(header));
+        assert!(!running.iter().any(|l| l.starts_with("Body")));
+
+        let full = pages
+            .iter()
+            .map(|p| p.content.as_str())
+            .collect::<Vec<_>>()
+            .join("\n");
+        let cleaned = remove_running_lines(&full, &running, true);
+        assert_eq!(cleaned.matches(header).count(), 1);
+        assert!(cleaned.starts_with(header));
+    }
+
+    #[test]
+    fn test_running_lines_need_three_pages() {
+        let pages: Vec<PdfPage> = (1..=2)
+            .map(|n| PdfPage {
+                number: n,
+                content: "Same line\nOther".to_string(),
+            })
+            .collect();
+        assert!(detect_running_lines(&pages).is_empty());
     }
 }

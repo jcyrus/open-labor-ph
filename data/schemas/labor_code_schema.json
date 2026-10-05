@@ -44,7 +44,7 @@
     },
     "content": {
       "type": "string",
-      "description": "Full text of the article"
+      "description": "Full text of the article, enumerated items included (they are also broken out in `subsections`)"
     },
     "metadata": {
       "type": "object",
