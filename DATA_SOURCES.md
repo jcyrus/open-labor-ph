@@ -2,115 +2,149 @@
 
 This document catalogs the priority sources for the open-labor-ph dataset.
 
+Every entry below was checked on 2026-10-04 against the DOLE Bureau of Working
+Conditions issuance index, the Labor Law PH Library index, and secondary legal
+commentary. Check the official text before you ingest anything: titles and dates here are
+for orientation, not citation.
+
 ## Priority DOLE Department Orders
 
 ### Tier 1 (High Priority)
 
-Most frequently referenced in HR/employment scenarios:
+The orders HR and employment questions most often turn on:
 
-1. **DO-174-17**: Guidelines on the Prevention of Sexual Harassment in Employment
-   - Source: [DOLE Official](https://www.dole.gov.ph/news/department-order-no-174-17-guidelines-on-the-prevention-of-sexual-harassment-in-employment/)
-   - Status: 🔴 Not yet processed
-2. **DO-219-21**: Implementing Rules on Telecommuting
-
-   - Source: [Official Gazette](https://www.officialgazette.gov.ph/)
-   - Status: 🔴 Not yet processed
-   - Note: Highly relevant post-COVID
-
-3. **DO-147-15**: Guidelines Governing the Employment of Workers in the Retail and Service Establishments (Probationary Employment)
-
-   - Source: [DOLE](https://www.dole.gov.ph/)
+1. **DO-147-15**: Amending the Implementing Rules and Regulations of Book VI of the Labor Code (termination of employment)
+   - Issued: 2015-09-07
+   - Covers: just and authorized causes (Arts. 297–299), two-notice rule, due process
+   - Source: [DOLE BLR](https://blr.dole.gov.ph/2015/11/12/dole-clarifies-rules-on-termination-of-employment/)
    - Status: 🔴 Not yet processed
 
-4. **DO-18-A-11**: Occupational Safety and Health Standards (as amended by DO-198-18)
-
-   - Source: [DOLE](https://www.dole.gov.ph/)
+2. **DO-174-17**: Rules Implementing Articles 106 to 109 of the Labor Code, as Amended (contracting and subcontracting)
+   - Issued: March 2017
+   - Supersedes: DO-18-A-11
+   - Note: Excludes BPO/KPO-type IT-enabled services
+   - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
    - Status: 🔴 Not yet processed
 
-5. **DO-198-18**: Omnibus Rules on Apprenticeship and Learnership
-   - Source: [DOLE](https://www.dole.gov.ph/)
+3. **DO-202-19**: Implementing Rules and Regulations of RA 11165, the Telecommuting Act
+   - Signed: 2019-03-26 · Published: 2019-04-24 · Effective: 2019-05-10
+   - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
+   - Status: 🔴 Not yet processed
+
+4. **DO-252-25**: Revised Implementing Rules and Regulations of RA 11058 (Occupational Safety and Health Standards)
+   - Supersedes: DO-198-18
+   - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/) (secondary summary: [L&E Global](https://leglobal.law/2025/06/24/philippines-stricter-rules-safer-workplaces-tightening-of-occupational-safety-and-health-standards-under-do-252-25-or-the-revised-implementing-rules-and-regulations-of-r-a-no-11058/))
+   - Status: 🔴 Not yet processed
+
+5. **DO-183-17**: Revised Rules on the Administration and Enforcement of Labor Laws Pursuant to Article 128 of the Labor Code, as Renumbered (labor inspections, visitorial powers)
+   - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
    - Status: 🔴 Not yet processed
 
 ### Tier 2 (Medium Priority)
 
-Important for specific industries or scenarios:
-
-6. **DO-183-17**: Guidelines on the Implementation of Fixed-Term Employment
-
+6. **DO-53-03**: Guidelines for the Implementation of a Drug-Free Workplace Policies and Programs for the Private Sector
+   - Source: [DOLE OSHC (PDF)](https://oshc.dole.gov.ph/wp-content/uploads/2020/09/Department-Order-No.-53-03.pdf)
    - Status: 🔴 Not yet processed
 
-7. **DO-57-16**: Guidelines on the Conduct of Drug Testing in the Workplace
-
+7. **DO-230-21**: Guidelines on Support for Workers in the Informal Economy under RA 11313 (Safe Spaces Act)
+   - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
    - Status: 🔴 Not yet processed
 
-8. **DO-131-13**: Guidelines on Electronic Time Keeping and Electronic Payroll Systems
+### Historical (ingest for amendment tracking, mark as superseded)
 
-   - Status: 🔴 Not yet processed
+- **DO-18-A-11**: Rules Implementing Articles 106 to 109 of the Labor Code. Superseded by DO-174-17.
+- **DO-198-18**: IRR of RA 11058 (OSH Law). Effective 2019-01-25. Superseded by DO-252-25.
 
-9. **DO-190-18**: Guidelines on the Implementation of the Supreme Court Decision in G.R. No 202468 (Striking labor cases)
+### Removed from the previous list
 
-   - Status: 🔴 Not yet processed
+The original list paired these numbers with topics they do not cover. They are
+recorded here so the corrections can be traced:
 
-10. **DO-169-17**: Rules on the Disposition of Monetary Claims of Overseas Filipino Workers
-    - Status: 🔴 Not yet processed
+| Number as listed | Topic claimed | Actual issuance |
+|---|---|---|
+| DO-174-17 | Prevention of sexual harassment | Contracting and subcontracting (kept above under its real topic) |
+| DO-219-21 | Telecommuting | DO-219-20 is the TUPAD emergency employment program; telecommuting is DO-202-19 |
+| DO-147-15 | Probationary employment in retail | Book VI termination rules (kept above under its real topic) |
+| DO-18-A-11 | OSH standards | Contracting rules, superseded by DO-174-17 |
+| DO-198-18 | Apprenticeship and learnership | IRR of RA 11058 (OSH), superseded by DO-252-25 |
+| DO-183-17 | Fixed-term employment | Labor standards enforcement (kept above under its real topic) |
+| DO-57-16 | Drug testing | DO-57-04 is labor standards enforcement guidelines; drug testing is DO-53-03 |
+| DO-131-13 | Electronic timekeeping and payroll | Rules on the Labor Compliance System |
+| DO-190-18 | Implementation of a Supreme Court decision | "Sa Pinas, Ikaw ang Ma'am at Sir" program |
+| DO-169-17 | OFW monetary claims | IRR of RA 10789 (Racehorse Jockeys Retirement Act) |
+
+Sexual harassment comes from statute, not a Department Order: see RA 7877 and RA 11313 below.
+Apprenticeship falls under Labor Code Book Two. Fixed-term employment
+comes from case law (*Brent School v. Zamora*, G.R. No. L-48494), not a Department Order.
 
 ## Labor Code Sections
 
-### Book I: Pre-Employment (Articles 12-39)
+Article numbers follow the **renumbered** Labor Code (DOLE, 2015). Former
+numbers appear in brackets. `parse-labor-code` keeps the renumbered
+article as `article_number` and records the former number as a
+`formerly_art_N` tag.
 
-- **Priority Articles**:
-  - Art. 12-20: Recruitment and placement
-  - Art. 21-39: Regulation of recruitment activities
+### Preliminary Title (Arts. 1–11)
+
+- Chapter I: General Provisions (Arts. 1–6); Chapter II: Emancipation of Tenants (Arts. 7–11)
 - Status: 🔴 Not yet processed
 
-### Book II: Human Resources Development (Articles 40-80)
+### Book One: Pre-Employment (Arts. 12–42)
 
-- **Priority Articles**:
-  - Art. 40-59: Training and employment of special workers
-  - Art. 60-80: Apprenticeship
+- Recruitment and placement, overseas employment, employment of non-resident aliens
 - Status: 🔴 Not yet processed
 
-### Book III: Conditions of Employment (Articles 81-141)
+### Book Two: Human Resources Development Program (Arts. 43–81)
 
-- **Priority Articles** (HIGH PRIORITY):
-  - Art. 82-96: Working conditions
-  - Art. 97-111: Wages
-  - Art. 112-128: Holiday pay, service charges
-  - Art. 129-141: Wage administration
+- National manpower development, apprentices, learners, handicapped workers
 - Status: 🔴 Not yet processed
 
-### Book IV: Health, Safety and Social Welfare Benefits (Articles 142-175)
+### Book Three: Conditions of Employment (Arts. 82–161 [82–155])
 
-- **Priority Articles**:
-  - Art. 142-162: Occupational health and safety
-  - Art. 163-175: Social welfare benefits
+- **Priority** (HIGH): working conditions and rest periods, wages, contracting (Arts. 106–109),
+  visitorial and enforcement power (Art. 128), recovery of wages and simple money claims (Art. 129)
 - Status: 🔴 Not yet processed
 
-### Book V: Labor Relations (Articles 212-302)
+### Book Four: Health, Safety and Social Welfare Benefits (Arts. 162–217 [156–210])
 
-- **Priority Articles** (HIGH PRIORITY):
-  - Art. 212-221: General provisions
-  - Art. 222-237: Unfair labor practices
-  - Art. 263-276: Strikes and lockouts
+- Medical, dental and occupational safety (from Art. 162 [156], First-Aid Treatment); employees' compensation; Medicare; adult education
 - Status: 🔴 Not yet processed
 
-### Book VI: Post-Employment (Articles 277-302)
+### Book Five: Labor Relations (Arts. 218–292 [211–277])
 
-- **Priority Articles** (HIGHEST PRIORITY):
-  - **Art. 279-286**: Termination of employment (most queried!)
-  - Art. 287-291: Retirement
-  - Art. 292-301: Retirement benefits
+- **Priority** (HIGH): declaration of policy (Art. 218 [211]), unfair labor practices, strikes and lockouts
+- Status: 🔴 Not yet processed
+
+### Book Six: Post-Employment (Arts. 293–302 [278–287])
+
+- **Priority** (HIGHEST, the most-asked area):
+  - Art. 294 [279]: Security of Tenure
+  - Art. 297 [282]: Termination by Employer (just causes)
+  - Art. 298 [283]: Closure of Establishment and Reduction of Personnel (authorized causes)
+  - Art. 299 [284]: Disease as Ground for Termination
+  - Art. 302 [287]: Retirement
+- Status: 🔴 Not yet processed
+
+### Book Seven: Transitory and Final Provisions (Arts. 303–317 [288–302])
+
+- **Priority** (HIGH):
+  - Art. 305 [290]: Offenses (3-year prescription)
+  - Art. 306 [291]: Money Claims (3-year prescription)
+  - Art. 307 [292]: Institution of Money Claims
 - Status: 🔴 Not yet processed
 
 ## Additional Sources to Consider
 
 ### Republic Acts
 
-- RA 6715: Security of Tenure amendments
+- RA 6715: Herrera-Veloso Law (security of tenure, labor relations amendments)
+- RA 7877: Anti-Sexual Harassment Act of 1995
 - RA 10361: Domestic Workers Act (Batas Kasambahay)
 - RA 11058: Occupational Safety and Health Law
-- RA 11210: Expanded Maternity Leave Law
-- RA 11199: Social Security Act amendments
+- RA 11165: Telecommuting Act
+- RA 11199: Social Security Act of 2018
+- RA 11210: 105-Day Expanded Maternity Leave Law
+- RA 11313: Safe Spaces Act
 
 ### IRRs (Implementing Rules and Regulations)
 
@@ -119,10 +153,10 @@ Important for specific industries or scenarios:
 
 ## Notes on Data Collection
 
-- **PDF Availability**: Some older Department Orders may only be available as scanned PDFs requiring OCR
-- **Official Sources**: Prioritize Official Gazette and DOLE official website
-- **Amendments**: Track which orders supersede previous versions
-- **Metadata Tracking**: Record crawl date, source URL, and file hash for provenance
+- **PDF Availability**: Some older Department Orders exist only as scanned PDFs and need OCR
+- **Official Sources**: Prefer the Official Gazette and DOLE sites (dole.gov.ph, bwc.dole.gov.ph, blr.dole.gov.ph, oshc.dole.gov.ph)
+- **Amendments**: Record which orders supersede earlier ones (see Historical above)
+- **Metadata Tracking**: Record the crawl date, source URL, and file hash for provenance
 
 ## Status Legend
 

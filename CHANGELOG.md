@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Labor Code book coverage**: Added `Preliminary Title` and `Book VII: Transitory and Final Provisions` to the book enum.
+  - Implementation: `engine/ingestion/src/types.rs`, `data/schemas/labor_code_schema.json`, `engine/ingestion/src/bin/parse_labor_code.rs`
+  - Impact: Arts. 1–11 are no longer misfiled under Book I, and Arts. 303–317 (penalties, prescription of offenses and money claims) are no longer misfiled under Book VI. `BOOK VII` headings now match (`VII` was previously truncated by the `VI` alternative)
+- **Data source catalog**: Corrected `DATA_SOURCES.md` after verification against DOLE issuance indexes.
+  - Impact: Ten Department Orders were listed under the wrong topics (e.g. DO-174-17 is contracting, not sexual harassment; telecommuting is DO-202-19). Added DO-252-25 (supersedes DO-198-18), DO-183-17, DO-53-03, DO-230-21; Labor Code ranges now use renumbered articles with former numbers in brackets
+- **Dataset tracking**: `data/processed/*.json` is no longer gitignored, so the published dataset can be committed. Source PDFs remain ignored.
+
 ### Added
 
 - **PDF Parser Core Module**: High-performance PDF text extraction for labor law documents.

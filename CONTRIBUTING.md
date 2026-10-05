@@ -6,7 +6,7 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 ### 1. Data Contribution
 
-- **Source Documents**: Upload new DOLE Department Orders or Labor Code amendments to `data/raw/`
+- **Source Documents**: Add new DOLE Department Orders or Labor Code amendments to `DATA_SOURCES.md` with their official URL. Source PDFs go in `data/raw/` locally but are gitignored; the validated JSON output in `data/processed/` is what gets committed
 - **Validation**: Review parsed JSON outputs for accuracy against official sources
 - **Benchmarking**: Submit real-world labor law questions to `engine/evals/`
 
