@@ -18,3 +18,6 @@ target/
 dist/
 build/
 *.egg-info/
+
+# Local graphify cache
+graphify-out/
