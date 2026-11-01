@@ -88,6 +88,37 @@
           },
           "description": "Topical tags (e.g., 'termination', 'probationary', 'just_cause')"
         },
+        "heading_footnotes": {
+          "type": "array",
+          "description": "Editorial footnotes printed on the Title or Chapter heading above this article; a repeal stated there covers every article under it",
+          "items": {
+            "type": "object",
+            "required": [
+              "heading",
+              "number",
+              "text"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "heading": {
+                "type": "string",
+                "description": "The heading carrying the footnote, as in title_name or chapter"
+              },
+              "number": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Footnote number as printed"
+              },
+              "text": {
+                "type": "string",
+                "description": "Footnote text, whitespace-normalized"
+              }
+            }
+          }
+        },
+        "legal_status": {
+          "$ref": "#/definitions/legal_status"
+        },
         "footnotes": {
           "type": "array",
           "description": "Editorial footnotes the source edition attaches to this article (amendment history, superseding laws, implementing rules)",
@@ -160,6 +191,66 @@
         "description": {
           "type": "string",
           "description": "The amendment note as printed (e.g., 'As amended by Section 34, Republic Act No. 6715, March 21, 1989')"
+        }
+      }
+    },
+    "legal_status": {
+      "type": "object",
+      "description": "What the source edition's editorial notes say about the article, reviewed by hand in data/labor_code_status.toml. Reports those notes only: it is not a finding that an article is in force, and later laws are outside the edition. Absent when the source PDF has not been reviewed.",
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "no_change_noted",
+            "partly_superseded",
+            "superseded"
+          ],
+          "description": "no_change_noted: no reviewed note says the text changed. partly_superseded: part of the article, or how it operates, no longer applies as printed. superseded: the whole article no longer applies as printed."
+        },
+        "changes": {
+          "type": "array",
+          "description": "The reviewed notes behind status",
+          "items": {
+            "type": "object",
+            "required": [
+              "effect",
+              "by",
+              "footnote"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "effect": {
+                "type": "string",
+                "enum": [
+                  "superseded",
+                  "repealed",
+                  "inoperative",
+                  "obsolete",
+                  "unconstitutional",
+                  "functions_transferred",
+                  "modified"
+                ],
+                "description": "How the note describes the change"
+              },
+              "part": {
+                "type": "string",
+                "description": "The part affected (e.g. 'second paragraph'); absent when the note covers the whole article"
+              },
+              "by": {
+                "type": "string",
+                "description": "Law or decision that made the change (e.g. 'RA 11210')"
+              },
+              "footnote": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Number of the footnote stating the change"
+              }
+            }
+          }
         }
       }
     },

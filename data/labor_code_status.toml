@@ -1,0 +1,327 @@
+# Reviewed legal status of Labor Code articles.
+#
+# Each entry was read against the footnote it cites in the DOLE renumbered
+# edition. `parse-labor-code` turns this file into `metadata.legal_status` and
+# fails on any status-like footnote listed in neither section below. The review
+# only reports what the source edition says: `no_change_noted` does not mean an
+# article is in force, because later laws are outside the edition.
+#
+#   source_sha256  PDF the review applies to; another PDF gets no legal_status.
+#   [[change]]     A note saying articles no longer apply as printed.
+#     articles     "131" or an inclusive range, "139-150".
+#     footnote     Footnote stating the change, on the article or its heading.
+#     effect       superseded, repealed, inoperative, obsolete, unconstitutional,
+#                  functions_transferred or modified.
+#     by           Law or decision that made the change.
+#     part         The part affected. Omit it when the whole article is affected.
+#   [[no_change]]  A footnote that reads like a status note but changes nothing.
+
+source_sha256 = "d9abd6f8eb3fb329456e926aa46ce05fbfe75f562f8aa6a60e7f421de97295c6"
+
+[[change]]
+articles = "7-11"
+footnote = 4
+effect = "modified"
+by = "RA 6657"
+part = "provisions of this Chapter the note does not identify"
+
+[[change]]
+articles = "9"
+footnote = 6
+effect = "modified"
+by = "RA 6657"
+part = "basis for determining land value"
+
+[[change]]
+articles = "10"
+footnote = 7
+effect = "superseded"
+by = "RA 6657"
+part = "second paragraph"
+
+[[change]]
+articles = "15"
+footnote = 11
+effect = "superseded"
+by = "EO 292"
+part = "functions in paragraph (a)"
+
+[[change]]
+articles = "15"
+footnote = 12
+effect = "superseded"
+by = "EO 797"
+part = "paragraph (b)"
+
+[[change]]
+articles = "17"
+footnote = 15
+effect = "functions_transferred"
+by = "EO 247"
+part = "functions of the Board"
+
+[[change]]
+articles = "18"
+footnote = 17
+effect = "functions_transferred"
+by = "EO 797"
+part = "references to the Boards"
+
+[[change]]
+articles = "20"
+footnote = 19
+effect = "functions_transferred"
+by = "EO 797"
+part = "functions of the Board"
+
+[[change]]
+articles = "21"
+footnote = 21
+effect = "superseded"
+by = "RA 8042"
+
+[[change]]
+articles = "23"
+footnote = 23
+effect = "superseded"
+by = "EO 247"
+
+[[change]]
+articles = "24"
+footnote = 24
+effect = "functions_transferred"
+by = "EO 797"
+part = "references to the Boards"
+
+[[change]]
+articles = "38"
+footnote = 40
+effect = "unconstitutional"
+by = "Salazar v. Achacoso, G.R. No. 81510 (1990)"
+part = "paragraph (c)"
+
+[[change]]
+articles = "43-56"
+footnote = 45
+effect = "inoperative"
+by = "RA 7796"
+
+[[change]]
+articles = "44"
+footnote = 47
+effect = "modified"
+by = "RA 7796"
+part = "definitions"
+
+[[change]]
+articles = "45"
+footnote = 48
+effect = "repealed"
+by = "RA 7796"
+
+[[change]]
+articles = "46"
+footnote = 49
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "47"
+footnote = 50
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "48"
+footnote = 51
+effect = "functions_transferred"
+by = "RA 7796"
+
+[[change]]
+articles = "49"
+footnote = 52
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "52"
+footnote = 55
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "53"
+footnote = 56
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "54"
+footnote = 57
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "56"
+footnote = 59
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "58"
+footnote = 60
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "73"
+footnote = 66
+effect = "superseded"
+by = "RA 7796"
+
+[[change]]
+articles = "78-81"
+footnote = 67
+effect = "modified"
+by = "RA 7277"
+part = "certain provisions of this Chapter the note does not identify"
+
+[[change]]
+articles = "81"
+footnote = 70
+effect = "superseded"
+by = "RA 7277"
+
+[[change]]
+articles = "131"
+footnote = 105
+effect = "superseded"
+by = "RA 11210"
+
+[[change]]
+articles = "139-150"
+footnote = 112
+effect = "repealed"
+by = "RA 10361"
+
+[[change]]
+articles = "173"
+footnote = 138
+effect = "superseded"
+by = "RA 8282"
+part = "paragraph (y)"
+
+[[change]]
+articles = "173"
+footnote = 139
+effect = "superseded"
+by = "RA 8282"
+part = "first paragraph of (z)"
+
+[[change]]
+articles = "173"
+footnote = 140
+effect = "superseded"
+by = "RA 8291"
+part = "second paragraph of (z)"
+
+[[change]]
+articles = "216"
+footnote = 175
+effect = "functions_transferred"
+by = "RA 7875"
+part = "implementation under R.A. No. 6111"
+
+[[change]]
+articles = "244"
+footnote = 203
+effect = "inoperative"
+by = "EO 111"
+part = "opening phrase \"Subject to Article 238\""
+
+[[change]]
+articles = "249"
+footnote = 209
+effect = "repealed"
+by = "EO 111"
+part = "second paragraph"
+
+[[change]]
+articles = "283"
+footnote = 242
+effect = "functions_transferred"
+by = "EO 126"
+part = "references to the Institute"
+
+[[change]]
+articles = "309"
+footnote = 257
+effect = "obsolete"
+by = "SSS and GSIS maternity benefits"
+
+[[change]]
+articles = "310"
+footnote = 258
+effect = "functions_transferred"
+by = "EO 797"
+part = "funding of the abolished Boards"
+
+[[no_change]]
+footnote = 36
+reason = "Updates names (Ministry of Labor, OEDB); the article's rules stand."
+
+[[no_change]]
+footnote = 54
+reason = "Updates names (Council, Bureau); Art. 51 is covered by footnote 45."
+
+[[no_change]]
+footnote = 75
+reason = "Reads \"National Assembly\" as Congress."
+
+[[no_change]]
+footnote = 79
+reason = "Quotes the holiday list in the Administrative Code; \"modified\" is part of the quotation."
+
+[[no_change]]
+footnote = 88
+reason = "\"Superseded\" describes D.O. 18-A, not Art. 103."
+
+[[no_change]]
+footnote = 104
+reason = "Concerns former Arts. 130 and 131, which are not in the renumbered text."
+
+[[no_change]]
+footnote = 125
+reason = "Records that R.A. No. 10151 inserted this Chapter."
+
+[[no_change]]
+footnote = 161
+reason = "R.A. No. 6111 was repealed; the note reads the reference as R.A. No. 7875."
+
+[[no_change]]
+footnote = 173
+reason = "\"No longer required\" describes when notice is excused under an ECC resolution, not the article's text."
+
+[[no_change]]
+footnote = 181
+reason = "\"Deemed appointed\" is quoted statutory text."
+
+[[no_change]]
+footnote = 184
+reason = "Art. 224 (a)(2) is read with the voluntary arbitration article; nothing is replaced."
+
+[[no_change]]
+footnote = 186
+reason = "Updates a Medicare reference to the National Health Insurance Program."
+
+[[no_change]]
+footnote = 188
+reason = "Concerns former Art. 220, not Ocular Inspection (former Art. 219)."
+
+[[no_change]]
+footnote = 195
+reason = "Reads \"Bureau\" and \"regional office\" as the NCMB."
+
+[[no_change]]
+footnote = 196
+reason = "Prints former Art. 228, repealed in 1981; the current article is its replacement."

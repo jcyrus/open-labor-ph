@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Format, lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - run: cargo test --workspace --locked
+
+  dataset:
+    name: Rebuild dataset from pinned sources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/cache@v4
+        with:
+          path: data/raw/labor-code-renumbered.pdf
+          key: labor-code-${{ hashFiles('data/sources.toml') }}
+      - run: cargo build --release --locked -p labor-ingestion
+      - run: target/release/fetch --only labor-code-renumbered
+      - run: target/release/parse-labor-code data/raw/labor-code-renumbered.pdf data/processed/labor_code.json
+      - run: target/release/validate data/processed/labor_code.json
+      - name: Fail if the committed dataset differs from the rebuild
+        run: git diff --exit-code -- data/processed/labor_code.json
