@@ -157,6 +157,14 @@ pub struct OrderMetadata {
     /// The sentence stating when the order takes effect, whitespace-normalized
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub effectivity_clause: Option<String>,
+
+    /// The order that replaced this one, when the source manifest records it
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub superseded_by: Option<String>,
+
+    /// The text came from OCR of a scan, so it can contain reading errors
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub ocr_text: bool,
 }
 
 fn default_issuing_authority() -> String {

@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **7 Department Orders**: DO-147-15, DO-174-17, DO-183-17, DO-202-19, DO-53-03, DO-230-21 and, as history, DO-198-18. All are downloaded from pinned Wayback Machine snapshots. `effective_date` stays unset on all of them: each runs from a publication date that is not yet verified.
+- **OCR text as a committed input**: the new `ocr` binary writes scans to `data/ocr/<id>.txt` and never replaces a file without `--force`. `parse-dole` reads that text and still hashes the PDF, so rebuilds are exact and need no OCR engine. Records carry `metadata.ocr_text`. Order numbers, signing dates and signatories were corrected against the scans.
+- **`metadata.superseded_by`** from the new manifest field of the same name.
+- **`scripts/rebuild-dataset.sh`**: CI now rebuilds and diffs every processed record.
 - **`metadata.legal_status`** on Labor Code articles: `superseded` (33), `partly_superseded` (20) or `no_change_noted` (264), with the notes behind it in `changes`. It comes from a hand review of the edition's footnotes (`data/labor_code_status.toml`, `engine/ingestion/src/status.rs`) tied to the PDF's SHA-256. `parse-labor-code` fails on a status-like footnote that has not been reviewed; a PDF outside the review gets no `legal_status`. `no_change_noted` is not a finding that an article is in force.
 - **`metadata.heading_footnotes`**: notes on Title and Chapter headings now reach every article under the heading. They were dropped before, which hid the express repeal of Arts. 139–150 (R.A. No. 10361) and the Title-wide note on Arts. 43–56 (R.A. No. 7796).
 - **CI** (`.github/workflows/ci.yml`): format, clippy and tests, plus a rebuild of `labor_code.json` from the pinned PDF that fails on any difference from the committed file. NATLEX returns 403 to CI runners, so the Labor Code `download_url` now points at a Wayback Machine snapshot with the same pinned SHA-256.
 
 ### Fixed
 
+- **`parse-dole` on real orders**: signing dates come from the closing "Manila, Philippines" line, which also ends the body; abbreviated months parse ("16 MAR 2017"); "PART II" groups keep restarted Sections apart; uppercase "SECTION 2" closes an amended Rule; "RULE I-A" keeps its letter; "A. COVERAGE" headings split orders with no Sections; titles may span blank lines; "as amended" in a citation no longer adds to `supersedes`.
 - **Labor Code chapters and titles**: a heading the extractor leaves on the end of a sentence now starts its chapter, so Arts. 137–138 are in "Chapter II: EMPLOYMENT OF MINORS" and the heading is gone from Art. 136's `content`. "Title VII-A" keeps its number instead of becoming "Title VII: A – GRIEVANCE…".
 - **Labor Code parser handles the real DOLE renumbered edition** (found on the first real-PDF run):
   - Book headers: the body prints "Book One - PRE-EMPLOYMENT" in title case; table-of-contents lines ending in a page number are skipped, and the body's "PRELIMINARY TITLE" resets any state left by the TOC. Previously all 317 articles landed in Book VII; now every book matches the verified ranges.

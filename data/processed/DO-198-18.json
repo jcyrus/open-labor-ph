@@ -1,0 +1,832 @@
+{
+  "order_number": "DO-198-18",
+  "title": "IMPLEMENTING RULES AND REGULATIONS OF REPUBLIC ACT NO. 11058 ENTITLED “AN ACT STRENGTHENING COMPLIANCE WITH OCCUPATIONAL SAFETY AND HEALTH STANDARDS AND PROVIDING PENALTIES FOR VIOLATIONS THEREOF”",
+  "source_url": "https://www.dole.gov.ph/php_assets/uploads/2019/01/DO-198-Implementing-Rules-and-Regulations-of-Republic-Act-No_-11058-An-Act-Strengthening-Compliance-with-Occupational-Safety-and-Health-Standards-and-Providing-Penalties-for-Violations-Thereof.pdf",
+  "provenance": {
+    "source_sha256": "84482b27043e2eb01ecb7f047c50ff60043255aec7192b1a2173440a6fb3bc84",
+    "parser": "labor-ingestion 0.1.0"
+  },
+  "metadata": {
+    "issuing_authority": "SILVESTRE H. BELLO III, Secretary",
+    "supersedes": [],
+    "related_laws": [
+      "RA 11058",
+      "RA 9165",
+      "RA 11036",
+      "RA 8504",
+      "PD 442 (Labor Code)"
+    ],
+    "tags": [
+      "contracting",
+      "osh",
+      "wages"
+    ],
+    "signed_date": "2018-12-06",
+    "effectivity_clause": "This Rules shall take effect fifteen (15) days after its publication in a newspaper of general circulation.",
+    "superseded_by": "DO-252-25",
+    "ocr_text": true
+  },
+  "sections": [
+    {
+      "section_number": "Section 1",
+      "title": "Declaration of Policy",
+      "content": "The State affirms labor as a primary social and\neconomic force, and that a safe and healthy workforce is an integral aspect of nation building.\n\nThe State shall ensure a safe and healthful workplace for all working people by\naffording them full protection against all hazards in their work environment. It shall ensure\nthat the provisions of the Labor Code of the Philippines, all domestic laws, and\ninternationally-recognized standards on occupational safety and health are being fully\nenforced and complied with by the employers, and it shall provide penalties for any violation\nthereof.\n\nThe State shall protect every worker against injury, sickness or death through safe and\nhealthful working conditions thereby assuring the conservation of valuable manpower\nresources and the prevention of loss or damage to lives and properties consistent with\nnational development goals, and with the State’s commitment to the total development of\nevery worker as a complete human being.\n\nThe State, in protecting the safety and health of the workers, shall promote strict but\ndynamic, inclusive, and gender-sensitive measures in the formulation and implementation of\npolicies and programs related to occupational safety and health.\n\nCHAPTER II\nGENERAL PROVISIONS"
+    },
+    {
+      "section_number": "Section 2",
+      "title": "Coverage",
+      "content": "This Rules shall apply to all establishments, projects and sites,\nand all other places where work is being undertaken in all branches of economic activity,\nincluding:\n(a) Establishments located inside special economic zones and other investment\npromotion agencies (e.g., Philippine Economic Zone Authority [PEZA], Clark\nDevelopment Corporation [CDC]);\n\n(b) Utilities engaged in air, sea, and land transportation; and\n\n(c) Industries such as mining, fishing, construction, agriculture, and maritime.\n\nThis Rules shall also cover contractors and subcontractors including those engaged in\nthe projects of the public sector. Workers of contractors and subcontractors should follow the\nOSH policy and program of the establishment where they are assigned.\n\nThis Rules does not apply to the public sector such as national government agencies,\ngovernment-owned and controlled corporations with original charters, government financial\ninstitutions, state universities and colleges and local government units which shall be\ngoverned by appropriate rules and regulations issued by the Civil Service Commission and\nother government agencies.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Establishments located inside special economic zones and other investment\npromotion agencies (e.g., Philippine Economic Zone Authority [PEZA], Clark\nDevelopment Corporation [CDC]);"
+        },
+        {
+          "label": "b",
+          "content": "Utilities engaged in air, sea, and land transportation; and"
+        },
+        {
+          "label": "c",
+          "content": "Industries such as mining, fishing, construction, agriculture, and maritime.\n\nThis Rules shall also cover contractors and subcontractors including those engaged in\nthe projects of the public sector. Workers of contractors and subcontractors should follow the\nOSH policy and program of the establishment where they are assigned.\n\nThis Rules does not apply to the public sector such as national government agencies,\ngovernment-owned and controlled corporations with original charters, government financial\ninstitutions, state universities and colleges and local government units which shall be\ngoverned by appropriate rules and regulations issued by the Civil Service Commission and\nother government agencies."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 3",
+      "title": "Definition of Terms",
+      "content": "As used in this Rules, the following terms shall\nmean:\n\n(a) Certified first-aider refers to any person trained and duly certified to administer\nfirst aid by the Philippine Red Cross or any organization authorized by the Secretary of Labor\nand Employment.\n\n(b) Competency Standards refer to industry-determined specifications of proficiency\nrequired for effective work performance. These are expressed as outcomes with focus on\nworkplace activity rather than training or personal attributes, and the ability to apply new\nskills in new situations or changing work organization.\n\n(c) Covered workplaces refer to establishments, projects, sites and all other places\nwhere work is being undertaken wherein the number of employees, nature of operations, and\nrisks or hazards involved in the business, as determined by the Secretary of Labor and\nEmployment, require compliance with the provisions of this Rules.\n\n(d) Department of Labor and Employment (DOLE)-Accredited Training\nOrganizations refer to those which have been granted accreditation by DOLE pursuant to\nDepartment Order No. 16, Series of 2001 and its subsequent regulations.\n\n(e) Employer refers to any person, natural or juridical, including the principal\nemployer, contractor or subcontractor, if any, who directly or indirectly benefits from the\nservices of the employee.\n\n(f) Equipment refers to any machine with engine or electric motor as prime mover.\n\n(g) General safety and health inspection refers to an examination of the work\nenvironment, including the location and operation of machinery other than those covered by\ntechnical safety audits, adequacy of work space, ventilation, lighting, conditions of work\nenvironment, handling, storage or work procedures, protection facilities and other possible\nsources of safety and health hazards in the workplace.\n\n(h) High risk establishment refers to a workplace wherein the presence of hazard or\npotential hazard within the company may affect the safety and/or health of workers not only\nwithin but also persons outside the premises of the workplace. There is high level of\nexposure to safety and health hazards, and probability of a major accident resulting to\ndisability or death or major illness is likely to occur if no preventive or contro! measures are\nin place. The following are workplaces commonly associated with potentially high-risk\nactivities:\n\n1. Chemical works and chemical production plants;\n\n2. Construction;\n\n3. Deep sea fishing;\n\n4. Explosives and pyrotechnics factories;\n\n5. Firefighting;\n\n6. Healthcare facilities;\n\n7. Installation of communication accessories, towers and cables;\n\n8. LPG filling, refilling, storage and distribution;\n\n9. Mining;\n\n10. Petrochemical and biofuel works and refineries;\n\n11. Power generation, transmission and distribution in the energy sector;\n\n12. Storage, handling, and distribution center for toxic or hazardous chemicals;\n\n13. Storage and handling of fertilizers in high volume;\n\n14. Transportation;\n\n15. Water supply, sewerage, waste management, remediation activities;\n\n16. Works in which chlorine is used in bulk; and\n\n17. Activities closely similar to those enumerated above and other activities as\n\ndetermined by DOLE in accordance with existing issuances on the\nclassification of establishments.\n\n(i) Imminent danger refers to a situation caused by a condition or practice in any\nplace of employment that could reasonably be expected to lead to death or serious physical\nharm.\n\n(j) Low risk establishment refers to a workplace where there is low level of danger or\nexposure to safety and health hazards and not likely or with low probability to result in\naccident, harm or injury, or illness.\n\n(k) Medium risk establishment refers to a workplace where there is moderate\nexposure to safety and health hazards and with probability of an accident, injury or illness, if\nno preventive or control measures are in place.\n\n(1) Micro and Small Enterprises (MSEs) refers to establishments employing less than\nten (10) employees, and the establishments employing less than one hundred (100)\nemployees, respectively, regardless of capitalization.\n\n(m) Occupational Health (OH) personnel refer to a qualified first-aider, nurse, dentist\nor physician engaged by the employer to provide occupational health services in the\nestablishment, project, site or workplace.\n\n(n) Occupational Safety and Health (OSH) consultant refers to a qualified Safety\nOfficer 4 or its equivalent, duly certified by DOLE to perform and/or render consultative\nservices on occupational safety and health in at least two (2) fields of specialization as\ndetermined by DOLE.\n\n(0) Occupational Safety and Health (OSH) practitioner refers to a qualified Safety\nOfficer 3 or its equivalent, duly certified by DOLE to render occupational safety and health\nservices in a defined and specific scope or core competency.\n(p) Occupational Safety and Health (OSH) standards refers to a set of rules issued by\nDOLE which mandates the adoption and use of appropriate practices, means, methods,\noperations or processes, and working conditions reasonably necessary to ensure safe and\nhealthful employment.\n\n(q) Personal protective equipment (PPE) refers to a specialized clothing or\nequipment designed to protect workers against safety and health hazards that may cause\nserious workplace injuries and illnesses, i.e., protection for the body, eyes, head, face, hands,\nfeet, ears, etc.\n\n(r) Safety and Health Audit refers to a regular and critical examination of project\nsites, safety programs, records, and management performance on program standards on safety\nand health conducted by the safety officer.\n\n(s) Safety and Health Committee refers to a body created within the workplace tasked\nwith the authority to plan, develop and implement OSH policies and programs, monitor and\nevaluate the OSH program, and inspect and investigate all aspects of the work pertaining to\nthe safety and health of workers.\n\n(t) Safety and Health program refers to a set of detailed rules to govern company\npolicies, processes and practices in all economic activities to conform with OSH standards,\nincluding the personnel responsible, and penalties for any violation thereof.\n\n(u) Safety officer refers to any employee or officer of the company trained by DOLE\nor DOLE-Accredited Training Organization and tasked by the employer to implement an\nOSH program, and ensure that it is in accordance with the provisions of OSH standards.\n\n(v) Safety Officer 1 (SO1) refers to an employee who has completed the mandatory\neight (8)-hour OSH orientation course as prescribed in the OSH standards and two (2)-hour\ntrainers’ training.\n\n(w) Safety Officer 2 (SO2) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry as prescribed in the OSH\nstandards.\n\n(x) Safety Officer 3 (SO3) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry, additional forty-eight (48)\nhours of advanced/specialized occupational safety training course relevant to the industry,\nrelevant experience in OSH for at least two (2) years, and other requirements as prescribed in\nthe OSH standards. Qualified SO3 shall be eligible for certification as OSH practitioner.\n\n(y) Safety Officer 4 (SO4) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry, additional eighty (80) hours of\nadvanced/specialized occupational safety training course relevant to the industry, an\naggregate of three hundred twenty (320) hours of OSH related training or experience, an\nactual experience as SO3 for at least four (4) years, and other requirements as prescribed by\nthe OSH standards. Additional training may be converted to years of experience where eighty\n(80) hours of training may equal to one (1) year of experience and vice versa. Qualified SO4\nshall be eligible for certification as OSH consultant.\n\n(z) Safety signage refers to any emergency, warning or danger signpost or any safety\ninstruction using the standard colors and sizes, including the standard symbols for safety\ninstructions and warnings in the workplace, prescribed by DOLE in accordance with the OSH\nstandards.\n(aa) Workplace refers to any site or location where workers need to be present or to go\nto by reason of their work, and which are under the direct or indirect control of the employer,\nincluding, but not limited to, work areas, employee lounges and restrooms, conference and\nclassroom spaces, employee cafeterias, hallways and emergency access.\n\n(bb) Worker refers to any member of the labor force, regardless of employment status.\n\n(cc) Workers’ OSH Seminar refers to the mandatory eight (8)-hour module conducted\nby the safety officer of the workplace as prescribed by the OSH standards.\n\nCHAPTER II\nDUTIES AND RIGHTS OF EMPLOYERS, WORKERS\nAND OTHER PERSONS",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Certified first-aider refers to any person trained and duly certified to administer\nfirst aid by the Philippine Red Cross or any organization authorized by the Secretary of Labor\nand Employment."
+        },
+        {
+          "label": "b",
+          "content": "Competency Standards refer to industry-determined specifications of proficiency\nrequired for effective work performance. These are expressed as outcomes with focus on\nworkplace activity rather than training or personal attributes, and the ability to apply new\nskills in new situations or changing work organization."
+        },
+        {
+          "label": "c",
+          "content": "Covered workplaces refer to establishments, projects, sites and all other places\nwhere work is being undertaken wherein the number of employees, nature of operations, and\nrisks or hazards involved in the business, as determined by the Secretary of Labor and\nEmployment, require compliance with the provisions of this Rules."
+        },
+        {
+          "label": "d",
+          "content": "Department of Labor and Employment (DOLE)-Accredited Training\nOrganizations refer to those which have been granted accreditation by DOLE pursuant to\nDepartment Order No. 16, Series of 2001 and its subsequent regulations."
+        },
+        {
+          "label": "e",
+          "content": "Employer refers to any person, natural or juridical, including the principal\nemployer, contractor or subcontractor, if any, who directly or indirectly benefits from the\nservices of the employee."
+        },
+        {
+          "label": "f",
+          "content": "Equipment refers to any machine with engine or electric motor as prime mover."
+        },
+        {
+          "label": "g",
+          "content": "General safety and health inspection refers to an examination of the work\nenvironment, including the location and operation of machinery other than those covered by\ntechnical safety audits, adequacy of work space, ventilation, lighting, conditions of work\nenvironment, handling, storage or work procedures, protection facilities and other possible\nsources of safety and health hazards in the workplace."
+        },
+        {
+          "label": "h",
+          "content": "High risk establishment refers to a workplace wherein the presence of hazard or\npotential hazard within the company may affect the safety and/or health of workers not only\nwithin but also persons outside the premises of the workplace. There is high level of\nexposure to safety and health hazards, and probability of a major accident resulting to\ndisability or death or major illness is likely to occur if no preventive or contro! measures are\nin place. The following are workplaces commonly associated with potentially high-risk\nactivities:",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Chemical works and chemical production plants;"
+            },
+            {
+              "label": "2",
+              "content": "Construction;"
+            },
+            {
+              "label": "3",
+              "content": "Deep sea fishing;"
+            },
+            {
+              "label": "4",
+              "content": "Explosives and pyrotechnics factories;"
+            },
+            {
+              "label": "5",
+              "content": "Firefighting;"
+            },
+            {
+              "label": "6",
+              "content": "Healthcare facilities;"
+            },
+            {
+              "label": "7",
+              "content": "Installation of communication accessories, towers and cables;"
+            },
+            {
+              "label": "8",
+              "content": "LPG filling, refilling, storage and distribution;"
+            },
+            {
+              "label": "9",
+              "content": "Mining;"
+            },
+            {
+              "label": "10",
+              "content": "Petrochemical and biofuel works and refineries;"
+            },
+            {
+              "label": "11",
+              "content": "Power generation, transmission and distribution in the energy sector;"
+            },
+            {
+              "label": "12",
+              "content": "Storage, handling, and distribution center for toxic or hazardous chemicals;"
+            },
+            {
+              "label": "13",
+              "content": "Storage and handling of fertilizers in high volume;"
+            },
+            {
+              "label": "14",
+              "content": "Transportation;"
+            },
+            {
+              "label": "15",
+              "content": "Water supply, sewerage, waste management, remediation activities;"
+            },
+            {
+              "label": "16",
+              "content": "Works in which chlorine is used in bulk; and"
+            },
+            {
+              "label": "17",
+              "content": "Activities closely similar to those enumerated above and other activities as\n\ndetermined by DOLE in accordance with existing issuances on the\nclassification of establishments."
+            }
+          ]
+        },
+        {
+          "label": "i",
+          "content": "Imminent danger refers to a situation caused by a condition or practice in any\nplace of employment that could reasonably be expected to lead to death or serious physical\nharm."
+        },
+        {
+          "label": "j",
+          "content": "Low risk establishment refers to a workplace where there is low level of danger or\nexposure to safety and health hazards and not likely or with low probability to result in\naccident, harm or injury, or illness."
+        },
+        {
+          "label": "k",
+          "content": "Medium risk establishment refers to a workplace where there is moderate\nexposure to safety and health hazards and with probability of an accident, injury or illness, if\nno preventive or control measures are in place.",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Micro and Small Enterprises (MSEs) refers to establishments employing less than\nten (10) employees, and the establishments employing less than one hundred (100)\nemployees, respectively, regardless of capitalization."
+            }
+          ]
+        },
+        {
+          "label": "m",
+          "content": "Occupational Health (OH) personnel refer to a qualified first-aider, nurse, dentist\nor physician engaged by the employer to provide occupational health services in the\nestablishment, project, site or workplace."
+        },
+        {
+          "label": "n",
+          "content": "Occupational Safety and Health (OSH) consultant refers to a qualified Safety\nOfficer 4 or its equivalent, duly certified by DOLE to perform and/or render consultative\nservices on occupational safety and health in at least two (2) fields of specialization as\ndetermined by DOLE.",
+          "subsections": [
+            {
+              "label": "0",
+              "content": "Occupational Safety and Health (OSH) practitioner refers to a qualified Safety\nOfficer 3 or its equivalent, duly certified by DOLE to render occupational safety and health\nservices in a defined and specific scope or core competency."
+            }
+          ]
+        },
+        {
+          "label": "p",
+          "content": "Occupational Safety and Health (OSH) standards refers to a set of rules issued by\nDOLE which mandates the adoption and use of appropriate practices, means, methods,\noperations or processes, and working conditions reasonably necessary to ensure safe and\nhealthful employment."
+        },
+        {
+          "label": "q",
+          "content": "Personal protective equipment (PPE) refers to a specialized clothing or\nequipment designed to protect workers against safety and health hazards that may cause\nserious workplace injuries and illnesses, i.e., protection for the body, eyes, head, face, hands,\nfeet, ears, etc."
+        },
+        {
+          "label": "r",
+          "content": "Safety and Health Audit refers to a regular and critical examination of project\nsites, safety programs, records, and management performance on program standards on safety\nand health conducted by the safety officer."
+        },
+        {
+          "label": "s",
+          "content": "Safety and Health Committee refers to a body created within the workplace tasked\nwith the authority to plan, develop and implement OSH policies and programs, monitor and\nevaluate the OSH program, and inspect and investigate all aspects of the work pertaining to\nthe safety and health of workers."
+        },
+        {
+          "label": "t",
+          "content": "Safety and Health program refers to a set of detailed rules to govern company\npolicies, processes and practices in all economic activities to conform with OSH standards,\nincluding the personnel responsible, and penalties for any violation thereof."
+        },
+        {
+          "label": "u",
+          "content": "Safety officer refers to any employee or officer of the company trained by DOLE\nor DOLE-Accredited Training Organization and tasked by the employer to implement an\nOSH program, and ensure that it is in accordance with the provisions of OSH standards."
+        },
+        {
+          "label": "v",
+          "content": "Safety Officer 1 (SO1) refers to an employee who has completed the mandatory\neight (8)-hour OSH orientation course as prescribed in the OSH standards and two (2)-hour\ntrainers’ training."
+        },
+        {
+          "label": "w",
+          "content": "Safety Officer 2 (SO2) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry as prescribed in the OSH\nstandards."
+        },
+        {
+          "label": "x",
+          "content": "Safety Officer 3 (SO3) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry, additional forty-eight (48)\nhours of advanced/specialized occupational safety training course relevant to the industry,\nrelevant experience in OSH for at least two (2) years, and other requirements as prescribed in\nthe OSH standards. Qualified SO3 shall be eligible for certification as OSH practitioner."
+        },
+        {
+          "label": "y",
+          "content": "Safety Officer 4 (SO4) refers to an employee who has completed the mandatory\nforty (40)-hour OSH training course applicable to the industry, additional eighty (80) hours of\nadvanced/specialized occupational safety training course relevant to the industry, an\naggregate of three hundred twenty (320) hours of OSH related training or experience, an\nactual experience as SO3 for at least four (4) years, and other requirements as prescribed by\nthe OSH standards. Additional training may be converted to years of experience where eighty",
+          "subsections": [
+            {
+              "label": "80",
+              "content": "hours of training may equal to one (1) year of experience and vice versa. Qualified SO4\nshall be eligible for certification as OSH consultant."
+            }
+          ]
+        },
+        {
+          "label": "z",
+          "content": "Safety signage refers to any emergency, warning or danger signpost or any safety\ninstruction using the standard colors and sizes, including the standard symbols for safety\ninstructions and warnings in the workplace, prescribed by DOLE in accordance with the OSH\nstandards."
+        },
+        {
+          "label": "aa",
+          "content": "Workplace refers to any site or location where workers need to be present or to go\nto by reason of their work, and which are under the direct or indirect control of the employer,\nincluding, but not limited to, work areas, employee lounges and restrooms, conference and\nclassroom spaces, employee cafeterias, hallways and emergency access."
+        },
+        {
+          "label": "bb",
+          "content": "Worker refers to any member of the labor force, regardless of employment status."
+        },
+        {
+          "label": "cc",
+          "content": "Workers’ OSH Seminar refers to the mandatory eight (8)-hour module conducted\nby the safety officer of the workplace as prescribed by the OSH standards.\n\nCHAPTER II\nDUTIES AND RIGHTS OF EMPLOYERS, WORKERS\nAND OTHER PERSONS"
+        }
+      ]
+    },
+    {
+      "section_number": "Section 4",
+      "title": "Duties of Employers, Workers and Other Persons",
+      "content": "(a) Duties of Employers.— Every employer, contractor or subcontractor, if any, and\nany person who manages, controls or supervises the work being undertaken shall:\n\n1. Equip a place of employment for workers free from hazardous conditions\nthat are causing or are likely to cause death, illness or physical harm to the\nworkers;\n\n2. Provide complete job safety instructions and proper orientation to all workers\nincluding, but not limited to, those relating to familiarization with their work\nenvironment;\n\n3. Ensure that, so far as is reasonably practicable, the chemical, physical and\nbiological substances and agents, and ergonomic and psychosocial stresses\nunder their control are without risk to health when the appropriate measures\nof protection are taken;\n\n4. Use only approved specific industry set of standards of devices and\nequipment for the workplace, as applicable;\n\n5. Comply with OSH standards including training, medical examination, and\nwhen necessary, provisions on protective and safety devices such as PPE and\nmachine guards. Training for workers shall include health promotion,\nhazards associated with their work, health risks involved or to which they are\nexposed to, preventive measures to eliminate or minimize risks, steps to be\ntaken in cases of emergency, and safety instructions for the jobs, activities\nand tasks to be handled by workers;\n\n6. Make arrangements for workers and their representatives to have the time\nand resource to participate actively in the processes of organizing, planning\nand implementation, monitoring, evaluation and action for improvement of\nthe OSH management system;\n\n7. Provide, when necessary, for measures identifying trainings and drills,\nevacuation plans, etc., to deal with emergencies, fires and accidents including\nfirst-aid arrangements;\n\n8. Comply with all reportorial requirements of the OSH standards; and\n\n9. Register establishment to DOLE as provided under the OSH standards.\n\n(b) Duties of Workers.— Every worker, in order to ensure compliance with OSH\nstandards shall:\n1. Participate in capacity building activities on safety and health and other OSH\nrelated topics and programs;\n\n2. Proper use of all safeguards and safety devices furnished for workers’\nprotection and that of others;\n\n3. Comply with instructions to prevent accidents or imminent danger situations\nin the workplace;\n\n4. Observe prescribed steps to be taken in cases of emergency including\nparticipation in the conduct of national or local disaster drills; and\n\n5. Report to their immediate supervisor or any other responsible safety and\nhealth personnel any work hazard that may be discovered in the workplace.\n\n(c) Duties of Other Persons. — Any other person, including the builder or contactor\nwho visits, builds, renovates or installs devices or conducts business in any establishments or\nworkplace, shall comply with the provisions of this Rules and all other regulations issued by\nthe Secretary of Labor and Employment.\n\nWhenever two (2) or more undertakings are engaged in activities simultaneously in\none (1) workplace, it shall be the duty of all concerned to collaborate and cooperate to ensure\ncompliance with OSH standards and regulations.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Duties of Employers.— Every employer, contractor or subcontractor, if any, and\nany person who manages, controls or supervises the work being undertaken shall:",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Equip a place of employment for workers free from hazardous conditions\nthat are causing or are likely to cause death, illness or physical harm to the\nworkers;"
+            },
+            {
+              "label": "2",
+              "content": "Provide complete job safety instructions and proper orientation to all workers\nincluding, but not limited to, those relating to familiarization with their work\nenvironment;"
+            },
+            {
+              "label": "3",
+              "content": "Ensure that, so far as is reasonably practicable, the chemical, physical and\nbiological substances and agents, and ergonomic and psychosocial stresses\nunder their control are without risk to health when the appropriate measures\nof protection are taken;"
+            },
+            {
+              "label": "4",
+              "content": "Use only approved specific industry set of standards of devices and\nequipment for the workplace, as applicable;"
+            },
+            {
+              "label": "5",
+              "content": "Comply with OSH standards including training, medical examination, and\nwhen necessary, provisions on protective and safety devices such as PPE and\nmachine guards. Training for workers shall include health promotion,\nhazards associated with their work, health risks involved or to which they are\nexposed to, preventive measures to eliminate or minimize risks, steps to be\ntaken in cases of emergency, and safety instructions for the jobs, activities\nand tasks to be handled by workers;"
+            },
+            {
+              "label": "6",
+              "content": "Make arrangements for workers and their representatives to have the time\nand resource to participate actively in the processes of organizing, planning\nand implementation, monitoring, evaluation and action for improvement of\nthe OSH management system;"
+            },
+            {
+              "label": "7",
+              "content": "Provide, when necessary, for measures identifying trainings and drills,\nevacuation plans, etc., to deal with emergencies, fires and accidents including\nfirst-aid arrangements;"
+            },
+            {
+              "label": "8",
+              "content": "Comply with all reportorial requirements of the OSH standards; and"
+            },
+            {
+              "label": "9",
+              "content": "Register establishment to DOLE as provided under the OSH standards."
+            }
+          ]
+        },
+        {
+          "label": "b",
+          "content": "Duties of Workers.— Every worker, in order to ensure compliance with OSH\nstandards shall:",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Participate in capacity building activities on safety and health and other OSH\nrelated topics and programs;"
+            },
+            {
+              "label": "2",
+              "content": "Proper use of all safeguards and safety devices furnished for workers’\nprotection and that of others;"
+            },
+            {
+              "label": "3",
+              "content": "Comply with instructions to prevent accidents or imminent danger situations\nin the workplace;"
+            },
+            {
+              "label": "4",
+              "content": "Observe prescribed steps to be taken in cases of emergency including\nparticipation in the conduct of national or local disaster drills; and"
+            },
+            {
+              "label": "5",
+              "content": "Report to their immediate supervisor or any other responsible safety and\nhealth personnel any work hazard that may be discovered in the workplace."
+            }
+          ]
+        },
+        {
+          "label": "c",
+          "content": "Duties of Other Persons. — Any other person, including the builder or contactor\nwho visits, builds, renovates or installs devices or conducts business in any establishments or\nworkplace, shall comply with the provisions of this Rules and all other regulations issued by\nthe Secretary of Labor and Employment.\n\nWhenever two (2) or more undertakings are engaged in activities simultaneously in\none (1) workplace, it shall be the duty of all concerned to collaborate and cooperate to ensure\ncompliance with OSH standards and regulations."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 5",
+      "title": "Workers’ Right to Know",
+      "content": "The right to safety and health at work shall be\nguaranteed. All workers shall be appropriately informed by the employer about all types of\nhazards in the workplace, and be provided access to training, education, and orientation on\nchemical safety, electrical safety, mechanical safety, ergonomics, and other hazards and risks.\n\nAll workers, including new hires, shall be provided training and information for all\ntypes of hazards in the workplace in a language and dialect that workers can understand.\nTraining and information materials used shall be made readily available and accessible to\nworkers,\n\nA re-orientation on safety and health for workers in high risk establishments must be\nconducted regularly, not less than once a quarter, and to be conducted immediately following\nany changes in the operations and production process."
+    },
+    {
+      "section_number": "Section 6",
+      "title": "Workers’ Right to Refuse Unsafe Work",
+      "content": "The worker has the right of\nrefusal to work without threat or reprisal from the employer if, as determined by DOLE, an\nimminent danger situation exists. As a preventive measure, the safety officer may, following\nhis/her own determination and without fear of reprisal, implement a work stoppage or\nsuspend operations in cases of imminent danger. The employer, safety officer or worker shall\nimmediately notify the DOLE that an imminent danger situation exists in the workplace.\n\nThe employer or safety officer cannot require the workers to return to work where\nthere is a continuing imminent danger. A worker may also refuse to work until the lifting of\nthe Work Stoppage Order (WSO) after implementing the appropriate corrective measures\n\nWorkers affected by the existence of an imminent danger situation may be\ntemporarily assigned to other areas within the workplace provided there is no impending\nissue with safety and health.\nSection 24 of this Rules shall apply during the period of such WSO or suspension of\noperations due to an imminent danger situation."
+    },
+    {
+      "section_number": "Section 7",
+      "title": "Workers’ Right to Report Accidents",
+      "content": "Workers and their representatives\nshall have the right to report accidents, dangerous occurrences, and hazards to the employer,\nto DOLE and to other concerned competent government agencies. They shall be free from\nany form of retaliation for reporting of any accident.\n\nReporting of accidents to DOLE may be made through any means of communication,\nincluding the DOLE hotline, whichever is most convenient to the worker. The same may be\nreported to the nearest DOLE Regional, Field, Provincial or Satellite Office having\njurisdiction over the place of the incident."
+    },
+    {
+      "section_number": "Section 8",
+      "title": "Workers’ Right to Personal Protective Equipment (PPE)",
+      "content": "Every\nemployer, contractor or subcontractor, if any, shall provide his/her workers, free of charge,\nPPE for any part of the body that may be exposed to hazards, and lifeline, safety belt or\nharness, gas or dust respirators or masks, and protective shields whenever necessary by\nreason of the hazardous work process or environment, chemical, radiological, mechanical,\nand other irritants or hazards capable of causing injury or impairment in the function of any\npart of the body through absorption, inhalation or physical contact. The cost of PPE shall be\npart of the safety and health program which is a separate pay item pursuant to Section 21 of\nthis Rules.\n\nAll PPE shall be of the appropriate type as tested and approved by the DOLE based on\nits standards and/or other means of verification.\n\nThe usage of PPE in all establishments, projects, sites and all other places where work\nis being undertaken shall be based on the evaluation and recommendation of the safety officer\nas a result of the workplace hazard assessment.\n\nAll PPE must be of appropriate size, weight, and type to specific workers exposed to\nhazards from which PPE are meant to ensure effective protection. Issuance of PPE shall be\nsupplemented by training on the application, use, handling, cleaning and maintenance of said\nPPE in accordance with the manufacturer’s recommendations.\n\nFailure to provide appropriate PPE in high risk activities shall give rise to the right of\nthe worker to refuse unsafe work."
+    },
+    {
+      "section_number": "Section 9",
+      "title": "Safety Signage and Devices",
+      "content": "All establishments, projects, sites and all\nother places where work is being undertaken shall have safety signage and devices to warn\nthe workers and the public of the hazards in the workplace. Safety signage and devices shall\nbe posted in prominent positions at strategic locations in a language understandable to all,\nand in accordance with the OSH standards on color of signs for safety instructions and\nwarnings, Globally Harmonized System (GHS) pictograms, construction safety, classification\nand labelling of chemicals, radiation, safety instructions and warning signs, set by DOLE. All\nsignage shall also be of appropriate quality to ensure their legibility."
+    },
+    {
+      "section_number": "Section 10",
+      "title": "Safety in the Use of Equipment",
+      "content": "In relation to the use of equipment,\nsuch as but not limited to, earth moving equipment, heavy duty equipment, materials\nhandling equipment, and construction equipment, the employer, contractor or subcontractor,\nif any, must comply with the OSH standards set by DOLE on safety and use of such\nequipment in the different phases of the company or project operation including the transport\nto and from the establishment, project, site or place where work is being undertaken.\n\nAppropriate training and certification by the Technical Education and Skills\nDevelopment Authority (TESDA), Professional Regulation Commission (PRC) or other\nconcerned government agency shall be a requirement for operators before use of equipment,\nif applicable. Trainings provided by international organizations or suppliers if not locally\navailable, shall be recognized by the DOLE."
+    },
+    {
+      "section_number": "Section 11",
+      "title": "Occupational Safety and Health Information",
+      "content": "The employer,\ncontractor or subcontractor, if any, shall provide the workers in all establishments, projects,\nsites and all other places where work is being undertaken adequate and suitable information\non the following:\n\n(a) Workplace hazards and the risk posed on the safety and health of the workers\n\nsuch as chemical safety data sheets;\n\n(b) Control mechanisms in place that reduces or minimizes the risk of exposure to\nhazards and other preventive strategies (e.g., training on specific hazards, medical\nmonitoring tests, immunization and control of lifestyle-related diseases);\n\n(c) Appropriate measures, including the probable location of workers, for the\nprevention, control and protection against those hazards; and\n\n(d) Emergency and disaster management protocols including proper evacuation and\nshut-down procedures.\n\nInformation materials shall be revised regularly by the OSH committee.\n\nCHAPTER IV\nCOVERED WORKPLACES",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Workplace hazards and the risk posed on the safety and health of the workers\n\nsuch as chemical safety data sheets;"
+        },
+        {
+          "label": "b",
+          "content": "Control mechanisms in place that reduces or minimizes the risk of exposure to\nhazards and other preventive strategies (e.g., training on specific hazards, medical\nmonitoring tests, immunization and control of lifestyle-related diseases);"
+        },
+        {
+          "label": "c",
+          "content": "Appropriate measures, including the probable location of workers, for the\nprevention, control and protection against those hazards; and"
+        },
+        {
+          "label": "d",
+          "content": "Emergency and disaster management protocols including proper evacuation and\nshut-down procedures.\n\nInformation materials shall be revised regularly by the OSH committee.\n\nCHAPTER IV\nCOVERED WORKPLACES"
+        }
+      ]
+    },
+    {
+      "section_number": "Section 12",
+      "title": "Occupational Safety and Health (OSH) Program",
+      "content": "Covered\nworkplaces shall develop and implement a suitable OSH program in a format prescribed by\nDOLE which shall be posted in prominent places.\n\n(a) For establishments-with less than ten (10) workers and low risk establishments\nwith ten (10) to fifty (50) workers. - The OSH program, which shall be duly signed by the\nemployer, must include at least the following:\n\n1. Company commitment to comply with OSH requirements;\n2. General safety and health programs, including:\ne Safety and health hazard identification, risk assessment and control\n(HIRAC),\ne Medical surveillance for early detection and management of\noccupational and work-related diseases, and\ne First aid and emergency medical services;\n3. Promotion of the following health domains:\ne Drug-free workplace (RA 9165),\ne Mental health services in the workplace (RA 11036), and\ne Healthy lifestyle;\n4. Prevention and control of the following health domains:\ne Human Immunodeficiency Virus and Acquired Immune Deficiency\nSyndrome (RA 8504),\ne Tuberculosis (EO 187-03), and\ne Hepatitis B(DOLE DA 05-2010);\n5. Complete company or project details;\n6. Composition and duties of the OSH committee;\n7. OSH personnel and facilities;\n8. Safety and health promotion, training and education, including:\ne Orientation of all workers on OSH, and\ne Conduct of risk assessment, evaluation and control;\n9. Conduct of toolbox or safety meetings and job safety analysis, if applicable;\n10. Accident/incident/illness investigation, recording and reporting;\n11. Provision and use of PPE;\n12. Provision of safety signage;\n13. Provision of workers’ welfare facilities;\n14. Emergency and disaster preparedness and mandated drills;\n15. Solid waste management system; and\n16. Control and management of hazards.\n\n(b) For medium to high risk establishments with ten (10) to fifty (50) workers and\nlow to high risk establishments with fifty-one (51) workers and above. - The OSH program,\nwhich shall be duly signed by the employer, must include at least the following:\n\n1. Company commitment to comply with OSH requirements;\n2. General safety and health programs including:\ne Safety and health hazard identification, risk assessment and control\n(HIRAC),\ne Medical surveillance for early detection and management of\noccupational and work-related diseases, and\ne First aid and emergency medical services;\n3. Promotion of the following health domains:\ne Drug-free workplace (RA 9165),\ne Mental health services in the workplace (RA 11036), and\ne Healthy lifestyle;\n4. Prevention and control of the following health domains:\n1. Human Immunodeficiency Virus and Acquired Immune Deficiency\nSyndrome (RA 8504),\n2. Tuberculosis (EO 187-03), and\n3. Hepatitis B (DOLE DA 05-2010);\n5. Complete company or project details;\n6. Composition and duties of the OSH committee;\n7. OSH personnel and facilities;\n8. Safety and health promotion, training and education, to include the\nfollowing:\ne Orientation of all workers on OSH,\ne Conduct of risk assessment, evaluation and control,\ne Continuous training on OSH of OSH personnel, and\ne Work Permit System such as working at height, working at confined\nspace, hot works, and other related activities;\n\n9. Conduct of toolbox or safety meetings and job safety analysis;\n\n10. Accident/incident/iliness investigation, recording and reporting;\n\n11. Provision and use of PPE;\n\n12. Provision of safety signage;\n\n13. Dust control and management, and regulations on activities such as building\nof temporary structures, and lifting and operation of electrical, mechanical,\ncommunications system, and other equipment;\n\n14. Provision of workers’ welfare facilities;\n\n15. Emergency and disaster preparedness and response plan to include the\norganization and creation of disaster control groups, business continuity plan,\nand updating the hazard, risk and vulnerability assessment, as required;\n\n16. Solid waste management system;\n\n17. Control and management of hazards;\n\n18. Prohibited acts and penalties for violations; and\n\n19. Cost of implementing company OSH program.\n\nThe DOLE shall prescribe a format that should be accomplished fully by the\nemployer, contractor or subcontractor, if any, in consultation with the workers and their\nrepresentatives.\n\nThe OSH program shall be communicated and be made readily available to all\npersons in the workplace. It shall be updated periodically whenever the DOLE, other\nregulatory or government agencies and institutions promulgate new rules, guidelines and\nother issuances related to workers’ safety and health.\n\nThe establishment shall ensure that the core elements of OSH program are integrated\nin the company OSH program such as management commitment and employee involvement,\nworkplace risk assessment, hazard prevention and control, safety and health training and\neducation, and OSH program evaluation.\n\nThe establishment shall submit a copy of the OSH program to the DOLE Regional,\nProvincial, Field or Satellite Office having jurisdiction over the workplace. A duly signed\ncompany commitment to comply OSH requirements together with the company OSH\nprogram using the prescribed template shall be considered approved upon submission\nEXCEPT for Construction Safety and Health Program which shall need approval by DOLE\nprior to construction.\n\nOSH programs in the pre-approved template may be modified by DOLE as necessary\nbased on existing laws, rules and regulations, and other issuances or upon validation of the\nprogram during inspection. If there is a modification made by the company, the company\nshall submit a revised copy of the OSH program to DOLE.\n\nThe company shall review and evaluate the OSH program at least once a year or as\nnecessary, to ensure that its objectives are met towards an improved safety and health\nperformance.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "For establishments-with less than ten (10) workers and low risk establishments\nwith ten (10) to fifty (50) workers. - The OSH program, which shall be duly signed by the\nemployer, must include at least the following:",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Company commitment to comply with OSH requirements;"
+            },
+            {
+              "label": "2",
+              "content": "General safety and health programs, including:\ne Safety and health hazard identification, risk assessment and control\n(HIRAC),\ne Medical surveillance for early detection and management of\noccupational and work-related diseases, and\ne First aid and emergency medical services;"
+            },
+            {
+              "label": "3",
+              "content": "Promotion of the following health domains:\ne Drug-free workplace (RA 9165),\ne Mental health services in the workplace (RA 11036), and\ne Healthy lifestyle;"
+            },
+            {
+              "label": "4",
+              "content": "Prevention and control of the following health domains:\ne Human Immunodeficiency Virus and Acquired Immune Deficiency\nSyndrome (RA 8504),\ne Tuberculosis (EO 187-03), and\ne Hepatitis B(DOLE DA 05-2010);"
+            },
+            {
+              "label": "5",
+              "content": "Complete company or project details;"
+            },
+            {
+              "label": "6",
+              "content": "Composition and duties of the OSH committee;"
+            },
+            {
+              "label": "7",
+              "content": "OSH personnel and facilities;"
+            },
+            {
+              "label": "8",
+              "content": "Safety and health promotion, training and education, including:\ne Orientation of all workers on OSH, and\ne Conduct of risk assessment, evaluation and control;"
+            },
+            {
+              "label": "9",
+              "content": "Conduct of toolbox or safety meetings and job safety analysis, if applicable;"
+            },
+            {
+              "label": "10",
+              "content": "Accident/incident/illness investigation, recording and reporting;"
+            },
+            {
+              "label": "11",
+              "content": "Provision and use of PPE;"
+            },
+            {
+              "label": "12",
+              "content": "Provision of safety signage;"
+            },
+            {
+              "label": "13",
+              "content": "Provision of workers’ welfare facilities;"
+            },
+            {
+              "label": "14",
+              "content": "Emergency and disaster preparedness and mandated drills;"
+            },
+            {
+              "label": "15",
+              "content": "Solid waste management system; and"
+            },
+            {
+              "label": "16",
+              "content": "Control and management of hazards."
+            }
+          ]
+        },
+        {
+          "label": "b",
+          "content": "For medium to high risk establishments with ten (10) to fifty (50) workers and\nlow to high risk establishments with fifty-one (51) workers and above. - The OSH program,\nwhich shall be duly signed by the employer, must include at least the following:",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "Company commitment to comply with OSH requirements;"
+            },
+            {
+              "label": "2",
+              "content": "General safety and health programs including:\ne Safety and health hazard identification, risk assessment and control\n(HIRAC),\ne Medical surveillance for early detection and management of\noccupational and work-related diseases, and\ne First aid and emergency medical services;"
+            },
+            {
+              "label": "3",
+              "content": "Promotion of the following health domains:\ne Drug-free workplace (RA 9165),\ne Mental health services in the workplace (RA 11036), and\ne Healthy lifestyle;"
+            },
+            {
+              "label": "4",
+              "content": "Prevention and control of the following health domains:"
+            },
+            {
+              "label": "1",
+              "content": "Human Immunodeficiency Virus and Acquired Immune Deficiency\nSyndrome (RA 8504),"
+            },
+            {
+              "label": "2",
+              "content": "Tuberculosis (EO 187-03), and"
+            },
+            {
+              "label": "3",
+              "content": "Hepatitis B (DOLE DA 05-2010);"
+            },
+            {
+              "label": "5",
+              "content": "Complete company or project details;"
+            },
+            {
+              "label": "6",
+              "content": "Composition and duties of the OSH committee;"
+            },
+            {
+              "label": "7",
+              "content": "OSH personnel and facilities;"
+            },
+            {
+              "label": "8",
+              "content": "Safety and health promotion, training and education, to include the\nfollowing:\ne Orientation of all workers on OSH,\ne Conduct of risk assessment, evaluation and control,\ne Continuous training on OSH of OSH personnel, and\ne Work Permit System such as working at height, working at confined\nspace, hot works, and other related activities;"
+            },
+            {
+              "label": "9",
+              "content": "Conduct of toolbox or safety meetings and job safety analysis;"
+            },
+            {
+              "label": "10",
+              "content": "Accident/incident/iliness investigation, recording and reporting;"
+            },
+            {
+              "label": "11",
+              "content": "Provision and use of PPE;"
+            },
+            {
+              "label": "12",
+              "content": "Provision of safety signage;"
+            },
+            {
+              "label": "13",
+              "content": "Dust control and management, and regulations on activities such as building\nof temporary structures, and lifting and operation of electrical, mechanical,\ncommunications system, and other equipment;"
+            },
+            {
+              "label": "14",
+              "content": "Provision of workers’ welfare facilities;"
+            },
+            {
+              "label": "15",
+              "content": "Emergency and disaster preparedness and response plan to include the\norganization and creation of disaster control groups, business continuity plan,\nand updating the hazard, risk and vulnerability assessment, as required;"
+            },
+            {
+              "label": "16",
+              "content": "Solid waste management system;"
+            },
+            {
+              "label": "17",
+              "content": "Control and management of hazards;"
+            },
+            {
+              "label": "18",
+              "content": "Prohibited acts and penalties for violations; and"
+            },
+            {
+              "label": "19",
+              "content": "Cost of implementing company OSH program.\n\nThe DOLE shall prescribe a format that should be accomplished fully by the\nemployer, contractor or subcontractor, if any, in consultation with the workers and their\nrepresentatives.\n\nThe OSH program shall be communicated and be made readily available to all\npersons in the workplace. It shall be updated periodically whenever the DOLE, other\nregulatory or government agencies and institutions promulgate new rules, guidelines and\nother issuances related to workers’ safety and health.\n\nThe establishment shall ensure that the core elements of OSH program are integrated\nin the company OSH program such as management commitment and employee involvement,\nworkplace risk assessment, hazard prevention and control, safety and health training and\neducation, and OSH program evaluation.\n\nThe establishment shall submit a copy of the OSH program to the DOLE Regional,\nProvincial, Field or Satellite Office having jurisdiction over the workplace. A duly signed\ncompany commitment to comply OSH requirements together with the company OSH\nprogram using the prescribed template shall be considered approved upon submission\nEXCEPT for Construction Safety and Health Program which shall need approval by DOLE\nprior to construction.\n\nOSH programs in the pre-approved template may be modified by DOLE as necessary\nbased on existing laws, rules and regulations, and other issuances or upon validation of the\nprogram during inspection. If there is a modification made by the company, the company\nshall submit a revised copy of the OSH program to DOLE.\n\nThe company shall review and evaluate the OSH program at least once a year or as\nnecessary, to ensure that its objectives are met towards an improved safety and health\nperformance."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_number": "Section 13",
+      "title": "Occupational Safety and Health Committee",
+      "content": "To ensure that the safety\nand health program is observed and enforced, a safety and health committee shall be\norganized in covered workplaces.\n\n(a) For establishments with less than ten (10) workers and low risk establishments\nwith ten (10) to fifty (50) workers. - A SO1 shall establish an OSH committee composed of\nthe following:\n\n: Company owner or manager\nChairperson\nSecretary : Safety officer of the workplace\nMember : At least one (1) worker, preferably a\nunion member if organized\n\nThe safety officer of the workplace may also be the owner, manager or his/her\ndesignated representative.\n\nThe company owner, manager or one of the workers of the company shall undertake\nfirst aid training from the Philippine Red Cross or any DOLE recognized organization.\n\n(b) For medium to high risk establishments with ten (10) to fifty (50) workers and\nlow to high risk establishments with fifty-one (51) workers and above. — The OSH committee\nof the covered workplace shall be composed of the following:\n\nEx-officio chairperson : Employer or his/her representative\n\nSecretary : Safety officer of the workplace\n\nEx-officio members : Certified first-aider, OH nurse, OH dentist, and\nOH physician, as applicable\n\nMembers : Safety officers representing the contractor or\nsubcontractor, as the case may be, and\nrepresentative/s of workers who shall come from\nthe union, if the workers are organized, or elected\nworkers through a simple vote of majority, if they\nare unorganized\n\nThe OSH committee shall effectively plan, develop, oversee and monitor the\nimplementation of the OSH program.\n\n(c) For two (2) or more establishments housed under one building or complex\nincluding malls. — When two or more establishments are housed under one building or\ncomplex, the health and safety committee organized in each workplace shall form themselves\ninto a Joint Coordinating Committee to plan and implement programs and activities\nconcerning all the establishments. The Joint Coordinating Committee shall be composed of\nthe following:\n\nChairperson : Building owner or his/her representative such as\nthe building administrator\nSecretary : Safety officer of the building or complex\nappointed by the Chairperson\nMembers : At least two safety officers from any of the\nestablishment housed under one building or\ncomplex\nAt least two workers’ representatives, one of\nwhich must be from a union if organized, from\nany of the establishment housed under one\nbuilding or complex\n\nThe building administrator shall ensure that the Joint OSH committee shall submit its\norganizational plans and minutes to the DOLE Regional office, copy furnished the Bureau of\nWorking Conditions.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "For establishments with less than ten (10) workers and low risk establishments\nwith ten (10) to fifty (50) workers. - A SO1 shall establish an OSH committee composed of\nthe following:\n\n: Company owner or manager\nChairperson\nSecretary : Safety officer of the workplace\nMember : At least one (1) worker, preferably a\nunion member if organized\n\nThe safety officer of the workplace may also be the owner, manager or his/her\ndesignated representative.\n\nThe company owner, manager or one of the workers of the company shall undertake\nfirst aid training from the Philippine Red Cross or any DOLE recognized organization."
+        },
+        {
+          "label": "b",
+          "content": "For medium to high risk establishments with ten (10) to fifty (50) workers and\nlow to high risk establishments with fifty-one (51) workers and above. — The OSH committee\nof the covered workplace shall be composed of the following:\n\nEx-officio chairperson : Employer or his/her representative\n\nSecretary : Safety officer of the workplace\n\nEx-officio members : Certified first-aider, OH nurse, OH dentist, and\nOH physician, as applicable\n\nMembers : Safety officers representing the contractor or\nsubcontractor, as the case may be, and\nrepresentative/s of workers who shall come from\nthe union, if the workers are organized, or elected\nworkers through a simple vote of majority, if they\nare unorganized\n\nThe OSH committee shall effectively plan, develop, oversee and monitor the\nimplementation of the OSH program."
+        },
+        {
+          "label": "c",
+          "content": "For two (2) or more establishments housed under one building or complex\nincluding malls. — When two or more establishments are housed under one building or\ncomplex, the health and safety committee organized in each workplace shall form themselves\ninto a Joint Coordinating Committee to plan and implement programs and activities\nconcerning all the establishments. The Joint Coordinating Committee shall be composed of\nthe following:\n\nChairperson : Building owner or his/her representative such as\nthe building administrator\nSecretary : Safety officer of the building or complex\nappointed by the Chairperson\nMembers : At least two safety officers from any of the\nestablishment housed under one building or\ncomplex\nAt least two workers’ representatives, one of\nwhich must be from a union if organized, from\nany of the establishment housed under one\nbuilding or complex\n\nThe building administrator shall ensure that the Joint OSH committee shall submit its\norganizational plans and minutes to the DOLE Regional office, copy furnished the Bureau of\nWorking Conditions."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 14",
+      "title": "Safety Officer",
+      "content": "In the implementation of OSH program, safety officers\nshall be employed or designated with the following duties and responsibilities:\n\n(a) Oversee the overall management of the OSH program in coordination with the\n\nOSH committee;\n\n(b) Frequently monitor and inspect any health or safety aspect of the operation being\nundertaken with the participation of supervisors and workers;\n\n(c) Assist government inspectors in the conduct of safety and health inspection at any\ntime whenever work is being performed or during the conduct of an accident\ninvestigation by providing necessary information and OSH reports as required by\nthe OSH standards; and\n\n(d) Issue Work Stoppage Order (WSO) when necessary based on the requirements\nand procedures provided by the OSH standards.\n\nSafety officer/s of all workplace must possess the necessary training and experience\nrequirement according to its category as contained herein. The respective qualifications of\nsafety officers are as follows:\n\nExperience\nSafety Officer 1 | (a) Mandatory eight (8)-hour OSH orientation\n(SO1) course AND\nb) Two (2)-hour trainers’ training\na eee, |\nS02 course applicable to the indust\nSafety Officer 3 | (a) Mandatory forty (40)-hour basic OSH | At least two (2) years\n(SO3) training course applicable to the industry; | of experience in OSH\n(b) Additional forty-eight (48) hours of\nadvanced/specialized occupational safety\ntraining course relevant to the industry;\nAND\n(c) Other requirements as prescribed by the\nOSH standards.\n(a) Mandatory forty (40)-hour OSH training\n(SO4) course applicable to the industry; SO3 for at least four\n(b) Additional eighty (80) hours of | (4) years\nadvanced/specialized occupational safety\ntraining course relevant to the industry;\n(c) An aggregate of three hundred twenty\n(320) hours of OSH related training or\nexperience (additional training may be\nconverted to years of experience where\neighty [80] hours of training may equal to\none [1] year of experience and vice\nversa.); AND\n\n(d) Other requirements as prescribed by the\nOSH standards.\n\nThe number and qualification of safety officers shall be proportionate to the total\nnumber of workers and equipment, size of work area, classification of the workplace and\nsuch other criteria as required by the OSH standards.\n\nThe safety officer shall be required to undergo the prescribed DOLE-BOSH training\norientation or course, advanced occupational safety training courses, and/or other OSH\nrelated training or learning as necessary in the effective performance of its duties and\nresponsibilities.\n\nSafety officers engaged in micro and small establishments, low to medium risk, shall\nbe engaged in safety programs including other tasks designated to him/her by his/her\nemployer.\n\nIn the case of a contractor or subcontractor, at least one (1) safety officer must be\ndeployed at each specific area of operations to oversee the management of the OSH program\nof its own workforce.\n\nMinimum classification and number of safety officer for all covered workplaces shall\nbe as follows:\n\nNumber of Workers Medium Risk High Risk\nOne (1) SO1 One (1) SO1 One (1) SO2\n(10t050_ | One (1) S01 | One (1) SO3__\n10 to 50 One (1) $02 One (1) SO3\n31 to 99 One (1) SO2 and\njot 199 One (1) SO2 One (1) SO2 and\n100 to 199 One (1) $03 One (1) SO3\nTwo (2) SO2 or One (1) SO2 and\n200 to 250 One (1) $03 One (1) S03 Two (2) S03\n251 to 500 One (1) S03 Two (2) SO3 Two (2) SO3\nTwo (2) SO2 and\n901 to 750 One (1) SO3 Two (2) S03 One (1) SO2 and\n751 to 1000 Two (2) SO3 Two (2) S03\nEvery additional 250 or Additional One (1)\nfraction thereof SO3 or SO4\nEvery additional 500 or | Additional One (1) | Additional One (1)\nfraction thereof SO3 SO3 or SO4\nThe engagement of the services of a certified OSH consultant (SO4) shall be allowed\nfor a period not longer than one (1) year for establishments whose designated safety officer\nhas to be trained or is in the process of completing the prescribed training courses and\nrelevant experience.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Oversee the overall management of the OSH program in coordination with the\n\nOSH committee;"
+        },
+        {
+          "label": "b",
+          "content": "Frequently monitor and inspect any health or safety aspect of the operation being\nundertaken with the participation of supervisors and workers;"
+        },
+        {
+          "label": "c",
+          "content": "Assist government inspectors in the conduct of safety and health inspection at any\ntime whenever work is being performed or during the conduct of an accident\ninvestigation by providing necessary information and OSH reports as required by\nthe OSH standards; and"
+        },
+        {
+          "label": "d",
+          "content": "Issue Work Stoppage Order (WSO) when necessary based on the requirements\nand procedures provided by the OSH standards.\n\nSafety officer/s of all workplace must possess the necessary training and experience\nrequirement according to its category as contained herein. The respective qualifications of\nsafety officers are as follows:\n\nExperience\nSafety Officer 1 | (a) Mandatory eight (8)-hour OSH orientation\n(SO1) course AND",
+          "subsections": [
+            {
+              "label": "b",
+              "content": "Two (2)-hour trainers’ training\na eee, |\nS02 course applicable to the indust\nSafety Officer 3 | (a) Mandatory forty (40)-hour basic OSH | At least two (2) years\n(SO3) training course applicable to the industry; | of experience in OSH"
+            }
+          ]
+        },
+        {
+          "label": "b",
+          "content": "Additional forty-eight (48) hours of\nadvanced/specialized occupational safety\ntraining course relevant to the industry;\nAND"
+        },
+        {
+          "label": "c",
+          "content": "Other requirements as prescribed by the\nOSH standards."
+        },
+        {
+          "label": "a",
+          "content": "Mandatory forty (40)-hour OSH training\n(SO4) course applicable to the industry; SO3 for at least four"
+        },
+        {
+          "label": "b",
+          "content": "Additional eighty (80) hours of | (4) years\nadvanced/specialized occupational safety\ntraining course relevant to the industry;"
+        },
+        {
+          "label": "c",
+          "content": "An aggregate of three hundred twenty\n(320) hours of OSH related training or\nexperience (additional training may be\nconverted to years of experience where\neighty [80] hours of training may equal to\none [1] year of experience and vice\nversa.); AND"
+        },
+        {
+          "label": "d",
+          "content": "Other requirements as prescribed by the\nOSH standards.\n\nThe number and qualification of safety officers shall be proportionate to the total\nnumber of workers and equipment, size of work area, classification of the workplace and\nsuch other criteria as required by the OSH standards.\n\nThe safety officer shall be required to undergo the prescribed DOLE-BOSH training\norientation or course, advanced occupational safety training courses, and/or other OSH\nrelated training or learning as necessary in the effective performance of its duties and\nresponsibilities.\n\nSafety officers engaged in micro and small establishments, low to medium risk, shall\nbe engaged in safety programs including other tasks designated to him/her by his/her\nemployer.\n\nIn the case of a contractor or subcontractor, at least one (1) safety officer must be\ndeployed at each specific area of operations to oversee the management of the OSH program\nof its own workforce.\n\nMinimum classification and number of safety officer for all covered workplaces shall\nbe as follows:\n\nNumber of Workers Medium Risk High Risk\nOne (1) SO1 One (1) SO1 One (1) SO2\n(10t050_ | One (1) S01 | One (1) SO3__\n10 to 50 One (1) $02 One (1) SO3\n31 to 99 One (1) SO2 and\njot 199 One (1) SO2 One (1) SO2 and\n100 to 199 One (1) $03 One (1) SO3\nTwo (2) SO2 or One (1) SO2 and\n200 to 250 One (1) $03 One (1) S03 Two (2) S03\n251 to 500 One (1) S03 Two (2) SO3 Two (2) SO3\nTwo (2) SO2 and\n901 to 750 One (1) SO3 Two (2) S03 One (1) SO2 and\n751 to 1000 Two (2) SO3 Two (2) S03\nEvery additional 250 or Additional One (1)\nfraction thereof SO3 or SO4\nEvery additional 500 or | Additional One (1) | Additional One (1)\nfraction thereof SO3 SO3 or SO4\nThe engagement of the services of a certified OSH consultant (SO4) shall be allowed\nfor a period not longer than one (1) year for establishments whose designated safety officer\nhas to be trained or is in the process of completing the prescribed training courses and\nrelevant experience."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 15",
+      "title": "Occupational Health Personnel and Facilities",
+      "content": "Covered workplaces\nshall have qualified occupational health personnel such as certified first-aiders, nurses,\ndentists, and physicians duly complemented with the required medical supplies, equipment\nand facilities. The number of health personnel, which may be classified as full time (FT) or\npart-time (PT), equipment and facilities, and the amount of supplies shall be proportionate to\nthe total number of workers and the risk or hazard involved in the workplace, the ideal ratio\nof which shall be as follows:\n\nNumber of Medium to High Risk\nWorkers First- OH OH OH First- OH OH\nAider | Nurse |Dentist* |Physician| Aider | Nurse Physician|\n1-9 | a ee a ee\n10-50 po o- | - | - | ee ee\n51-99 ee 2PT | |\n100-199 | 2 | 2PT | - | - [| 2 {irr { ipr { ipr |\n200-500\n1 FT 1 FT 1 FT 1 FT\n> 2000 >20 per 1 FT and >20 per 1 FT and\nshift 2 PT shift 2 PT\nEvery 100\nworkers or\na fraction\nthereof\nEvery 250\nworkers or\na fraction IFT 1FT\nthereof\nEvery 500\nworkers or 1 FT or 1 FT or\na fraction TFT | 4p IFT | 4pr\nthereof\nPT = 4h/d, 3d/w; FT = 8h/d, 6d/w\nOH personnel shall be placed in the shift with the highest number of workers\n*For OH dentists: Alternatively, establishments can enter into a Memorandum of\nAgreement (MOA) for dental services for workers; provided that the requirements for\ndental facilities are met.\nFor OH physicians: If more than 1 PT physician is required, a physician must be present in\nall work days of the establishment.\nEvery employer covered by this Rules shall provide his/her workers medical services\nand facilities and shall not be an excuse by employer from maintaining in his/her workplace a\nfirst aid treatment room or clinic for workers which shall be as follows:\n\nveto\ntreatment | (number of | (number of | treatment | (number of | (number of\nroom beds beds room beds beds\n1-9 a ee Ds ee ee\na ee ee es\npp fd\n| |\n2 2 [| -\nAdditional | = —__| Additional Fe\n1 for every | Additional | = - ~—_—|§'| forevery | Additional | = -\n100 \"| 1 forevery [__-__] $0 worker | 1 forevery [_-___\nworker or 200 ora 100\na fraction | worker or fraction | worker or\n1001-2000 thereof | a fraction thereof | a fraction\nthereof 1 thereof 1\nfull time full time\n\nThe employer may not establish a hospital or dental clinic in the workplace where\nthere is a hospital or dental clinic which is located not more than five (5) kilometers away\nfrom the workplace, accessible in not more than twenty-five (25) minutes travel time, and the\nemployer has facilities readily available for transporting workers to the hospital or dental\nclinic in cases of emergency. For this purpose, the employer shall enter into a written contract\nwith the hospital for the use of such hospital for the treatment of workers in cases of\nemergency."
+    },
+    {
+      "section_number": "Section 16",
+      "title": "Safety and Health Training",
+      "content": "(a) All safety and health personnel shall undergo the mandatory orientation or\ntraining on OSH as prescribed by DOLE. Said training shall be evidenced by the issuance of\na certification by DOLE or a DOLE-Accredited Training Organization. Dispatch curriculum\nfor training covered under this Section shall be prescribed by DOLE. The following are the\nminimum prescribed training or orientation for all safety and health personnel:\n\nSafety Officer 1 1. Mandatory eight (8)-hour OSH orientation course\n(SO1) applicable to its industry such as:\ne General Industry — Basic OSH Orientation Course,\ne Construction Industry - Construction OSH\nOrientation Course,\ne Maritime Industry — Maritime OSH Orientation\nCourse, or\ne Other industry specific course as may be prescribed;\nAND\n2. Two (2)- hour trainers’ training.\nSafety Officer 2 Mandatory forty (40)-hour OSH training course\n(SO2) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry -— Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed.\nSafety Officer 3 1. Mandatory forty (40)-hour OSH training course\n(SO3) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry - Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed;\n\n2. Additional forty-eight (48) hours of\nadvanced/specialized occupational safety training\ncourse relevant to the industry(e.g., industrial\nhygiene, safety audit, accident investigation, OSH\nprogramming, chemical safety, etc.); AND\n\n3. Other requirements as prescribed by the OSH\nstandards.\n\nSafety Officer 4 1. Mandatory forty (40)-hour OSH training course\n(SO4) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry - Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed;\n\n2. Additional eighty (80) hours of advanced/specialized\noccupational safety training course relevant to the\nindustry, (e.g., industrial hygiene, safety audit,\naccident investigation, OSH programming, chemical\nsafety, etc.);\n\n3. An aggregate of three hundred twenty (320) hours of\nOSH related training or experience (additional\ntraining may be converted to years of experience\nwhere eighty [80] hours of training may equal to one\n[1] year of experience and vice versa.); AND\n\n4. Other requirements as prescribed by the OSH\nstandards.\nFistAider 8 | Standard first aid training\n\nOH Nurse At least forty (40)-hour Basic OSH training course for\nOH Nurses\n\nJOH Dentist At least forty (40)-hour Basic OSH training course\n\nOH Physician At least fifty-six (56)-hour Basic OSH training course for\nOH Physicians\n\n(b) All workers shall undergo the mandatory workers’ OSH seminar as prescribed by\nDOLE which shall be jointly participated by workers and employers. Standardized training\nmodule for safety and health personnel shall be implemented and updated regularly as\nnecessary. The mandatory workers’ OSH seminar may be conducted by the safety officer of\nthe establishment or any certified OSH practitioner or consultant.\n\nThe workers’ OSH seminar and other trainings/orientations as required by the\nemployer and by any law shall be at no cost on the worker and considered as compensable\nworking time.\n\n(c) All personnel engaged in the operation, erection and dismantling of equipment\nand scaffolds, structural erections, excavations, blasting operations, demolition, confined\nspaces, hazardous chemicals, welding, and flame cutting shall undergo specialized instruction\nand training on said activities. Such training shall include, among others, topics on safety and\nspecialized PPE requirements for said high-risk work activities, including the use, application\nand handling of the same, which can be provided by DOLE, DOLE-Accredited Training\nOrganizations or the PPE manufacturers.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "All safety and health personnel shall undergo the mandatory orientation or\ntraining on OSH as prescribed by DOLE. Said training shall be evidenced by the issuance of\na certification by DOLE or a DOLE-Accredited Training Organization. Dispatch curriculum\nfor training covered under this Section shall be prescribed by DOLE. The following are the\nminimum prescribed training or orientation for all safety and health personnel:\n\nSafety Officer 1 1. Mandatory eight (8)-hour OSH orientation course\n(SO1) applicable to its industry such as:\ne General Industry — Basic OSH Orientation Course,\ne Construction Industry - Construction OSH\nOrientation Course,\ne Maritime Industry — Maritime OSH Orientation\nCourse, or\ne Other industry specific course as may be prescribed;\nAND",
+          "subsections": [
+            {
+              "label": "2",
+              "content": "Two (2)- hour trainers’ training.\nSafety Officer 2 Mandatory forty (40)-hour OSH training course\n(SO2) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry -— Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed.\nSafety Officer 3 1. Mandatory forty (40)-hour OSH training course\n(SO3) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry - Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed;"
+            },
+            {
+              "label": "2",
+              "content": "Additional forty-eight (48) hours of\nadvanced/specialized occupational safety training\ncourse relevant to the industry(e.g., industrial\nhygiene, safety audit, accident investigation, OSH\nprogramming, chemical safety, etc.); AND"
+            },
+            {
+              "label": "3",
+              "content": "Other requirements as prescribed by the OSH\nstandards.\n\nSafety Officer 4 1. Mandatory forty (40)-hour OSH training course\n(SO4) applicable to its industry such as:\ne General Industry — Basic OSH Training Course,\ne Construction Industry — Construction OSH Training\nCourse,\ne Maritime Industry - Maritime OSH Training\nCourse, or\ne Other industry specific mandatory training as may\nbe prescribed;"
+            },
+            {
+              "label": "2",
+              "content": "Additional eighty (80) hours of advanced/specialized\noccupational safety training course relevant to the\nindustry, (e.g., industrial hygiene, safety audit,\naccident investigation, OSH programming, chemical\nsafety, etc.);"
+            },
+            {
+              "label": "3",
+              "content": "An aggregate of three hundred twenty (320) hours of\nOSH related training or experience (additional\ntraining may be converted to years of experience\nwhere eighty [80] hours of training may equal to one\n[1] year of experience and vice versa.); AND"
+            },
+            {
+              "label": "4",
+              "content": "Other requirements as prescribed by the OSH\nstandards.\nFistAider 8 | Standard first aid training\n\nOH Nurse At least forty (40)-hour Basic OSH training course for\nOH Nurses\n\nJOH Dentist At least forty (40)-hour Basic OSH training course\n\nOH Physician At least fifty-six (56)-hour Basic OSH training course for\nOH Physicians"
+            }
+          ]
+        },
+        {
+          "label": "b",
+          "content": "All workers shall undergo the mandatory workers’ OSH seminar as prescribed by\nDOLE which shall be jointly participated by workers and employers. Standardized training\nmodule for safety and health personnel shall be implemented and updated regularly as\nnecessary. The mandatory workers’ OSH seminar may be conducted by the safety officer of\nthe establishment or any certified OSH practitioner or consultant.\n\nThe workers’ OSH seminar and other trainings/orientations as required by the\nemployer and by any law shall be at no cost on the worker and considered as compensable\nworking time."
+        },
+        {
+          "label": "c",
+          "content": "All personnel engaged in the operation, erection and dismantling of equipment\nand scaffolds, structural erections, excavations, blasting operations, demolition, confined\nspaces, hazardous chemicals, welding, and flame cutting shall undergo specialized instruction\nand training on said activities. Such training shall include, among others, topics on safety and\nspecialized PPE requirements for said high-risk work activities, including the use, application\nand handling of the same, which can be provided by DOLE, DOLE-Accredited Training\nOrganizations or the PPE manufacturers."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 17",
+      "title": "Occupational Safety and Health Reports",
+      "content": "All employers, contractors\nor subcontractors, if any, shall submit to DOLE all safety and health reports, and notifications\nsuch as but not limited to annual medical report (AMR), OSH committee report, employer’s\nwork accident/injury report (WAIR), and annual work accident/injury exposure data report\n(AEDR)."
+    },
+    {
+      "section_number": "Section 18",
+      "content": "Workers’ Competency Certification. -The PRC shall determine the\nminimum and necessary competency on safety and health for OSH personnel and use the\nsame as equivalency in their application for Continuing Professional Development (CPD)\nunits. In order to professionalize, upgrade and update the level of competence of workers,\nTESDA or PRC, as the case may be, shall establish national competency standards and\nprepare guidelines on competency assessment and certification for critical occupations to\ninclude requirements on safety and health. In this regard, all critical occupations shall\nundergo the mandatory competency assessment and certification by TESDA.\n\nAn occupation shall be considered critical when:\n\n(a) The performance of a job affects people’s lives and safety;\n\n(b) The job involves the handling of complex tools, equipment and supplies;\n\n(c) The job requires a relatively long period of education and training; and\n\n(d) The performance of the job may compromise the safety, health and environmental\nconcerns within the immediate vicinity of the establishments.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "The performance of a job affects people’s lives and safety;"
+        },
+        {
+          "label": "b",
+          "content": "The job involves the handling of complex tools, equipment and supplies;"
+        },
+        {
+          "label": "c",
+          "content": "The job requires a relatively long period of education and training; and"
+        },
+        {
+          "label": "d",
+          "content": "The performance of the job may compromise the safety, health and environmental\nconcerns within the immediate vicinity of the establishments."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 19",
+      "title": "Workers’ Welfare Facilities",
+      "content": "All establishments, projects, sites and all\nother places where work is being undertaken shall have the following free welfare facilities in\norder to ensure humane working conditions:\n\n(a) Adequate supply of safe drinking water;\n\n(b) Adequate sanitary and washing facilities;\n\n(c) Suitable living accommodation for workers, as may be applicable such as in\nconstruction, shipping, fishing and nightworkers;\n\n(d) Separate sanitary, washing and sleeping facilities for all gender, as may be\napplicable;\n\n(e) Lactation station except those establishments as provided for under DOLE\nDepartment Order No. 143-15;\n\n(f) Ramps, railings and the like; and\n\n(g) Other workers’ welfare facilities as may be prescribed by the OSH standards and\nother issuances.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Adequate supply of safe drinking water;"
+        },
+        {
+          "label": "b",
+          "content": "Adequate sanitary and washing facilities;"
+        },
+        {
+          "label": "c",
+          "content": "Suitable living accommodation for workers, as may be applicable such as in\nconstruction, shipping, fishing and nightworkers;"
+        },
+        {
+          "label": "d",
+          "content": "Separate sanitary, washing and sleeping facilities for all gender, as may be\napplicable;"
+        },
+        {
+          "label": "e",
+          "content": "Lactation station except those establishments as provided for under DOLE\nDepartment Order No. 143-15;"
+        },
+        {
+          "label": "f",
+          "content": "Ramps, railings and the like; and"
+        },
+        {
+          "label": "g",
+          "content": "Other workers’ welfare facilities as may be prescribed by the OSH standards and\nother issuances."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 20",
+      "title": "All Other Occupational Safety and Health Standards",
+      "content": "All\nemployers, contractors or subcontractors, if any, shall comply with other occupational safety\nand health standards as provided for in the 1978 DOLE Occupational Safety and Health\nStandards, as amended."
+    },
+    {
+      "section_number": "Section 21",
+      "title": "Cost of Safety and Health Program",
+      "content": "The total cost of implementing a\nduly approved OSH program shall be an integral part of the operations cost. It shall be\nseparate pay item in construction and in all contracting or subcontracting arrangements.\n\nCHAPTER V\nJOINT AND SOLIDARY LIABILITY"
+    },
+    {
+      "section_number": "Section 22",
+      "title": "Employer’s Responsibility and Liability",
+      "content": "The employer, project\nowner, contractor, or subcontractor, if any, and any person who manages, controls or\nsupervises the work being undertaken shall be jointly and solidarily liable for compliance\nwith occupational safety and health standards including the penalties imposed for violation\nthereof as provided for in this Rules.\n\nCHAPTER VI\nENFORCEMENT OF OCCUPATIONAL SAFETY AND HEALTH STANDARDS"
+    },
+    {
+      "section_number": "Section 23",
+      "content": "Visitorial and Enforcement Power of the Secretary of Labor and\nEmployment or his/her duly authorized representatives. — All matters arising from the\nvisitorial and enforcement power of the Secretary of Labor and Employment or his/her duly\nauthorized representatives shall be governed by the applicable rules on the administration and\nenforcement of labor laws pursuant to Article 128 of the Labor Code of the Philippines, as\nrenumbered, and other laws.\n\nThe Secretary of Labor and Employment or his/her duly authorized representatives\nwith the appropriate inspection authority shall have the authority to enforce the mandatory\nOSH standards in all establishments and conduct an annual spot audit on its compliance for\nthe same.\n\nThe conduct of annual spot audit must be attended by a safety officer and\nrepresentative of the management and workers of the establishment. In the absence of the\nestablishment’s safety officer, his duly authorized representative may attend in his stead. The\nSecretary of Labor and Employment or his/her duly authorized representatives can enter\nworkplaces at any time of the day or night where work is being performed to examine records\nand investigate facts, conditions or matters necessary to determine compliance of\nestablishments with the provisions of this Rules and other applicable laws.\n\nPursuant to Article 128 of the Labor Code of the Philippines, it shall be unlawful for\nany person or entity to obstruct, impede, delay or otherwise render ineffective the orders of\nthe Secretary of Labor and Employment or his/her duly authorized representatives issued\npursuant to the authority granted before him/her, and no lower court or entity shall issue\ntemporary or permanent injunction or restraining order or otherwise assume jurisdiction over\nany case involving the orders of the Secretary of Labor and Employment or his/her duly\nauthorized representatives.\n\nThe Secretary of Labor and Employment or his/her duly authorized representatives\nmay order stoppage of work or suspension of operations of any unit or department of an\nestablishment when non-compliance to this Rules, OSH standards and other applicable laws\nposes grave and imminent danger to the safety and health of workers in the workplace.\n\nThe labor inspector or person authorized by DOLE to enforce compliance with this\nRules, OSH standards and other applicable laws and regulations, shall present legitimate\nauthorized identification upon request, and he/she shall only act within the authority or\ndirection given by the Secretary of Labor and Employment or his/her duly authorized\nrepresentatives.\n\nThe Secretary of Labor and Employment or his/her duly authorized representatives\nshall inspect establishments and workplaces regardless of the size and nature of operation.\nAny kind of self-assessment shall not take the place of labor inspection conducted by DOLE.\nHowever, chartered cities may be allowed to conduct industrial safety inspection of\nestablishments within their jurisdiction in coordination with DOLE, provided that, they have\nadequate facilities and competent personnel for the purpose as determined by DOLE, and\nsubject to national standards established by the latter.\n\nDepartment Order No. 183, Series of 2017 and the manual on execution of judgments\nshall govern the procedures in the conduct of inspection, mandatory conference, issuance of\norder and execution thereof.\n\nNo person or entity shall obstruct, impede, delay or otherwise render ineffective the\norders of the Secretary of Labor and Employment or the Secretary’s duly authorized\nrepresentatives issued pursuant to the authority granted under Article 128 of the Labor Code\nof the Philippines, and no lower court or entity shall issue temporary or permanent injunction\nor restraining order or otherwise assume jurisdiction over any case involving the enforcement\norders."
+    },
+    {
+      "section_number": "Section 24",
+      "content": "Payment of Workers During Work Stoppage Due to Imminent\nDanger. — If stoppage of work due to imminent danger occurs as a result of the employer’s\nviolation or fault, the employer shall pay the affected workers their corresponding wages\nduring the period of such stoppage of work or suspension of operations.\n\nFor purposes of payment of wages and any other liabilities arising from the WSO, the\nemployer is presumed a party at fault if the WSO was issued secondary to an imminent\ndanger situation which would imperil the lives of the workers. A mandatory conference not\nlater than seventy-two (72) hours shall be held to determine whether the WSO will be lifted\nor not."
+    },
+    {
+      "section_number": "Section 25",
+      "title": "Delegation of Authority",
+      "content": "The authority to enforce mandatory OSH\nstandards may be delegated by the Secretary of Labor and Employment to a competent\ngovernment authority. The said delegation of authority shall only cover the conduct of\nindustrial safety inspection.\n\nIn pursuance of the delegation of authority, the competent government authority shall\nsubmit a monthly report to the DOLE-Regional Office having jurisdiction over its location, in\naccordance with the provisions of the Revised Technical Safety Inspection Manual.\n\nThe delegation of authority upon may be revoked any time as may be warranted by\nthe circumstances."
+    },
+    {
+      "section_number": "Section 26",
+      "title": "Standards Setting Power of the Secretary of Labor and Employment",
+      "content": "— The Secretary of Labor and Employment shall, in consultation with all concerned\ngovernment agencies and instrumentalities, and relevant stakeholders, set and enforce\nmandatory OSH standards to eliminate or reduce OSH hazards depending on the number of\nemployees of the establishment, the nature of its business operations, and the risk or hazard\ninvolved,\n\nThe Secretary of Labor and Employment shall institute new and updated programs to\nensure safe and healthy working conditions in all workplaces especially in hazardous\nindustries such as, but not limited to, mining, fishing, construction, and maritime."
+    },
+    {
+      "section_number": "Section 27",
+      "title": "Employee’s Compensation Claim",
+      "content": "A worker may file claims for\ncompensation benefit arising out of work-related disability or death. Such claims shall be\nprocessed independently of the finding of fault, gross negligence or bad faith of the employer\nin a proceeding instituted for the purpose. The employer shall provide the necessary\nassistance to employees applying for claims."
+    },
+    {
+      "section_number": "Section 28",
+      "title": "Incentives to Employers and Workers",
+      "content": "There shall be established\npackage of incentives under such rules and regulations as may be promulgated by the DOLE\nto qualified employers and workers to recognize their efforts towards ensuring compliance\nwith OSH and general labor standards such as OSH training packages, additional protective\nequipment, technical guidance, recognition awards and other similar incentives."
+    },
+    {
+      "section_number": "Section 29",
+      "title": "Prohibited Acts and its Corresponding Penalties",
+      "content": "Any willful failure\nor refusal of an employer, contractor or subcontractor to comply with the following OSH\nstandards below or with a compliance order issued by the Secretary of Labor and\nEmployment or his/her authorized representative shall be penalized of the administrative\nfines as follows:\nRegistration of establishment to DOLE P20,000.00\nProvision of job safety instruction or orientation prior to work P20,000.00\nProvision of worker’s training (first aid, mandatory workers training, P25,000.00\nmandatory OSH training for safety officers and health personnel\nProvision of safety signage and devices P30,000.00\nProvision of medical supplies, equipment and facilities P30,000.00\nSubmission of reportorial requirements as prescribed by OSH P30,000.00\nstandards\nProvision of safety officer and/or OH personnel P40,000.00\nProvision of certified personnel or professionals required by the OSH P40,000.00\nstandards\nEstablishment of a safety and health committee P40,000.00\nFormulation and implementation of a comprehensive safety and health P40,000.00\nprogram\nProvision of information on hazards and risk (absence of chemical P40,000.00\nsafety data sheet, no written SOP in materials handling, lifting etc., no\npermitting system for confined spaces/hot works, no lock-out/tag-out\nsystem etc.\nProvision of sanitary and welfare facilities P40,000.00\nUse of approved or certified devices and equipment for the task P50,000.00\nProvision of PPE or charging of provided PPE to workers P50,000.00\nCompliance with DOLE issued WSO P50,000.00\nCompliance to other OSH standards P40,000.00\n\nFailure or refusal to comply with OSH standards or compliance order shall be deemed\nwillful when done voluntarily, deliberately and intentionally.\n\nAn employer, contractor or subcontractor who is found to have repeatedly violated the\nsame prohibited act shall be penalized of the corresponding fine plus an additional fine\nequivalent to fifty percent (50%) thereof for every instance of repeat violation.\n\nIf any of the following acts is present and there is non-compliance, the penalty of one\nhundred thousand pesos (P 100,000.00) administrative fine shall be imposed separate and in\naddition to the daily administrative fine imposed above:\n\n(1) Repeated obstruction, delay or refusal to provide the Secretary of Labor and\nEmployment or any of its authorized representatives access to the covered\nworkplace, or refusal to provide or allow access to relevant records and\ndocuments or obstruct the conduct of investigation of any fact necessary in\ndetermining compliance with OSH standards;\n\n(2) Misrepresentation in relation to adherence to OSH standards, knowing such\nstatement, report or record submitted to DOLE to be false in any material\naspect; or\n(3) Making retaliatory measures such as termination of employment, refusal to pay,\nreducing wages and benefits or in any manner discriminates against any worker\nwho has given information relative to the inspection being conducted.\n\nWhen the violation exposes the worker to death, serious injury or serious illness, the\nimposable penalty shall be one hundred thousand pesos (P 100,000.00).\n\nShould there be two (2) or more be non-compliances, all penalties shall be imposed;\nprovided that the total daily penalty shall not exceed one hundred thousand pesos (P\n100,000.00).\n\nThe penalties shall be computed on a per day basis until full compliance reckoned\nfrom the date of the notice of violation or service of the compliance order to the employer\nwithout prejudice to the filing of a criminal or civil case in the regular courts, as the case may\nbe. Fines herein imposed shall be without prejudice to the fines imposable by other\nappropriate government agencies.\n\nThe Regional Director shall, after due notice and hearing, impose the appropriate\nadministrative fines taking into consideration the damage or injury caused and risk involved\nincluding the severity and frequency of the OSH violations and size of the establishment.\n\nFines collected pursuant to this Rules shall be utilized for the operation of OSH\ninitiatives incentivizing qualified employers and workers in recognition of their efforts\ntowards ensuring compliance with OSH and general labor standards, including OSH training\nand education as well other inter-governmental programs and activities.\n\nCHAPTER VII\nMISCELLANEOUS PROVISIONS",
+      "subsections": [
+        {
+          "label": "1",
+          "content": "Repeated obstruction, delay or refusal to provide the Secretary of Labor and\nEmployment or any of its authorized representatives access to the covered\nworkplace, or refusal to provide or allow access to relevant records and\ndocuments or obstruct the conduct of investigation of any fact necessary in\ndetermining compliance with OSH standards;"
+        },
+        {
+          "label": "2",
+          "content": "Misrepresentation in relation to adherence to OSH standards, knowing such\nstatement, report or record submitted to DOLE to be false in any material\naspect; or"
+        },
+        {
+          "label": "3",
+          "content": "Making retaliatory measures such as termination of employment, refusal to pay,\nreducing wages and benefits or in any manner discriminates against any worker\nwho has given information relative to the inspection being conducted.\n\nWhen the violation exposes the worker to death, serious injury or serious illness, the\nimposable penalty shall be one hundred thousand pesos (P 100,000.00).\n\nShould there be two (2) or more be non-compliances, all penalties shall be imposed;\nprovided that the total daily penalty shall not exceed one hundred thousand pesos (P\n100,000.00).\n\nThe penalties shall be computed on a per day basis until full compliance reckoned\nfrom the date of the notice of violation or service of the compliance order to the employer\nwithout prejudice to the filing of a criminal or civil case in the regular courts, as the case may\nbe. Fines herein imposed shall be without prejudice to the fines imposable by other\nappropriate government agencies.\n\nThe Regional Director shall, after due notice and hearing, impose the appropriate\nadministrative fines taking into consideration the damage or injury caused and risk involved\nincluding the severity and frequency of the OSH violations and size of the establishment.\n\nFines collected pursuant to this Rules shall be utilized for the operation of OSH\ninitiatives incentivizing qualified employers and workers in recognition of their efforts\ntowards ensuring compliance with OSH and general labor standards, including OSH training\nand education as well other inter-governmental programs and activities.\n\nCHAPTER VII\nMISCELLANEOUS PROVISIONS"
+        }
+      ]
+    },
+    {
+      "section_number": "Section 30",
+      "title": "Updated DOLE Computerized Inspection System",
+      "content": "The Secretary of\nLabor and Employment shall maintain an updated labor inspection system of computerized\ngathering and generation of real time data on compliances, monitoring of enforcement, and a\nsystem of notification on workplace accidents and injuries."
+    },
+    {
+      "section_number": "Section 31",
+      "title": "Inter-Government Coordination and Cooperation",
+      "content": "The DOLE shall\nbe primarily responsible for the administration and enforcement of OSH laws, regulations\nand standards in all establishments and workplaces to effectively implement the provisions of\nRA 11058. There shall be established an Inter-government Coordination and Cooperation\nCommittee composed of the Department of Environment and Natural Resources, Department\nof Energy, Department of Transportation, Department of Agriculture, Department of Public\nWorks and Highways, Department of Trade and Industry, Department of the Interior and\nLocal Government, Department of Health, Department of Information and Communications\nTechnology, Philippine Economic Zone Authority and all other government agencies,\nincluding local government units, within sixty (60) days from the issuance of this Rules. It\nshall regularly convene at least once per quarter, to monitor the effective implementation of\nthis Rules as well as related programs and projects intended to prevent and eliminate the\nincidence of injury, sickness or death in all workplaces including periodic review of this\nRules and all OSH standards.\nWorkers and employers representatives from the National Tripartite Industrial Peace\nCouncil shall be invited to the meetings and activities of the Inter-government Coordination\nand Cooperation Committee.\n\nThere shall be developed an annual work plan and accomplishments to be submitted\nto Secretary of Labor and Employment. The funds for the operation of the Inter-government\nCoordination and Cooperation Committee shall be sourced from the fines collected under this\nRules."
+    },
+    {
+      "section_number": "Section 32",
+      "title": "Separability Clause",
+      "content": "If any part, section or provision of this Rules\nshall be held invalid or unconstitutional, the other provisions not affected by such declaration\nshall remain in full force and effect.\n\nNothing in this Rules shall repeal any issuances which have more stringent measures\nissued by other regulatory agencies for the achievement of safe and health working\nconditions for workers."
+    },
+    {
+      "section_number": "Section 33",
+      "title": "Repealing Clause",
+      "content": "All rules and regulations or other issuances or parts\nthereof which are inconsistent with this Rules are hereby modified or repealed."
+    },
+    {
+      "section_number": "Section 34",
+      "title": "Effectivity",
+      "content": "This Rules shall take effect fifteen (15) days after its\npublication in a newspaper of general circulation."
+    }
+  ]
+}

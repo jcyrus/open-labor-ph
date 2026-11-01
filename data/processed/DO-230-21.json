@@ -1,0 +1,350 @@
+{
+  "order_number": "DO-230-21",
+  "title": "GUIDELINES ON SUPPORT FOR WORKERS IN THE INFORMAL ECONOMY UNDER REPUBLIC ACT NO. 11313 OTHERWISE KNOWN AS THE “SAFE SPACES ACT” AND ITS IMPLEMENTING RULES AND REGULATIONS",
+  "source_url": "https://www.dole.gov.ph/php_assets/uploads/2021/11/Department-Order-No.-230-21-Guidelines-on-Support-for-Workers-in-the-Informal-Economy-under-Republic-Act-No.-11313-otherwise-known-as-the-Safe-Spaces-Act-and-its-IRR.pdf",
+  "provenance": {
+    "source_sha256": "16074012bba5033b0bd65c33f21d5f0b64aec4043e494fc3f854ec8fab4f1e59",
+    "parser": "labor-ingestion 0.1.0"
+  },
+  "metadata": {
+    "issuing_authority": "SILVESTRE H. BELLO III, Secretary",
+    "supersedes": [],
+    "related_laws": [
+      "RA 11313",
+      "RA 10361",
+      "RA 11058",
+      "PD 442 (Labor Code)"
+    ],
+    "tags": [
+      "kasambahay",
+      "harassment"
+    ],
+    "signed_date": "2021-11-22",
+    "effectivity_clause": "This Guidelines shall be effective fifteen (15) days after its publication in a newspaper of general circulation.",
+    "ocr_text": true
+  },
+  "sections": [
+    {
+      "section_number": "Part I",
+      "content": "GENERAL PROVISIONS"
+    },
+    {
+      "section_number": "Part I, Section 1",
+      "title": "Purpose and Coverage",
+      "content": "This Guidelines provides the appropriate\nmechanisms and interventions, including redress mechanisms, in cases of gender-based\nsexual harassment in the workplace. This shall apply to the following:\n\na. Employees covered by Republic Act No. 10361, otherwise known as the “Domestic\nWorkers Act” or “Batas Kasambahay”;\n\nb. Those employed in the informal economy; and\n\nc. Those employed in establishments with ten or fewer employees.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Employees covered by Republic Act No. 10361, otherwise known as the “Domestic\nWorkers Act” or “Batas Kasambahay”;"
+        },
+        {
+          "label": "b",
+          "content": "Those employed in the informal economy; and"
+        },
+        {
+          "label": "c",
+          "content": "Those employed in establishments with ten or fewer employees."
+        }
+      ]
+    },
+    {
+      "section_number": "Part I, Section 2",
+      "title": "Definition of terms",
+      "content": "As used in this Guidelines, the following terms shall\nmean:\n\na. Committee on Decorum and Investigation (CODI) refers to an independent internal\ngrievance mechanism that will act as the main body in the investigation and\nresolution of cases involving gender-based sexual harassment.\"\n\nb. Domestic worker or “Kasambahay” refers to any person engaged in domestic work\nwithin an employment relationship such as, but not limited to, the following: general\nhousehelp, nursemaid or “yaya”, cook, gardener, or laundry person, but shall\nexclude any person who performs domestic work only occasionally or sporadically\nand not on an occupational basis.\n\nIt shall not include children who are under foster family arrangement, and are\nprovided access to education and given an allowance incidental to education, i.e.\n“baon”, transportation, school projects and school activities.”\n\nc. Employee refers to a person, who in exchange for remuneration, agrees to perform\nspecified services for another person, whether natural or juridical, and whether\nprivate or public, who exercises fundamental control over the work, regardless of\nthe term or duration of agreement: Provided, that for the purpose of this Guidelines,\na person who is detailed to an entity under a subcontracting or secondment\nagreement shall be considered an employee.®\n\n‘ Republic Act No. 11313, Sec. 17(c)\n? Republic Act No. 10361, Sec. 4(d)\n* Republic Act No. 11313, Sec. 3(b)\nNa A a ef\n\nd. Employer refers to a person who exercises control over an employee: Provided, that\nfor the purpose of this Guidelines, the status or conditions of the latter’s employment\nor engagement shall be disregarded.*\n\ne. Establishment refers to an economic unit which engages in one or predominantly\none kind of economic activity at a single fixed location.\n\nf. Gender-Based Sexual Harassment (GBSH) refers to specific acts penalized by RA\n11313 which may be committed either in the following:\n\ni. streets and public spaces;\nii. — online;\niii. workplace; and\niv. educational and training institutions.\n\ng. Informal economy refers to all economic activities by workers and economic units\nthat are — in law or in practice — not covered or insufficiently covered by formal\narrangements.°",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Committee on Decorum and Investigation (CODI) refers to an independent internal\ngrievance mechanism that will act as the main body in the investigation and\nresolution of cases involving gender-based sexual harassment.\""
+        },
+        {
+          "label": "b",
+          "content": "Domestic worker or “Kasambahay” refers to any person engaged in domestic work\nwithin an employment relationship such as, but not limited to, the following: general\nhousehelp, nursemaid or “yaya”, cook, gardener, or laundry person, but shall\nexclude any person who performs domestic work only occasionally or sporadically\nand not on an occupational basis.\n\nIt shall not include children who are under foster family arrangement, and are\nprovided access to education and given an allowance incidental to education, i.e.\n“baon”, transportation, school projects and school activities.”"
+        },
+        {
+          "label": "c",
+          "content": "Employee refers to a person, who in exchange for remuneration, agrees to perform\nspecified services for another person, whether natural or juridical, and whether\nprivate or public, who exercises fundamental control over the work, regardless of\nthe term or duration of agreement: Provided, that for the purpose of this Guidelines,\na person who is detailed to an entity under a subcontracting or secondment\nagreement shall be considered an employee.®\n\n‘ Republic Act No. 11313, Sec. 17(c)\n? Republic Act No. 10361, Sec. 4(d)\n* Republic Act No. 11313, Sec. 3(b)\nNa A a ef"
+        },
+        {
+          "label": "d",
+          "content": "Employer refers to a person who exercises control over an employee: Provided, that\nfor the purpose of this Guidelines, the status or conditions of the latter’s employment\nor engagement shall be disregarded.*"
+        },
+        {
+          "label": "e",
+          "content": "Establishment refers to an economic unit which engages in one or predominantly\none kind of economic activity at a single fixed location."
+        },
+        {
+          "label": "f",
+          "content": "Gender-Based Sexual Harassment (GBSH) refers to specific acts penalized by RA\n11313 which may be committed either in the following:",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "streets and public spaces;\nii. — online;\niii. workplace; and\niv. educational and training institutions."
+            }
+          ]
+        },
+        {
+          "label": "g",
+          "content": "Informal economy refers to all economic activities by workers and economic units\nthat are — in law or in practice — not covered or insufficiently covered by formal\narrangements.°"
+        }
+      ]
+    },
+    {
+      "section_number": "Part II",
+      "content": "SUPPORT FOR EMPLOYEES COVERED BY REPUBLIC ACT NO. 10361 OR THE\n“DOMESTIC WORKERS ACT” OR “BATAS KASAMBAHAY”"
+    },
+    {
+      "section_number": "Part II, Section 1",
+      "title": "Duties of Employers of Domestic Worker or Kasambahay",
+      "content": "The\nemployers of the kasambahay shall adopt the following measures to protect and prevent the\ncommission of acts of GBSH against the kasambahay in the workplace:\n\na. Acquaint oneself, his/her family members, and the kasambahay on the salient\nfeatures of RA 11313, its IRR, this Guidelines, and other relevant laws, issuances\nand local ordinances;\n\nb. Include the following stipulations in the contract of employment of the kasambahay-:\ni. The kasambahay shall be protected from GBSH in the workplace; and\nii. The kasambahay shall be given access to internet connectivity as part of the\n\nright to access to outside communication; and\n\nc. Provide adequate assistance to the kasambahay, even if the act is committed by an\nindividual other than the employer or members of the employers’ household, in filing\nthe GBSH complaint/case to appropriate government agencies, such as the nearest\nBarangay Local Government Units (LGUs), Philippine National Police (PNP)\nWomen’s Desk, Prosecutors Office and/or other appropriate government\nauthorities.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Acquaint oneself, his/her family members, and the kasambahay on the salient\nfeatures of RA 11313, its IRR, this Guidelines, and other relevant laws, issuances\nand local ordinances;"
+        },
+        {
+          "label": "b",
+          "content": "Include the following stipulations in the contract of employment of the kasambahay-:",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "The kasambahay shall be protected from GBSH in the workplace; and\nii. The kasambahay shall be given access to internet connectivity as part of the\n\nright to access to outside communication; and"
+            }
+          ]
+        },
+        {
+          "label": "c",
+          "content": "Provide adequate assistance to the kasambahay, even if the act is committed by an\nindividual other than the employer or members of the employers’ household, in filing\nthe GBSH complaint/case to appropriate government agencies, such as the nearest\nBarangay Local Government Units (LGUs), Philippine National Police (PNP)\nWomen’s Desk, Prosecutors Office and/or other appropriate government\nauthorities."
+        }
+      ]
+    },
+    {
+      "section_number": "Part II, Section 2",
+      "title": "Duties of Private Employment Agencies (PEAs)",
+      "content": "The concerned PEA\nshall adopt, as practicable, the following measures to prevent the commission of acts of GBSH\nagainst the kasambahay:\n\na. Provide brief orientation to the kasambahay as well as the employer on the salient\nfeatures of RA 11313 and its IRR, as well as other pertinent laws, issuances, and\nlocal ordinances, in a language understood by the kasambahay and the employers;\n\n> ILO Recommendation No. 204, Sec. 2(a)\naes\n\nb. Provide assistance to the kasambahay in filing the GBSH complaint to the\nappropriate government agencies, such as the nearest DOLE Field Office,\nBarangay LGUs, PNP Women’s Desk, Prosecutor's Office and/or other appropriate\ngovernment authorities, if the offender is the employer or any of the employer's\nhousehold members; and\n\nc. Require that the contract of employment between the employer and the\nkasambahay should include the following stipulations:\n\ni. The kasambahay shall be protected from GBSH in the workplace, and\nii. The kasambahay shall be given access to internet connectivity as part of his\nor her right to access to outside communication.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Provide brief orientation to the kasambahay as well as the employer on the salient\nfeatures of RA 11313 and its IRR, as well as other pertinent laws, issuances, and\nlocal ordinances, in a language understood by the kasambahay and the employers;\n\n> ILO Recommendation No. 204, Sec. 2(a)\naes"
+        },
+        {
+          "label": "b",
+          "content": "Provide assistance to the kasambahay in filing the GBSH complaint to the\nappropriate government agencies, such as the nearest DOLE Field Office,\nBarangay LGUs, PNP Women’s Desk, Prosecutor's Office and/or other appropriate\ngovernment authorities, if the offender is the employer or any of the employer's\nhousehold members; and"
+        },
+        {
+          "label": "c",
+          "content": "Require that the contract of employment between the employer and the\nkasambahay should include the following stipulations:",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "The kasambahay shall be protected from GBSH in the workplace, and\nii. The kasambahay shall be given access to internet connectivity as part of his\nor her right to access to outside communication."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_number": "Part II, Section 3",
+      "title": "DOLE Assistance to Kasambahay",
+      "content": "The DOLE shall provide appropriate\nassistance in the filling of a GBSH complaint. It shall perform the following:\n\na. Assess whether the GBSH complaint is proper for the conduct of appropriate labor\ndispute mechanisms such as the Single-Entry Approach (SEnA) under the existing\nrules and regulations of the DOLE;\n\nb. Assist the kasambahay in filing the Request for Assistance under the SEnA, as\npracticable; for purposes of claiming the unpaid/underpayment of wages and other\nlabor-related disputes that might arise from the violation of RA 11313, its IRR, and\nthis Guidelines;\n\nc. Refer and assist the kasambahay in filing the GBSH case before the appropriate\ngovernment authorities;\n\nd. Recognize and make use, if applicable, of local mechanisms established through\npertinent local ordinances or other similar mechanisms such as the Workers’\nAssistance Desk and Barangay Kasambahay Desk; and\n\ne. Coordinate with the barangay where the kasambahay is working, whenever rescue\noperations is necessary, together with the local social welfare officer, in accordance\nwith the Joint Memorandum Circular No. 2015-002 (Protocol on the Rescue and\nRehabilitation of Abused Kasambahay Pursuant to RA 10361 entitled An Act\nInstituting Policies for the Protection and Welfare of Domestic Workers).",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Assess whether the GBSH complaint is proper for the conduct of appropriate labor\ndispute mechanisms such as the Single-Entry Approach (SEnA) under the existing\nrules and regulations of the DOLE;"
+        },
+        {
+          "label": "b",
+          "content": "Assist the kasambahay in filing the Request for Assistance under the SEnA, as\npracticable; for purposes of claiming the unpaid/underpayment of wages and other\nlabor-related disputes that might arise from the violation of RA 11313, its IRR, and\nthis Guidelines;"
+        },
+        {
+          "label": "c",
+          "content": "Refer and assist the kasambahay in filing the GBSH case before the appropriate\ngovernment authorities;"
+        },
+        {
+          "label": "d",
+          "content": "Recognize and make use, if applicable, of local mechanisms established through\npertinent local ordinances or other similar mechanisms such as the Workers’\nAssistance Desk and Barangay Kasambahay Desk; and"
+        },
+        {
+          "label": "e",
+          "content": "Coordinate with the barangay where the kasambahay is working, whenever rescue\noperations is necessary, together with the local social welfare officer, in accordance\nwith the Joint Memorandum Circular No. 2015-002 (Protocol on the Rescue and\nRehabilitation of Abused Kasambahay Pursuant to RA 10361 entitled An Act\nInstituting Policies for the Protection and Welfare of Domestic Workers)."
+        }
+      ]
+    },
+    {
+      "section_number": "Part III",
+      "content": "SUPPORT FOR WORKERS IN THE INFORMAL ECONOMY"
+    },
+    {
+      "section_number": "Part III, Section 1",
+      "title": "Filing and Assistance on GBSH Complaint",
+      "content": "Workers in the informal\neconomy seeking assistance concerning GBSH acts committed against them shall be assisted\nby the DOLE in accordance with Sections 1 and 2, Part V."
+    },
+    {
+      "section_number": "Part IV",
+      "content": "SUPPORT FOR WORKERS IN ESTABLISHMENTS\nEMPLOYING TEN OR FEWER"
+    },
+    {
+      "section_number": "Part IV, Section 1",
+      "title": "Duties of Employers",
+      "content": "In establishments employing ten or fewer\nemployees, employers or other persons of authority, influence or moral ascendancy shall have\nthe duty to prevent, deter, or punish the commission of acts of GBSH in the workplace. They\nshall perform, as practicable, the following:\n\nKvn cen nn nnn nn ee er nn errr ee ec terrence creer eer X\n\na. Disseminate or post in a conspicuous place in the workplace a copy of RA 11313,\nits IRR, and this Guidelines;\n\nb. Adopt measures to prevent GBSH in the workplace, such as the conduct of antisexual harassment seminars and orientation on the salient features of RA 11313, its\nIRR, and this Guidelines;\n\nc. Create an independent internal mechanism or a CODI to investigate and address\nGBSH complaints;\n\nd. Carry out functions enumerated in Section 17(c) of RA 11313 and as further outlined\nin Section 33 of its IRR;\n\ne. Develop and disseminate, in consultation with employees a code of conduct or\nworkplace policy which shall:\n\ni. Expressly reiterate the prohibition on GBSH.\nii. Outline the procedures of the internal mechanism in investigating and\naddressing GBSH complaints.\niii. Set administrative penalties for the violation of the code of conduct or\nworkplace policy on GBSH.\n\nf. Report confirmed instances of GBSH and coordinate with concerned government\nauthorities and ensure that the victim-employee receives prompt and appropriate\nassistance.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Disseminate or post in a conspicuous place in the workplace a copy of RA 11313,\nits IRR, and this Guidelines;"
+        },
+        {
+          "label": "b",
+          "content": "Adopt measures to prevent GBSH in the workplace, such as the conduct of antisexual harassment seminars and orientation on the salient features of RA 11313, its\nIRR, and this Guidelines;"
+        },
+        {
+          "label": "c",
+          "content": "Create an independent internal mechanism or a CODI to investigate and address\nGBSH complaints;"
+        },
+        {
+          "label": "d",
+          "content": "Carry out functions enumerated in Section 17(c) of RA 11313 and as further outlined\nin Section 33 of its IRR;"
+        },
+        {
+          "label": "e",
+          "content": "Develop and disseminate, in consultation with employees a code of conduct or\nworkplace policy which shall:",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "Expressly reiterate the prohibition on GBSH.\nii. Outline the procedures of the internal mechanism in investigating and\naddressing GBSH complaints.\niii. Set administrative penalties for the violation of the code of conduct or\nworkplace policy on GBSH."
+            }
+          ]
+        },
+        {
+          "label": "f",
+          "content": "Report confirmed instances of GBSH and coordinate with concerned government\nauthorities and ensure that the victim-employee receives prompt and appropriate\nassistance."
+        }
+      ]
+    },
+    {
+      "section_number": "Part IV, Section 2",
+      "content": "Inclusion of GBSH Code of Conduct or Workplace Policy in the\nEstablishment’s OSH Program. -— In relation to Section 12 of Department Order No. 198,\nSeries of 2018° (DO 198-18), the establishment’s OSH Program shall also include its\ncompliance to Section 1, Part IV of this Guidelines."
+    },
+    {
+      "section_number": "Part IV, Section 3",
+      "content": "Constitution of the Occupational Safety and Health Committee (OSH)\nas CODI. - If the creation of an independent internal mechanism or CODI is not feasible, the\nestablishment's OSH Committee may serve as the CODI. As provided in Section 13(a) of DO\n198-18, the OSH Committee shall be comprised of the following:\n\nChairperson : Company owner or manager\nSecretary : Safety officer of the workplace\nMember : At least one (1) worker, preferably a union member if organized\nAlternatively, for two (2) or more establishments situated in multi-tenant building or\ncomplex, a common CODI may be established and shall be composed as follows:\nChairperson : Building or complex owner or his or her duly authorized\nrepresentative\nSecretary : Safety officer of the workplace\nMembers : At least one (1) from every tenant therein"
+    },
+    {
+      "section_number": "Part IV, Section 4",
+      "title": "Filing of GBSH Complaint Before a CODI",
+      "content": "The victim-employee is\nencouraged to file the GBSH complaint before the CODI of the establishment.\n© Entitled Implementing Rules and Regulations of Republic Act No. 11058 ”An Act Strengthening Compliance\nwith Occupational Safety and Health Standards and Providing Penalties for Violations Thereof.” |ssued on 06\nDecember 2018.\n\nXone nn nnn nnn ne ee en ne nnn ee rn nn nn ee errr en rrr nnn Xx\n\nThe filing of the GBSH complaint and/or the consequent resolution of the CODI shall not\npreclude the victim-employee from filing the complaint before any appropriate government\noffice."
+    },
+    {
+      "section_number": "Part IV, Section 5",
+      "title": "Conduct of Routine and Complaint Inspection",
+      "content": "To ensure compliance\nof employers to RA 11313, its IRR, and this Guidelines, the DOLE shall conduct yearly\nspontaneous, random, and unannounced inspections pursuant to existing rules and\nregulations relative to Article 128, in relation to Article 303, of the Labor Code of the\nPhilippines, as renumbered.\n\nNon-compliance of employers to Section 1, Part IV of this Guidelines shall be reported\nto DOLE."
+    },
+    {
+      "section_number": "Part V",
+      "content": "COMMON PROVISIONS"
+    },
+    {
+      "section_number": "Part V, Section 1",
+      "title": "Filing of GBSH Complaints Before a Government Office",
+      "content": "GBSH\ncomplaints may be filed before any of the following government authorities having jurisdiction\nover the place where the alleged act of GBSH was committed:\n\na. DOLE Attached Agencies;\n\nb. DOLE Regional, Provincial, Field, or Satellite Offices;\n\nc. PNP Women and Children’s Desk;\n\nd. Barangay Anti-Sexual Harassment (ASH) Desk, Kasambahay Desk, or other\nsimilar desks as established in the LGU;\n\ne. Commission on Human Rights (CHR);\n\nf. Public Attorney's Office (PAO);\n\ng. Provincial or City Prosecutor; or\n\nh. Other law enforcement agencies.\n\nThe complaint may likewise be filed directly with the aforementioned government\n\nauthorities in the following cases:\na. The victim is a worker in the informal economy;\nb. Absence of an independent internal mechanism, CODI, or OSH Committee in\nestablishments employing not more than ten employees; or\nc. The offender is a member of the independent internal mechanism, CODI, or OSH\nCommittee.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "DOLE Attached Agencies;"
+        },
+        {
+          "label": "b",
+          "content": "DOLE Regional, Provincial, Field, or Satellite Offices;"
+        },
+        {
+          "label": "c",
+          "content": "PNP Women and Children’s Desk;"
+        },
+        {
+          "label": "d",
+          "content": "Barangay Anti-Sexual Harassment (ASH) Desk, Kasambahay Desk, or other\nsimilar desks as established in the LGU;"
+        },
+        {
+          "label": "e",
+          "content": "Commission on Human Rights (CHR);"
+        },
+        {
+          "label": "f",
+          "content": "Public Attorney's Office (PAO);"
+        },
+        {
+          "label": "g",
+          "content": "Provincial or City Prosecutor; or"
+        },
+        {
+          "label": "h",
+          "content": "Other law enforcement agencies.\n\nThe complaint may likewise be filed directly with the aforementioned government\n\nauthorities in the following cases:"
+        },
+        {
+          "label": "a",
+          "content": "The victim is a worker in the informal economy;"
+        },
+        {
+          "label": "b",
+          "content": "Absence of an independent internal mechanism, CODI, or OSH Committee in\nestablishments employing not more than ten employees; or"
+        },
+        {
+          "label": "c",
+          "content": "The offender is a member of the independent internal mechanism, CODI, or OSH\nCommittee."
+        }
+      ]
+    },
+    {
+      "section_number": "Part V, Section 2",
+      "title": "DOLE Assistance to GBSH Complaints Filed with the DOLE",
+      "content": "Upon\nreceipt of a GBSH complaint, the concerned DOLE office shall immediately perform the\nfollowing:\n\na. Assist the victim by referring his/her complaint to the appropriate government\nauthorities; and\n\nb. Determine whether a conduct of complaint inspection under the existing rules\nand regulations of the DOLE is appropriate.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Assist the victim by referring his/her complaint to the appropriate government\nauthorities; and"
+        },
+        {
+          "label": "b",
+          "content": "Determine whether a conduct of complaint inspection under the existing rules\nand regulations of the DOLE is appropriate."
+        }
+      ]
+    },
+    {
+      "section_number": "Part V, Section 3",
+      "title": "Repository of Data on GBSH Complaints in the DOLE",
+      "content": "The Bureau of\nWorkers with Special Concerns (BWSC) shall act as the repository of data on all GBSH\ncomplaints filed with and referred to the DOLE.\n\nXv cen eee nen ee esc cee w cree rrenn re tnscsseecresest oneness eek"
+    },
+    {
+      "section_number": "Part V, Section 4",
+      "title": "Confidentiality",
+      "content": "At any stage of the investigation, prosecution and trial of\nan offense under RA 11313, the rights of the victim and the accused, especially involving a\nchild, shall be recognized."
+    },
+    {
+      "section_number": "Part V, Section 5",
+      "title": "Reporting of Cases Involving Children",
+      "content": "The DOLE and the employer\nshall report to the Department of Social Welfare and Development (DSWD) within ninety (90)\nworking days all GBSH complaints involving children."
+    },
+    {
+      "section_number": "Part V, Section 6",
+      "title": "Administrative Sanction",
+      "content": "Penalties provided under RA 11313 are without\nprejudice to any administrative sanction that may be imposed by the Secretary of Labor and\nEmployment or his/her duly authorized representatives pursuant to Article 128 of the Labor\nCode, as amended, and other relevant laws."
+    },
+    {
+      "section_number": "Part VI",
+      "content": "FINAL PROVISIONS"
+    },
+    {
+      "section_number": "Part VI, Section 1",
+      "title": "Repealing Clause",
+      "content": "All orders, rules and regulations, guidelines, and other\npolicies or parts thereof which are contrary to or inconsistent with this Guidelines are hereby\nrepealed, amended, or modified accordingly."
+    },
+    {
+      "section_number": "Part VI, Section 2",
+      "title": "Separability Clause",
+      "content": "If any provision or part of this Guidelines is held\ninvalid or unconstitutional, the remaining provisions not affected thereby shall remain valid and\nsubsisting."
+    },
+    {
+      "section_number": "Part VI, Section 3",
+      "title": "Effectivity",
+      "content": "This Guidelines shall be effective fifteen (15) days after its\npublication in a newspaper of general circulation."
+    }
+  ]
+}

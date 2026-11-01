@@ -41,7 +41,7 @@ sha2 = "0.11.0"
 toml = "1.1.6"
 toml_edit = "0.25.15"
 
-[dev-dependencies]
+# Scratch space for OCR page images (`ocr` binary)
 tempfile = "3.8"
 
 [[bin]]
@@ -59,3 +59,7 @@ path = "src/bin/validate.rs"
 [[bin]]
 name = "fetch"
 path = "src/bin/fetch.rs"
+
+[[bin]]
+name = "ocr"
+path = "src/bin/ocr.rs"

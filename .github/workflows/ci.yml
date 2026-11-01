@@ -31,11 +31,10 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - uses: actions/cache@v4
         with:
-          path: data/raw/labor-code-renumbered.pdf
-          key: labor-code-${{ hashFiles('data/sources.toml') }}
+          path: data/raw/*.pdf
+          key: sources-${{ hashFiles('data/sources.toml') }}
       - run: cargo build --release --locked -p labor-ingestion
-      - run: target/release/fetch --only labor-code-renumbered
-      - run: target/release/parse-labor-code data/raw/labor-code-renumbered.pdf data/processed/labor_code.json
-      - run: target/release/validate data/processed/labor_code.json
+      - run: target/release/fetch
+      - run: scripts/rebuild-dataset.sh
       - name: Fail if the committed dataset differs from the rebuild
-        run: git diff --exit-code -- data/processed/labor_code.json
+        run: git diff --exit-code -- data/processed

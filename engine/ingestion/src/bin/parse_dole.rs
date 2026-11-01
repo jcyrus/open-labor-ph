@@ -15,7 +15,8 @@
 //! (`data/sources.toml`). A matching entry supplies `--source-url` and
 //! `--published-date` (flags still override) and must agree with the
 //! extracted order number. Without a manifest entry, `--source-url` is
-//! required.
+//! required. An entry marked `ocr` is read from its reviewed text file
+//! (`data/ocr/<id>.txt`) instead of the PDF, which is still what is hashed.
 //!
 //! Department Orders usually take effect a fixed number of days after
 //! publication, and the publication date is not printed in the Order itself.
@@ -33,10 +34,12 @@ use chrono::{Days, NaiveDate};
 use regex::Regex;
 use tracing::{info, warn};
 
-use labor_ingestion::manifest::{lookup_entry, sha256_file, DocumentKind, SourceDocument};
+use labor_ingestion::manifest::{
+    lookup_entry, resolve_manifest, sha256_file, DocumentKind, SourceDocument,
+};
 use labor_ingestion::parser::{
-    self, date_to_utc, extract_subsections, parse_first_date, split_into_blocks, MarkerKind,
-    PdfDocument,
+    self, date_to_utc, extract_subsections, parse_first_date, split_into_blocks,
+    split_lettered_blocks, MarkerKind, PdfDocument,
 };
 use labor_ingestion::types::{DoleOrder, OrderMetadata, Provenance, Section};
 
@@ -205,8 +208,31 @@ fn run() -> Result<()> {
         return Ok(());
     };
 
-    let doc = parser::parse_document(&cli.input)
-        .with_context(|| format!("failed to parse PDF {}", cli.input.display()))?;
+    let sha256 = sha256_file(&cli.input)
+        .with_context(|| format!("failed to hash {}", cli.input.display()))?;
+    let entry = lookup_entry(cli.manifest.as_deref(), &sha256)?;
+    match &entry {
+        Some(e) => info!(id = %e.id, "matched source manifest entry by SHA-256"),
+        None => info!(%sha256, "PDF is not pinned in the source manifest"),
+    }
+
+    let doc = match entry.as_ref().filter(|e| e.ocr) {
+        Some(e) => {
+            let manifest = resolve_manifest(cli.manifest.as_deref())
+                .context("manifest entry found but the manifest path is unknown")?;
+            let path = e.ocr_text_path(&manifest);
+            let text = std::fs::read_to_string(&path).with_context(|| {
+                format!(
+                    "failed to read {}; run `ocr --only {}` first",
+                    path.display(),
+                    e.id
+                )
+            })?;
+            parser::parse_ocr_text(&cli.input, &text)
+        }
+        None => parser::parse_document(&cli.input),
+    }
+    .with_context(|| format!("failed to parse PDF {}", cli.input.display()))?;
 
     for w in &doc.warnings {
         warn!(page = w.page, "{}", w.message);
@@ -218,14 +244,6 @@ fn run() -> Result<()> {
              scanned image and requires OCR before ingestion",
             cli.input.display()
         );
-    }
-
-    let sha256 = sha256_file(&cli.input)
-        .with_context(|| format!("failed to hash {}", cli.input.display()))?;
-    let entry = lookup_entry(cli.manifest.as_deref(), &sha256)?;
-    match &entry {
-        Some(e) => info!(id = %e.id, "matched source manifest entry by SHA-256"),
-        None => info!(%sha256, "PDF is not pinned in the source manifest"),
     }
 
     let order = build_dole_order(&doc, &cli, entry.as_ref(), sha256)?;
@@ -313,6 +331,8 @@ fn build_dole_order(
         published_date: published_date.map(date_to_utc),
         signed_date: signed_date.map(date_to_utc),
         effectivity_clause,
+        superseded_by: entry.and_then(|e| e.superseded_by.clone()),
+        ocr_text: entry.is_some_and(|e| e.ocr),
     };
 
     if sections.is_empty() {
@@ -426,12 +446,12 @@ fn extract_title(text: &str) -> Option<String> {
     let mut title_lines: Vec<&str> = Vec::new();
     for line in lines.iter().skip(header_idx + 1) {
         let trimmed = line.trim();
+        // Titles can be set with blank lines between their lines, so a gap
+        // ends the title only at what follows it.
         if trimmed.is_empty() {
-            // Allow blank gaps before the title starts, then stop at the
-            // first blank line after it.
-            if title_lines.is_empty() {
-                continue;
-            }
+            continue;
+        }
+        if title_end_re().is_match(trimmed) {
             break;
         }
         // A "Series of 2021" sub-line belongs to the header, not the title.
@@ -448,6 +468,14 @@ fn extract_title(text: &str) -> Option<String> {
         return None;
     }
     Some(title_lines.join(" "))
+}
+
+fn title_end_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // The first heading of the body, which is also in capitals.
+    RE.get_or_init(|| {
+        Regex::new(r"^(?:RULE|PART|SECTION|ARTICLE|[A-Z]\.)\s").expect("static regex")
+    })
 }
 
 fn header_line_re() -> &'static Regex {
@@ -470,13 +498,17 @@ fn is_mostly_uppercase(line: &str) -> bool {
 
 fn signing_context_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r"(?i)\b(?:signed|done|issued|approved)\b").expect("static regex"))
+    RE.get_or_init(|| {
+        Regex::new(r"(?i)\b(?:signed|done|issued|approved|manila,\s+philippines)\b")
+            .expect("static regex")
+    })
 }
 
 fn signature_line_re() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| {
-        Regex::new(r"(?im)^[ \t]*(?:done|signed|given|issued|approved)\b").expect("static regex")
+        Regex::new(r"(?im)^[ \t]*(?:done|signed|given|issued|approved|manila,\s+philippines)\b")
+            .expect("static regex")
     })
 }
 
@@ -748,6 +780,14 @@ fn supersede_keyword_re() -> &'static Regex {
 fn extract_supersedes(text: &str, self_number: &str) -> Vec<String> {
     let mut found: Vec<String> = Vec::new();
     for m in supersede_keyword_re().find_iter(text) {
+        // "as amended" describes a cited text; this order is not changing it.
+        if text[..m.start()]
+            .to_ascii_lowercase()
+            .trim_end()
+            .ends_with(" as")
+        {
+            continue;
+        }
         let paragraph_start = text[..m.start()].rfind("\n\n").map_or(0, |i| i + 2);
         let paragraph_end = text[m.end()..]
             .find("\n\n")
@@ -831,14 +871,28 @@ fn extract_tags(text: &str, title: &str) -> Vec<String> {
 /// leaf sections under it are qualified as "Rule I, Section 2" so the flat
 /// `sections` array preserves the hierarchy losslessly.
 fn build_sections(text: &str) -> Vec<Section> {
-    let blocks = split_into_blocks(text);
+    let mut blocks = split_into_blocks(text);
+    if blocks.is_empty() {
+        blocks = split_lettered_blocks(text);
+    }
     let has_leaf_sections = blocks.iter().any(|b| b.kind == MarkerKind::Section);
 
     let mut sections = Vec::with_capacity(blocks.len());
     let mut current_group: Option<String> = None;
+    let mut title_case_leaves = false;
 
     for block in blocks {
         let is_group = has_leaf_sections && block.kind != MarkerKind::Section;
+        // Orders that amend a Rule print "SECTION 2" for their own closing
+        // clauses after the Rule's "Section 11": those are outside the group.
+        if block.kind == MarkerKind::Section {
+            if block.uppercase && title_case_leaves {
+                current_group = None;
+                title_case_leaves = false;
+            } else if !block.uppercase {
+                title_case_leaves = current_group.is_some();
+            }
+        }
         let section_number = if is_group {
             current_group = Some(block.label.clone());
             block.label.clone()
@@ -930,6 +984,78 @@ mod tests {
     const NO_FILE: &str = "order.pdf";
 
     #[test]
+    fn test_parts_keep_restarted_sections_apart() {
+        let text = "PART I\nGENERAL PROVISIONS\nSection 1. Purpose. - One.\n\
+                    PART II\nDUTIES\nSection 1. Employers. - Two.\n";
+        let numbers: Vec<String> = build_sections(text)
+            .into_iter()
+            .map(|s| s.section_number)
+            .collect();
+        assert_eq!(
+            numbers,
+            [
+                "Part I",
+                "Part I, Section 1",
+                "Part II",
+                "Part II, Section 1"
+            ]
+        );
+    }
+
+    #[test]
+    fn test_uppercase_section_closes_an_amended_rule() {
+        let text = "SECTION 1. Rules. - Issued.\nRULE I-A\nSection 1. Coverage. - One.\n\
+                    Section 2. Definitions. - Two.\nSECTION 2. Repealing Clause. - Three.\n";
+        let numbers: Vec<String> = build_sections(text)
+            .into_iter()
+            .map(|s| s.section_number)
+            .collect();
+        assert_eq!(
+            numbers,
+            [
+                "Section 1",
+                "Rule I-A",
+                "Rule I-A, Section 1",
+                "Rule I-A, Section 2",
+                "Section 2"
+            ]
+        );
+    }
+
+    #[test]
+    fn test_manila_line_gives_the_signing_date() {
+        let text = "Citing Order issued on May 28, 1999.\n\
+                    Section 4. Effectivity. - Fifteen days after publication.\n\
+                    Manila, Philippines, 16 MAR 2017.\nSILVESTRE H. BELLO III\nSecretary\n";
+        assert_eq!(extract_signed_date(text), date(2017, 3, 16));
+        assert!(text[..signature_block_start(text).unwrap()].ends_with("publication.\n"));
+    }
+
+    #[test]
+    fn test_lettered_headings_split_an_order_without_sections() {
+        let text = "Preamble.\nA. COVERAGE\n1. All establishments.\n\
+                    B. ROLES, RIGHTS AND DUTIES\n1. The employer.\nA. Not a heading.\n";
+        let sections = build_sections(text);
+        assert_eq!(sections.len(), 2);
+        assert_eq!(sections[0].section_number, "Section A");
+        assert_eq!(
+            sections[1].title.as_deref(),
+            Some("ROLES, RIGHTS AND DUTIES")
+        );
+        assert!(sections[1].content.ends_with("A. Not a heading."));
+    }
+
+    #[test]
+    fn test_title_spans_blank_lines_and_stops_at_the_body() {
+        let text = "DEPARTMENT ORDER NO. 53-03\nSeries of 2003\n\nGUIDELINES FOR\n\n\
+                    THE PRIVATE SECTOR\n\nA. COVERAGE\n";
+        assert_eq!(
+            extract_title(text).as_deref(),
+            Some("GUIDELINES FOR THE PRIVATE SECTOR")
+        );
+    }
+
+    #[test]
     fn test_order_number_lettered_dash_style() {
         let text = "DEPARTMENT ORDER NO. 18-A-11\nRULES IMPLEMENTING ARTICLES 106 TO 109";
         assert_eq!(
@@ -969,6 +1095,13 @@ mod tests {
         let text = "Section 3. Repealing Clause. - Department Order No. 18-A, Series of 2011 \
                     is hereby superseded.";
         assert_eq!(extract_supersedes(text, "DO-174-17"), vec!["DO-18-A-11"]);
+    }
+
+    #[test]
+    fn test_supersedes_ignores_as_amended_citations() {
+        let text = "Rule 1053.02, Occupational Safety and Health Standards, as amended\n\
+                    Section 2 (n), Department Order No. 10, Series of 1998\n";
+        assert!(extract_supersedes(text, "DO-183-17").is_empty());
     }
 
     #[test]
@@ -1114,6 +1247,9 @@ mod tests {
             download_url: None,
             published_date: Some("2017-03-20".to_string()),
             sha256: None,
+            ocr: false,
+            ocr_first_page: None,
+            superseded_by: None,
         }
     }
 

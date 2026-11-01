@@ -357,25 +357,8 @@ pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
 
     let metadata = extract_metadata(path)?;
 
-    let (mut pages, mut warnings, mut full_text) = match pdf_extract::extract_text_by_pages(path) {
-        Ok(raw_pages) => {
-            let mut pages = Vec::with_capacity(raw_pages.len());
-            let mut warnings = Vec::new();
-            for (index, raw) in raw_pages.iter().enumerate() {
-                let number = index + 1;
-                let content = clean_text(raw);
-                if let Some(w) = page_quality_warning(number, &content) {
-                    warn!(page = w.page, kind = ?w.kind, "{}", w.message);
-                    warnings.push(w);
-                }
-                pages.push(PdfPage { number, content });
-            }
-            // Cleaning the concatenated raw pages (rather than joining the
-            // cleaned ones) keeps `full_text` identical to whole-document
-            // extraction, including words hyphenated across a page break.
-            let full_text = clean_text(&raw_pages.concat());
-            (pages, warnings, full_text)
-        }
+    let (pages, warnings, full_text) = match pdf_extract::extract_text_by_pages(path) {
+        Ok(raw_pages) => clean_pages(&raw_pages),
         Err(e) => {
             let PageExtraction {
                 pages,
@@ -395,6 +378,47 @@ pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
         }
     };
 
+    Ok(finish_document(path, metadata, pages, warnings, full_text))
+}
+
+/// Build a document from a scanned PDF's reviewed OCR text, with pages
+/// separated by form feeds. The PDF supplies only the file metadata.
+pub fn parse_ocr_text<P: AsRef<Path>>(path: P, text: &str) -> IngestionResult<PdfDocument> {
+    let path = path.as_ref();
+    let metadata = extract_metadata(path)?;
+    let raw_pages: Vec<String> = text.split('\u{c}').map(str::to_string).collect();
+    let (pages, warnings, full_text) = clean_pages(&raw_pages);
+    Ok(finish_document(path, metadata, pages, warnings, full_text))
+}
+
+/// Clean raw page text into pages, quality warnings and the full text.
+fn clean_pages(raw_pages: &[String]) -> (Vec<PdfPage>, Vec<ExtractionWarning>, String) {
+    let mut pages = Vec::with_capacity(raw_pages.len());
+    let mut warnings = Vec::new();
+    for (index, raw) in raw_pages.iter().enumerate() {
+        let number = index + 1;
+        let content = clean_text(raw);
+        if let Some(w) = page_quality_warning(number, &content) {
+            warn!(page = w.page, kind = ?w.kind, "{}", w.message);
+            warnings.push(w);
+        }
+        pages.push(PdfPage { number, content });
+    }
+    // Cleaning the concatenated raw pages (rather than joining the
+    // cleaned ones) keeps `full_text` identical to whole-document
+    // extraction, including words hyphenated across a page break.
+    let full_text = clean_text(&raw_pages.concat());
+    (pages, warnings, full_text)
+}
+
+/// Remove running lines and assemble the document.
+fn finish_document(
+    path: &Path,
+    metadata: PdfMetadata,
+    mut pages: Vec<PdfPage>,
+    mut warnings: Vec<ExtractionWarning>,
+    mut full_text: String,
+) -> PdfDocument {
     // Running headers/footers ("Department Order No. 174, s. 2017" on every
     // page) would otherwise be spliced into whatever section spans the page
     // break. The first occurrence survives so the cover-page header that
@@ -420,13 +444,13 @@ pub fn parse_document<P: AsRef<Path>>(path: P) -> IngestionResult<PdfDocument> {
         }];
     }
 
-    Ok(PdfDocument {
+    PdfDocument {
         source_path: path.display().to_string(),
         metadata,
         full_text,
         pages,
         warnings,
-    })
+    }
 }
 
 /// Helper to extract a string value from a lopdf dictionary.
@@ -637,6 +661,9 @@ pub enum MarkerKind {
 
     /// "SECTION 1", "Sec. 3" — the leaf unit of most Department Orders.
     Section,
+
+    /// "PART II" — grouping unit whose Sections restart at 1.
+    Part,
 }
 
 /// A structural unit recovered from running text.
@@ -655,6 +682,9 @@ pub struct StructuralBlock {
     /// ("Section 1. Coverage. — …" → "Coverage").
     pub title: Option<String>,
 
+    /// The keyword was printed in capitals ("SECTION 2").
+    pub uppercase: bool,
+
     /// Body text up to the next structural marker (inline remainder of the
     /// heading line included).
     pub content: String,
@@ -667,7 +697,7 @@ fn marker_re() -> &'static Regex {
     // abbreviated with period, upper- and title-case.
     RE.get_or_init(|| {
         Regex::new(
-            r"(?m)^[ \t]*(?P<kw>RULE|Rule|ARTICLE|Article|ART\.|Art\.|SECTION|Section|SEC\.|Sec\.)[ \t]+(?P<num>\d{1,4}[A-Za-z]?(?:-[A-Za-z0-9]+)?|[IVXLCDM]{1,7})(?P<sep>[ \t]*[.:\u{2013}\u{2014}-])?(?P<rest>[^\n]*)",
+            r"(?m)^[ \t]*(?P<kw>RULE|Rule|ARTICLE|Article|ART\.|Art\.|SECTION|Section|SEC\.|Sec\.|PART|Part)[ \t]+(?P<num>\d{1,4}[A-Za-z]?(?:-[A-Za-z0-9]+)?|[IVXLCDM]{1,7}(?:-[A-Z]\b)?)(?P<sep>[ \t]*[.:\u{2013}\u{2014}-])?(?P<rest>[^\n]*)",
         )
         .expect("static regex")
     })
@@ -677,6 +707,7 @@ fn kind_from_keyword(kw: &str) -> MarkerKind {
     match kw.to_ascii_uppercase().as_str() {
         "RULE" => MarkerKind::Rule,
         "ARTICLE" | "ART." => MarkerKind::Article,
+        "PART" => MarkerKind::Part,
         _ => MarkerKind::Section,
     }
 }
@@ -696,7 +727,7 @@ fn kind_from_keyword(kw: &str) -> MarkerKind {
 ///   returned here; callers that need it should slice `text` up to the first
 ///   block themselves.
 pub fn split_into_blocks(text: &str) -> Vec<StructuralBlock> {
-    let mut markers: Vec<(usize, usize, MarkerKind, String, String)> = Vec::new();
+    let mut markers: Vec<(usize, usize, MarkerKind, String, String, bool)> = Vec::new();
 
     for caps in marker_re().captures_iter(text) {
         let whole = caps.get(0).expect("match group 0 always present");
@@ -716,11 +747,12 @@ pub fn split_into_blocks(text: &str) -> Vec<StructuralBlock> {
             kind_from_keyword(kw),
             num,
             rest.trim().to_string(),
+            !kw.chars().any(char::is_lowercase),
         ));
     }
 
     let mut blocks = Vec::with_capacity(markers.len());
-    for (i, (_start, header_end, kind, number, rest)) in markers.iter().enumerate() {
+    for (i, (_start, header_end, kind, number, rest, uppercase)) in markers.iter().enumerate() {
         let body_end = markers.get(i + 1).map_or(text.len(), |next| next.0);
         let trailing = text[*header_end..body_end].trim();
 
@@ -735,6 +767,7 @@ pub fn split_into_blocks(text: &str) -> Vec<StructuralBlock> {
             MarkerKind::Rule => "Rule",
             MarkerKind::Article => "Article",
             MarkerKind::Section => "Section",
+            MarkerKind::Part => "Part",
         };
 
         blocks.push(StructuralBlock {
@@ -742,11 +775,46 @@ pub fn split_into_blocks(text: &str) -> Vec<StructuralBlock> {
             number: number.clone(),
             label: format!("{keyword} {number}"),
             title,
+            uppercase: *uppercase,
             content,
         });
     }
 
     blocks
+}
+
+fn lettered_heading_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // "A. COVERAGE": a capital letter and a heading in capitals, alone on
+    // its line. Requiring capitals keeps "A. Workers shall…" as body text.
+    RE.get_or_init(|| {
+        Regex::new(r"(?m)^[ \t]*(?P<letter>[A-Z])\.[ \t]+(?P<title>[A-Z][A-Z ,'/-]{3,})[ \t]*$")
+            .expect("static regex")
+    })
+}
+
+/// Split text at lettered headings, for orders with no Section markers.
+pub fn split_lettered_blocks(text: &str) -> Vec<StructuralBlock> {
+    let headings: Vec<_> = lettered_heading_re().captures_iter(text).collect();
+    headings
+        .iter()
+        .enumerate()
+        .map(|(i, caps)| {
+            let whole = caps.get(0).expect("match group 0 always present");
+            let end = headings
+                .get(i + 1)
+                .map_or(text.len(), |next| next.get(0).expect("group 0").start());
+            let letter = &caps["letter"];
+            StructuralBlock {
+                kind: MarkerKind::Section,
+                number: letter.to_string(),
+                label: format!("Section {letter}"),
+                title: Some(caps["title"].trim().to_string()),
+                uppercase: true,
+                content: text[whole.end()..end].trim().to_string(),
+            }
+        })
+        .collect()
 }
 
 /// Split the remainder of a heading line into (title, inline content).
@@ -989,7 +1057,7 @@ fn date_mdy_re() -> &'static Regex {
     // "March 1, 2021" / "March 1 2021"
     RE.get_or_init(|| {
         Regex::new(
-            r"(?i)\b(?P<month>January|February|March|April|May|June|July|August|September|October|November|December)\s+(?P<day>\d{1,2}),?\s+(?P<year>\d{4})",
+            r"(?i)\b(?P<month>Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(?P<day>\d{1,2}),?\s+(?P<year>\d{4})",
         )
         .expect("static regex")
     })
@@ -1000,7 +1068,7 @@ fn date_dmy_re() -> &'static Regex {
     // "1st day of March, 2021" / "01 March 2021" — common in signing blocks.
     RE.get_or_init(|| {
         Regex::new(
-            r"(?i)\b(?P<day>\d{1,2})(?:st|nd|rd|th)?\s+(?:day\s+of\s+)?(?P<month>January|February|March|April|May|June|July|August|September|October|November|December),?\s+(?P<year>\d{4})",
+            r"(?i)\b(?P<day>\d{1,2})(?:st|nd|rd|th)?\s+(?:day\s+of\s+)?(?P<month>Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?),?\s+(?P<year>\d{4})",
         )
         .expect("static regex")
     })
@@ -1022,9 +1090,11 @@ fn month_number(name: &str) -> Option<u32> {
         "december",
     ];
     let lower = name.to_ascii_lowercase();
+    // Stamps abbreviate months ("16 MAR 2017", "Sept"); the date patterns
+    // only let real month spellings through.
     MONTHS
         .iter()
-        .position(|m| *m == lower)
+        .position(|m| lower.get(..3).is_some_and(|prefix| m.starts_with(prefix)))
         .map(|i| i as u32 + 1)
 }
 

@@ -6,14 +6,20 @@
 #   kind            "dole_order" (parse-dole) or "labor_code" (parse-labor-code).
 #   title           Human-readable title.
 #   source_url      Official page for the document; recorded as `source_url`.
-#   download_url    Direct PDF URL that `fetch` downloads. Omitted when the host
-#                   blocks automated downloads (all dole.gov.ph hosts sit behind
-#                   a Cloudflare JavaScript challenge): save the PDF by hand from
-#                   source_url as data/raw/<id>.pdf instead.
+#   download_url    Direct PDF URL that `fetch` downloads. dole.gov.ph hosts sit
+#                   behind a Cloudflare JavaScript challenge, so this is a Wayback
+#                   Machine snapshot of the official PDF, and the pin proves its
+#                   bytes. Without one, save the PDF by hand from source_url as
+#                   data/raw/<id>.pdf instead.
 #   published_date  Official publication date, YYYY-MM-DD, when verified. Used to
 #                   resolve "N days after publication" effectivity clauses.
 #   sha256          Pinned hash of the exact PDF. Written by `fetch --pin` after
 #                   you have checked the file; a mismatch is a hard error.
+#   ocr             true for a scan with no text layer. `ocr` writes the text once
+#                   to data/ocr/<id>.txt; corrections go there, and parse-dole
+#                   reads that file.
+#   ocr_first_page  First page to OCR, for scans that open with a duplicate.
+#   superseded_by   Order number that replaced this one.
 #
 # Workflow:
 #   cargo run --release --bin fetch            # download / verify everything
@@ -37,19 +43,29 @@ sha256 = "d9abd6f8eb3fb329456e926aa46ce05fbfe75f562f8aa6a60e7f421de97295c6"
 id = "DO-147-15"
 kind = "dole_order"
 title = "Amending the Implementing Rules and Regulations of Book VI of the Labor Code"
-source_url = "https://blr.dole.gov.ph/2015/11/12/dole-clarifies-rules-on-termination-of-employment/"
+source_url = "https://www.dole.gov.ph/php_assets/uploads/2017/07/Dept-Order-No_-147-15.pdf"
+download_url = "https://web.archive.org/web/20201128225903id_/https://www.dole.gov.ph/php_assets/uploads/2017/07/Dept-Order-No_-147-15.pdf"
+ocr = true
+sha256 = "9c79ff142e844d9a3893a6d4f11a1d88d1d9e88c309273b340b09f7bb1921c01"
 
 [[document]]
 id = "DO-174-17"
 kind = "dole_order"
 title = "Rules Implementing Articles 106 to 109 of the Labor Code, as Amended"
-source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+source_url = "https://www.dole.gov.ph/php_assets/uploads/2017/07/DO-174-17-Rules-Implementing-Articles-106-to-109-of-the-Labor-Code-As-Amended1.pdf"
+download_url = "https://web.archive.org/web/20210126043855id_/https://www.dole.gov.ph/php_assets/uploads/2017/07/DO-174-17-Rules-Implementing-Articles-106-to-109-of-the-Labor-Code-As-Amended1.pdf"
+ocr = true
+ocr_first_page = 2
+sha256 = "8d1b8827aac41d5be16546107dcd9f18ea9dfe559b0dff308646f5eb4125da67"
 
 [[document]]
 id = "DO-202-19"
 kind = "dole_order"
 title = "Implementing Rules and Regulations of Republic Act No. 11165 (Telecommuting Act)"
-source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+source_url = "https://www.dole.gov.ph/php_assets/uploads/2019/04/DO-202-19-Implementing-Rules-and-Reulations-of-Republic-Act-No.-11165-otherwise-known-as-the-Telecommuting-Act.pdf"
+download_url = "https://web.archive.org/web/20210421181358id_/https://www.dole.gov.ph/php_assets/uploads/2019/04/DO-202-19-Implementing-Rules-and-Reulations-of-Republic-Act-No.-11165-otherwise-known-as-the-Telecommuting-Act.pdf"
+ocr = true
+sha256 = "b3109ea1e6085db9a5d0bf65c1098c55c56d8cf35230fc09e396175ac7905ecb"
 
 [[document]]
 id = "DO-252-25"
@@ -61,7 +77,10 @@ source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
 id = "DO-183-17"
 kind = "dole_order"
 title = "Revised Rules on the Administration and Enforcement of Labor Laws Pursuant to Article 128 of the Labor Code, as Renumbered"
-source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+source_url = "http://bwc.dole.gov.ph/images/Issuances/DepartmentOrder/DO183_17_ChangesinSection2_Rule-XI___RevisedRules_onthe_Administration_And_Enforcement_of_LaborLaws_PursuantTo_Article128_ofthe_LaborCode_asRenumbered.pdf"
+download_url = "https://web.archive.org/web/20180820104723id_/http://bwc.dole.gov.ph:80/images/Issuances/DepartmentOrder/DO183_17_ChangesinSection2_Rule-XI___RevisedRules_onthe_Administration_And_Enforcement_of_LaborLaws_PursuantTo_Article128_ofthe_LaborCode_asRenumbered.pdf"
+ocr = true
+sha256 = "60f56df98b903b5a316e56302d92995199ec7b5098f5558b8bed7ca2ccc0fbc3"
 
 # --- Tier 2 Department Orders -----------------------------------------------
 
@@ -70,9 +89,26 @@ id = "DO-53-03"
 kind = "dole_order"
 title = "Guidelines for the Implementation of a Drug-Free Workplace Policies and Programs for the Private Sector"
 source_url = "https://oshc.dole.gov.ph/wp-content/uploads/2020/09/Department-Order-No.-53-03.pdf"
+download_url = "https://web.archive.org/web/20211227182557id_/https://oshc.dole.gov.ph/wp-content/uploads/2020/09/Department-Order-No.-53-03.pdf"
+sha256 = "f04f70e201b2b4f948b98e81dc5155e42ccbb9bb4c72f8757a0403ac727d68aa"
 
 [[document]]
 id = "DO-230-21"
 kind = "dole_order"
 title = "Guidelines on Support for Workers in the Informal Economy under Republic Act No. 11313 (Safe Spaces Act)"
-source_url = "https://bwc.dole.gov.ph/issuances/department-orders/"
+source_url = "https://www.dole.gov.ph/php_assets/uploads/2021/11/Department-Order-No.-230-21-Guidelines-on-Support-for-Workers-in-the-Informal-Economy-under-Republic-Act-No.-11313-otherwise-known-as-the-Safe-Spaces-Act-and-its-IRR.pdf"
+download_url = "https://web.archive.org/web/20211227191559id_/https://www.dole.gov.ph/php_assets/uploads/2021/11/Department-Order-No.-230-21-Guidelines-on-Support-for-Workers-in-the-Informal-Economy-under-Republic-Act-No.-11313-otherwise-known-as-the-Safe-Spaces-Act-and-its-IRR.pdf"
+ocr = true
+sha256 = "16074012bba5033b0bd65c33f21d5f0b64aec4043e494fc3f854ec8fab4f1e59"
+
+# --- Historical Department Orders -------------------------------------------
+
+[[document]]
+id = "DO-198-18"
+kind = "dole_order"
+title = "Implementing Rules and Regulations of Republic Act No. 11058 (Occupational Safety and Health Standards)"
+source_url = "https://www.dole.gov.ph/php_assets/uploads/2019/01/DO-198-Implementing-Rules-and-Regulations-of-Republic-Act-No_-11058-An-Act-Strengthening-Compliance-with-Occupational-Safety-and-Health-Standards-and-Providing-Penalties-for-Violations-Thereof.pdf"
+download_url = "https://web.archive.org/web/20210307235230id_/https://www.dole.gov.ph/php_assets/uploads/2019/01/DO-198-Implementing-Rules-and-Regulations-of-Republic-Act-No_-11058-An-Act-Strengthening-Compliance-with-Occupational-Safety-and-Health-Standards-and-Providing-Penalties-for-Violations-Thereof.pdf"
+ocr = true
+superseded_by = "DO-252-25"
+sha256 = "84482b27043e2eb01ecb7f047c50ff60043255aec7192b1a2173440a6fb3bc84"

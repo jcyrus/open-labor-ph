@@ -17,19 +17,19 @@ The orders HR and employment questions most often turn on:
    - Issued: 2015-09-07
    - Covers: just and authorized causes (Arts. 297–299), two-notice rule, due process
    - Source: [DOLE BLR](https://blr.dole.gov.ph/2015/11/12/dole-clarifies-rules-on-termination-of-employment/)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed (OCR text). Signed: 2015-09-07
 
 2. **DO-174-17**: Rules Implementing Articles 106 to 109 of the Labor Code, as Amended (contracting and subcontracting)
    - Issued: March 2017
    - Supersedes: DO-18-A-11
    - Note: Excludes BPO/KPO-type IT-enabled services
    - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed (OCR text). Signed: 2017-03-16
 
 3. **DO-202-19**: Implementing Rules and Regulations of RA 11165, the Telecommuting Act
    - Signed: 2019-03-26 · Published: 2019-04-24 · Effective: 2019-05-10
    - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed (OCR text)
 
 4. **DO-252-25**: Revised Implementing Rules and Regulations of RA 11058 (Occupational Safety and Health Standards)
    - Supersedes: DO-198-18
@@ -38,22 +38,24 @@ The orders HR and employment questions most often turn on:
 
 5. **DO-183-17**: Revised Rules on the Administration and Enforcement of Labor Laws Pursuant to Article 128 of the Labor Code, as Renumbered (labor inspections, visitorial powers)
    - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed (OCR text). Signed: 2017-10-18
 
 ### Tier 2 (Medium Priority)
 
 6. **DO-53-03**: Guidelines for the Implementation of a Drug-Free Workplace Policies and Programs for the Private Sector
    - Source: [DOLE OSHC (PDF)](https://oshc.dole.gov.ph/wp-content/uploads/2020/09/Department-Order-No.-53-03.pdf)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed. Signed: 2003-08-14
 
 7. **DO-230-21**: Guidelines on Support for Workers in the Informal Economy under RA 11313 (Safe Spaces Act)
    - Source: [DOLE BWC issuances](https://bwc.dole.gov.ph/issuances/department-orders/)
-   - Status: 🔴 Not yet processed
+   - Status: ✅ Processed (OCR text). Signed: 2021-11-22
+
+DO-252-25 is the one order still missing: no Wayback Machine snapshot was found on 2026-11-01. Save the PDF by hand from the source page as `data/raw/DO-252-25.pdf`, then run `fetch --pin`.
 
 ### Historical (ingest for amendment tracking, mark as superseded)
 
 - **DO-18-A-11**: Rules Implementing Articles 106 to 109 of the Labor Code. Superseded by DO-174-17.
-- **DO-198-18**: IRR of RA 11058 (OSH Law). Effective 2019-01-25. Superseded by DO-252-25.
+- **DO-198-18**: IRR of RA 11058 (OSH Law). Signed 2018-12-06. Effective 2019-01-25. Superseded by DO-252-25. Processed (OCR text), with `metadata.superseded_by` set. Do not use it as current rules: its staffing tables are garbled in the OCR text.
 
 ### Removed from the previous list
 
