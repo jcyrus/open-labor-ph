@@ -54,6 +54,16 @@
     "metadata": {
       "type": "object",
       "properties": {
+        "superseded_by": {
+          "type": "string",
+          "pattern": "^DO-[0-9]+(-[A-Z])?-[0-9]{2}$",
+          "description": "Order that replaced this one. A superseded order is kept for history and must not be used as current rules"
+        },
+        "ocr_text": {
+          "type": "boolean",
+          "description": "True when the text came from OCR of a scan and can contain reading errors",
+          "default": false
+        },
         "issuing_authority": {
           "type": "string",
           "description": "Name and title of the issuing official",

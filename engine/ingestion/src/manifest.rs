@@ -16,6 +16,9 @@
 //! download_url = "https://…/DO-174-17.pdf"   # optional
 //! published_date = "2017-03-20"              # optional, YYYY-MM-DD
 //! sha256 = "…"                               # written by `fetch --pin`
+//! ocr = true                                 # optional, scanned PDFs
+//! ocr_first_page = 2                         # optional
+//! superseded_by = "DO-252-25"                # optional
 //! ```
 
 use std::collections::HashSet;
@@ -73,12 +76,35 @@ pub struct SourceDocument {
     /// Lowercase hex SHA-256 of the PDF, once pinned.
     #[serde(default)]
     pub sha256: Option<String>,
+
+    /// The PDF is a scan with no text layer: `ocr` writes its text once to
+    /// `ocr/<id>.txt` beside the manifest, corrections are made there, and
+    /// the parser reads that file so rebuilds need no OCR engine.
+    #[serde(default)]
+    pub ocr: bool,
+
+    /// First page to OCR, for scans that open with a duplicate. Default 1.
+    #[serde(default)]
+    pub ocr_first_page: Option<u32>,
+
+    /// Normalized order number of the order that replaced this one.
+    #[serde(default)]
+    pub superseded_by: Option<String>,
 }
 
 impl SourceDocument {
     /// Where the PDF for this entry lives locally.
     pub fn pdf_path(&self, raw_dir: &Path) -> PathBuf {
         raw_dir.join(format!("{}.pdf", self.id))
+    }
+
+    /// Where the reviewed OCR text lives for a manifest at `manifest`.
+    pub fn ocr_text_path(&self, manifest: &Path) -> PathBuf {
+        manifest
+            .parent()
+            .unwrap_or(Path::new("."))
+            .join("ocr")
+            .join(format!("{}.txt", self.id))
     }
 
     /// The publication date, if set. Validated by [`Manifest::parse`].
@@ -160,6 +186,18 @@ impl Manifest {
                     problems.push(format!("{id}: published_date {date:?} is not YYYY-MM-DD"));
                 }
             }
+            if doc
+                .superseded_by
+                .as_deref()
+                .is_some_and(|o| !dole_id_re().is_match(o))
+            {
+                problems.push(format!(
+                    "{id}: superseded_by must be a normalized order number"
+                ));
+            }
+            if doc.ocr_first_page.is_some() && !doc.ocr {
+                problems.push(format!("{id}: ocr_first_page requires ocr = true"));
+            }
             if let Some(hash) = doc.sha256.as_deref() {
                 if !sha256_re().is_match(hash) {
                     problems.push(format!("{id}: sha256 must be 64 lowercase hex characters"));
@@ -215,6 +253,14 @@ pub fn find_upward(relative: &Path) -> Option<PathBuf> {
         .find(|candidate| candidate.exists())
 }
 
+/// The manifest to use: the explicit path, else [`DEFAULT_MANIFEST_PATH`]
+/// searched upward from the current directory.
+pub fn resolve_manifest(manifest: Option<&Path>) -> Option<PathBuf> {
+    manifest
+        .map(Path::to_path_buf)
+        .or_else(|| find_upward(Path::new(DEFAULT_MANIFEST_PATH)))
+}
+
 /// Find the manifest entry for a PDF by its hash.
 ///
 /// With an explicit `manifest` path the file must exist. Otherwise
@@ -225,12 +271,8 @@ pub fn lookup_entry(
     manifest: Option<&Path>,
     sha256: &str,
 ) -> IngestionResult<Option<SourceDocument>> {
-    let path = match manifest {
-        Some(path) => path.to_path_buf(),
-        None => match find_upward(Path::new(DEFAULT_MANIFEST_PATH)) {
-            Some(path) => path,
-            None => return Ok(None),
-        },
+    let Some(path) = resolve_manifest(manifest) else {
+        return Ok(None);
     };
     Ok(Manifest::load(&path)?.find_by_sha256(sha256).cloned())
 }
@@ -304,6 +346,32 @@ mod tests {
 
         let unknown = "[[document]]\nid = \"x\"\nkind = \"labor_code\"\ntitle = \"x\"\nsource_url = \"https://x.ph\"\nurl = \"typo\"\n";
         assert!(Manifest::parse(unknown).is_err());
+    }
+
+    #[test]
+    fn test_ocr_fields() {
+        let raw = r#"
+            [[document]]
+            id = "DO-198-18"
+            kind = "dole_order"
+            title = "OSH"
+            source_url = "https://x.ph"
+            ocr = true
+            ocr_first_page = 2
+            superseded_by = "DO-252-25"
+        "#;
+        let manifest = Manifest::parse(raw).unwrap();
+        assert_eq!(
+            manifest.documents[0].ocr_text_path(Path::new("data/sources.toml")),
+            PathBuf::from("data/ocr/DO-198-18.txt")
+        );
+
+        let bad = raw
+            .replace("ocr = true\n", "")
+            .replace("DO-252-25", "not an order");
+        let err = Manifest::parse(&bad).unwrap_err();
+        assert!(err.contains("superseded_by must be"), "{err}");
+        assert!(err.contains("requires ocr = true"), "{err}");
     }
 
     #[test]
