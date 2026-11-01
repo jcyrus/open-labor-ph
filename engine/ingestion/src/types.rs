@@ -292,6 +292,17 @@ pub struct LaborCodeMetadata {
     #[serde(default)]
     pub footnotes: Vec<Footnote>,
 
+    /// Editorial footnotes printed on the Title or Chapter heading above
+    /// this article; a repeal stated there covers every article under it
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub heading_footnotes: Vec<HeadingFootnote>,
+
+    /// Whether the source edition's editorial notes say this text no longer
+    /// applies as printed. `None` when the notes of the parsed PDF have not
+    /// been reviewed in `data/labor_code_status.toml`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub legal_status: Option<LegalStatus>,
+
     /// Topical tags
     #[serde(default)]
     pub tags: Vec<String>,
@@ -305,6 +316,75 @@ pub struct Footnote {
 
     /// Footnote text, whitespace-normalized
     pub text: String,
+}
+
+/// An editorial footnote printed on a Title or Chapter heading
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct HeadingFootnote {
+    /// The heading carrying the footnote, as in `title_name` or `chapter`
+    pub heading: String,
+
+    /// Footnote number as printed
+    pub number: u32,
+
+    /// Footnote text, whitespace-normalized
+    pub text: String,
+}
+
+/// What the source edition's editorial notes say about an article's currency.
+/// This reports those notes; it is not a finding that an article is in force.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LegalStatus {
+    /// Overall reading of the notes
+    pub status: LegalStatusKind,
+
+    /// The notes behind `status`; empty for `no_change_noted`
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub changes: Vec<LegalChange>,
+}
+
+/// Overall status of an article, as far as the source edition's notes go
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum LegalStatusKind {
+    /// No reviewed note says the text changed. Later laws may still apply.
+    NoChangeNoted,
+
+    /// Part of the article, or how it operates, no longer applies as printed
+    PartlySuperseded,
+
+    /// The whole article no longer applies as printed
+    Superseded,
+}
+
+/// One reviewed editorial note saying an article no longer applies as printed
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LegalChange {
+    /// How the note describes the change
+    pub effect: LegalEffect,
+
+    /// The part affected, e.g. "second paragraph"; `None` for the whole article
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub part: Option<String>,
+
+    /// Law or decision that made the change, e.g. "RA 11210"
+    pub by: String,
+
+    /// Number of the footnote stating the change
+    pub footnote: u32,
+}
+
+/// How an editorial note describes a change
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum LegalEffect {
+    Superseded,
+    Repealed,
+    Inoperative,
+    Obsolete,
+    Unconstitutional,
+    FunctionsTransferred,
+    Modified,
 }
 
 fn default_true() -> bool {

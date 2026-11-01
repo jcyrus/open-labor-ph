@@ -1,6 +1,7 @@
 pub mod errors;
 pub mod manifest;
 pub mod parser;
+pub mod status;
 pub mod types;
 
 pub use errors::*;

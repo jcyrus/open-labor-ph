@@ -6,15 +6,17 @@
 //!
 //! Usage:
 //! ```text
-//! parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>]
+//! parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>] [--status <status.toml>]
 //! ```
 //!
 //! Every article records the PDF's SHA-256 and the parser version in
 //! `provenance`. If the PDF is pinned in the source manifest
-//! (`data/sources.toml`), the entry must be a `labor_code` document.
+//! (`data/sources.toml`), the entry must be a `labor_code` document. When the
+//! PDF is the one reviewed in `data/labor_code_status.toml`, articles get a
+//! `legal_status`, and an unreviewed status footnote is an error.
 
 use std::collections::{BTreeMap, HashMap, HashSet};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::sync::OnceLock;
 
@@ -23,11 +25,13 @@ use rayon::prelude::*;
 use regex::Regex;
 use tracing::{info, warn};
 
-use labor_ingestion::manifest::{lookup_entry, sha256_file, DocumentKind};
+use labor_ingestion::manifest::{find_upward, lookup_entry, sha256_file, DocumentKind};
 use labor_ingestion::parser::{self, extract_subsections};
 use labor_ingestion::parser::{date_to_utc, parse_first_date};
+use labor_ingestion::status::{StatusReview, DEFAULT_STATUS_PATH};
 use labor_ingestion::types::{
-    Amendment, Footnote, LaborCodeArticle, LaborCodeBook, LaborCodeMetadata, Provenance,
+    Amendment, Footnote, HeadingFootnote, LaborCodeArticle, LaborCodeBook, LaborCodeMetadata,
+    Provenance,
 };
 
 /// An article delimited during the sequential scan, before the (parallel)
@@ -43,15 +47,20 @@ struct RawArticle {
     book: LaborCodeBook,
     title_name: String,
     chapter: Option<String>,
+    /// Footnote numbers on the Title and Chapter headings above the article.
+    heading_notes: Vec<(String, u32)>,
 }
 
-const USAGE: &str = "Usage: parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>]";
+const USAGE: &str = "Usage: parse-labor-code <input.pdf> <output.json> [--manifest <sources.toml>] [--status <status.toml>]";
 
 struct Cli {
     input: PathBuf,
     output: PathBuf,
     /// Explicit manifest path; defaults to `data/sources.toml` found upward.
     manifest: Option<PathBuf>,
+    /// Explicit status review; defaults to `data/labor_code_status.toml`
+    /// found upward.
+    status: Option<PathBuf>,
 }
 
 /// Parse CLI arguments. `Ok(None)` means help was requested.
@@ -59,12 +68,18 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
     let mut args = args.into_iter();
     let mut positional: Vec<String> = Vec::new();
     let mut manifest = None;
+    let mut status = None;
 
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--manifest" => {
                 manifest = Some(PathBuf::from(
                     args.next().context("--manifest requires a value")?,
+                ));
+            }
+            "--status" => {
+                status = Some(PathBuf::from(
+                    args.next().context("--status requires a value")?,
                 ));
             }
             "-h" | "--help" => return Ok(None),
@@ -79,6 +94,7 @@ fn parse_args(args: impl IntoIterator<Item = String>) -> Result<Option<Cli>> {
         input: PathBuf::from(&positional[0]),
         output: PathBuf::from(&positional[1]),
         manifest,
+        status,
     }))
 }
 
@@ -105,6 +121,7 @@ fn run() -> Result<()> {
         input,
         output,
         manifest,
+        status,
     }) = parse_args(std::env::args().skip(1))?
     else {
         println!("{USAGE}");
@@ -122,7 +139,11 @@ fn run() -> Result<()> {
         Some(entry) => info!(id = %entry.id, "matched source manifest entry by SHA-256"),
         None => info!(%sha256, "PDF is not pinned in the source manifest"),
     }
-    let provenance = Provenance::new(sha256);
+    let review = status
+        .or_else(|| find_upward(Path::new(DEFAULT_STATUS_PATH)))
+        .map(|path| StatusReview::load(&path))
+        .transpose()?;
+    let provenance = Provenance::new(sha256.clone());
 
     let doc = parser::parse_document(&input)
         .with_context(|| format!("failed to parse PDF {}", input.display()))?;
@@ -153,7 +174,7 @@ fn run() -> Result<()> {
     let body_text = mark_footnote_refs(&body_text, &footnotes);
     info!(footnotes = footnotes.len(), "separated editorial footnotes");
 
-    let raw_articles = scan_articles(&body_text);
+    let raw_articles = scan_articles(&split_glued_headings(&body_text));
     if raw_articles.is_empty() {
         bail!(
             "no article headings (\"Art. 294.\", \"ARTICLE 5.\") were found in {}; \
@@ -173,6 +194,11 @@ fn run() -> Result<()> {
 
     // Deterministic output order regardless of scan/parallel ordering.
     articles.sort_by_key(|a| a.article_number);
+
+    match review {
+        Some(review) if review.source_sha256 == sha256 => review.apply(&mut articles)?,
+        _ => warn!("no status review for this PDF; articles get no legal_status"),
+    }
 
     let json =
         serde_json::to_string_pretty(&articles).context("failed to serialize article list")?;
@@ -207,7 +233,7 @@ fn title_re() -> &'static Regex {
     RE.get_or_init(|| {
         // A separator or the end of the line must follow the number, so
         // "Title to the land…" and "Title II of the Code…" are prose.
-        Regex::new(r"^\s*(?:TITLE|Title)\s+(?P<num>[IVXLCDM]{1,7}|\d{1,2})(?:\s*[.:\u{2013}\u{2014}-]\s*(?P<rest>.*)|\s*)$")
+        Regex::new(r"^\s*(?:TITLE|Title)\s+(?P<num>[IVXLCDM]{1,7}(?:-[A-Z])?|\d{1,2})(?:\s*[.:\u{2013}\u{2014}-]\s*(?P<rest>.*)|\s*)$")
             .expect("static regex")
     })
 }
@@ -313,6 +339,25 @@ fn is_caps_heading(line: &str) -> bool {
     upper * 10 >= alphabetic.len() * 8
 }
 
+fn glued_heading_re() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    // The extractor can leave a centered heading on the last line of the
+    // text above it: "…social legislation. Chapter II – EMPLOYMENT OF MINORS".
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?P<end>[.;:)\]\u{201d}])[ \t]+(?P<heading>(?:Chapter|Title)\s+[IVXLCDM]+\s+[\u{2013}\u{2014}-]\s+[A-Z]{2})",
+        )
+        .expect("static regex")
+    })
+}
+
+/// Move headings glued to the end of a sentence onto their own line.
+fn split_glued_headings(text: &str) -> String {
+    glued_heading_re()
+        .replace_all(text, "$end\n$heading")
+        .into_owned()
+}
+
 /// Sequentially scan the document, tracking Book/Title/Chapter context and
 /// delimiting article bodies.
 ///
@@ -327,6 +372,8 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
     let mut seen_book_header = false;
     let mut title_name = String::from("Preliminary Title");
     let mut chapter: Option<String> = None;
+    let mut title_notes: Vec<(String, u32)> = Vec::new();
+    let mut chapter_notes: Vec<(String, u32)> = Vec::new();
 
     let mut articles: Vec<RawArticle> = Vec::new();
     let mut current: Option<RawArticle> = None;
@@ -360,6 +407,8 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
             book = LaborCodeBook::Preliminary;
             title_name = String::from("Preliminary Title");
             chapter = None;
+            title_notes.clear();
+            chapter_notes.clear();
             i += 1;
             continue;
         }
@@ -372,6 +421,8 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
                 // Each book restarts its Title/Chapter numbering.
                 title_name = String::from("General Provisions");
                 chapter = None;
+                title_notes.clear();
+                chapter_notes.clear();
                 // Skip the book's name line(s) ("CONDITIONS OF EMPLOYMENT").
                 let (_, consumed) = caps_continuation(&lines, i + 1);
                 i += 1 + consumed;
@@ -383,7 +434,7 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
             let num = &caps["num"];
             // Only treat as a header when the name is inline or follows in
             // capitals; "Title to the property shall…" has neither.
-            let (name, consumed) = header_name(&caps, &lines, i);
+            let (name, refs, consumed) = header_name(&caps, &lines, i);
             if !name.is_empty() || seen_book_header {
                 flush(&mut current, &mut body_lines, &mut articles);
                 title_name = if name.is_empty() {
@@ -392,6 +443,8 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
                     format!("Title {num}: {name}")
                 };
                 chapter = None;
+                title_notes = refs.iter().map(|n| (title_name.clone(), *n)).collect();
+                chapter_notes.clear();
                 i += 1 + consumed;
                 continue;
             }
@@ -399,14 +452,16 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
 
         if let Some(caps) = chapter_re().captures(line) {
             let num = &caps["num"];
-            let (name, consumed) = header_name(&caps, &lines, i);
+            let (name, refs, consumed) = header_name(&caps, &lines, i);
             if !name.is_empty() || seen_book_header {
                 flush(&mut current, &mut body_lines, &mut articles);
-                chapter = Some(if name.is_empty() {
+                let heading = if name.is_empty() {
                     format!("Chapter {num}")
                 } else {
                     format!("Chapter {num}: {name}")
-                });
+                };
+                chapter_notes = refs.iter().map(|n| (heading.clone(), *n)).collect();
+                chapter = Some(heading);
                 i += 1 + consumed;
                 continue;
             }
@@ -423,6 +478,7 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
                     book: book.clone(),
                     title_name: title_name.clone(),
                     chapter: chapter.clone(),
+                    heading_notes: title_notes.iter().chain(&chapter_notes).cloned().collect(),
                 });
                 i += 1;
                 continue;
@@ -441,8 +497,8 @@ fn scan_articles(text: &str) -> Vec<RawArticle> {
 
 /// A title/chapter header's name: the inline remainder plus any wrapped
 /// capitalized continuation lines, with footnote tokens removed. Returns
-/// the name and how many following lines it consumed.
-fn header_name(caps: &regex::Captures<'_>, lines: &[&str], i: usize) -> (String, usize) {
+/// the name, its footnote numbers and how many following lines it consumed.
+fn header_name(caps: &regex::Captures<'_>, lines: &[&str], i: usize) -> (String, Vec<u32>, usize) {
     let inline = caps.name("rest").map_or("", |m| m.as_str().trim());
     let (continuation, consumed) = caps_continuation(lines, i + 1);
     let name = [inline, continuation.as_str()]
@@ -451,7 +507,15 @@ fn header_name(caps: &regex::Captures<'_>, lines: &[&str], i: usize) -> (String,
         .copied()
         .collect::<Vec<_>>()
         .join(" ");
-    (take_footnote_refs(&name).0, consumed)
+    let (name, mut refs) = take_footnote_refs(&name);
+    // A marker can wrap onto its own line below the heading ("WAGES" / "82").
+    match lines.get(i + 1 + consumed).map(|l| take_footnote_refs(l)) {
+        Some((rest, marker)) if rest.trim().is_empty() && !marker.is_empty() => {
+            refs.extend(marker);
+            (name, refs, consumed + 1)
+        }
+        _ => (name, refs, consumed),
+    }
 }
 
 /// Drop repeated article numbers, keeping the longest body of each.
@@ -511,6 +575,17 @@ fn build_article(
             })
         })
         .collect();
+    let heading_footnotes: Vec<HeadingFootnote> = raw
+        .heading_notes
+        .iter()
+        .filter_map(|(heading, n)| {
+            footnotes.get(n).map(|text| HeadingFootnote {
+                heading: heading.clone(),
+                number: *n,
+                text: text.clone(),
+            })
+        })
+        .collect();
 
     // Heading style is "Security of Tenure. – In cases of regular
     // employment…": short title, dash, then the body starts inline.
@@ -564,6 +639,8 @@ fn build_article(
             related_articles,
             implementing_orders,
             footnotes: notes,
+            heading_footnotes,
+            legal_status: None,
             tags: Vec::new(),
         },
         provenance: provenance.clone(),
@@ -1410,6 +1487,58 @@ mod tests {
         );
         assert!(!article.metadata.original_pd_442);
         assert_eq!(article.metadata.amendments[0].law, "PD 1368");
+    }
+
+    #[test]
+    fn test_heading_footnotes_reach_every_article_under_the_heading() {
+        let notes = footnote_map(&[
+            (1, "This Title was superseded."),
+            (2, "This Chapter was repealed."),
+        ]);
+        // The Title's marker wraps onto its own line; the Chapter's is glued.
+        let text = "Title II – WAGES\n1\nChapter III – HOUSEHELPERS2\n\
+                    Art. 139. Coverage. – Text.\nArt. 140. Contract. – Text.\n\
+                    Chapter IV – HOMEWORKERS\nArt. 151. Regulation. – Text.\n\
+                    Title III – OTHERS\nArt. 152. Other. – Text.\n";
+        let marked = mark_footnote_refs(text, &notes);
+        let articles: Vec<LaborCodeArticle> = scan_articles(&marked)
+            .into_iter()
+            .map(|raw| build_article(raw, &Provenance::new("0".repeat(64)), &notes))
+            .collect();
+        let numbers: Vec<Vec<u32>> = articles
+            .iter()
+            .map(|a| {
+                a.metadata
+                    .heading_footnotes
+                    .iter()
+                    .map(|f| f.number)
+                    .collect()
+            })
+            .collect();
+        assert_eq!(numbers, [vec![1, 2], vec![1, 2], vec![1], vec![]]);
+        assert_eq!(
+            articles[0].metadata.heading_footnotes[1].heading,
+            "Chapter III: HOUSEHELPERS"
+        );
+    }
+
+    #[test]
+    fn test_glued_heading_starts_its_chapter() {
+        let text = "Art. 136. Workers. – For labor and social\n\
+                    legislation. Chapter II – EMPLOYMENT OF MINORS\n\
+                    Art. 137. Minimum Age. – Text.\n";
+        let articles = scan_articles(&split_glued_headings(text));
+        assert!(articles[0].body.ends_with("legislation."));
+        assert_eq!(
+            articles[1].chapter.as_deref(),
+            Some("Chapter II: EMPLOYMENT OF MINORS")
+        );
+    }
+
+    #[test]
+    fn test_lettered_title_keeps_its_number() {
+        let articles = scan_articles("Title VII-A – GRIEVANCE MACHINERY\nArt. 273. A. – Text.\n");
+        assert_eq!(articles[0].title_name, "Title VII-A: GRIEVANCE MACHINERY");
     }
 
     #[test]

@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`metadata.legal_status`** on Labor Code articles: `superseded` (33), `partly_superseded` (20) or `no_change_noted` (264), with the notes behind it in `changes`. It comes from a hand review of the edition's footnotes (`data/labor_code_status.toml`, `engine/ingestion/src/status.rs`) tied to the PDF's SHA-256. `parse-labor-code` fails on a status-like footnote that has not been reviewed; a PDF outside the review gets no `legal_status`. `no_change_noted` is not a finding that an article is in force.
+- **`metadata.heading_footnotes`**: notes on Title and Chapter headings now reach every article under the heading. They were dropped before, which hid the express repeal of Arts. 139–150 (R.A. No. 10361) and the Title-wide note on Arts. 43–56 (R.A. No. 7796).
+- **CI** (`.github/workflows/ci.yml`): format, clippy and tests, plus a rebuild of `labor_code.json` from the pinned PDF that fails on any difference from the committed file.
+
 ### Fixed
 
+- **Labor Code chapters and titles**: a heading the extractor leaves on the end of a sentence now starts its chapter, so Arts. 137–138 are in "Chapter II: EMPLOYMENT OF MINORS" and the heading is gone from Art. 136's `content`. "Title VII-A" keeps its number instead of becoming "Title VII: A – GRIEVANCE…".
 - **Labor Code parser handles the real DOLE renumbered edition** (found on the first real-PDF run):
   - Book headers: the body prints "Book One - PRE-EMPLOYMENT" in title case; table-of-contents lines ending in a page number are skipped, and the body's "PRELIMINARY TITLE" resets any state left by the TOC. Previously all 317 articles landed in Book VII; now every book matches the verified ranges.
   - Footnotes: the edition's 258 editorial footnotes are split out of the text per page (from a page's first footnote to its end; wide-font remainders that spill onto the next page are moved back), inline markers are resolved per article, and the footnotes are kept in new `metadata.footnotes`. `amendments` (first sentence of "As amended/added by …" footnotes, never PD 442 itself) and `implementing_orders` (cited DOs, normalized) are derived from them.

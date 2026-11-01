@@ -89,6 +89,16 @@ cargo run --release --bin parse-labor-code -- \
 
 Writes a JSON array with one object per article, using the 2015 renumbering. The former number goes in `former_article_number`. Amendment notes ("As amended by …") are parsed into `metadata.amendments`. Each article carries the same `provenance` as DOLE records.
 
+`content` keeps the text as printed, even where it no longer applies. **Check `metadata.legal_status` before you use an article as current law.** It reports the source edition's editorial notes, reviewed by hand in [`data/labor_code_status.toml`](data/labor_code_status.toml):
+
+| `status` | Meaning |
+| --- | --- |
+| `superseded` | The whole article no longer applies as printed (for example Art. 131 on maternity leave, or Arts. 139–150 on househelpers). |
+| `partly_superseded` | Part of the article, or how it operates, no longer applies as printed. `changes` says which part. |
+| `no_change_noted` | No reviewed note says the text changed. This does not mean the article is in force: later laws are outside the edition. |
+
+Notes printed on a Title or Chapter heading are in `metadata.heading_footnotes` on every article under that heading.
+
 ### Validate Output
 
 ```bash
@@ -108,7 +118,7 @@ Every binary accepts `--help`.
 - 🟡 **Phase 2: Data Ingestion Pipeline**: Tooling complete; Labor Code ingested
   - ✅ `parse-dole`, `parse-labor-code`, `validate`
   - ✅ Source manifest and `fetch` (hash-pinned; the Labor Code is pinned)
-  - ✅ Labor Code processed: [`data/processed/labor_code.json`](data/processed/labor_code.json) (317 articles, with editorial footnotes and amendment history)
+  - ✅ Labor Code processed: [`data/processed/labor_code.json`](data/processed/labor_code.json) (317 articles, with editorial footnotes, amendment history and reviewed legal status)
   - 🔲 Department Orders (PDFs must be downloaded by hand; see `fetch`)
   - 🔲 OCR for scanned PDFs
 - 🔲 **Phase 3: Evaluation Framework**: Not started
