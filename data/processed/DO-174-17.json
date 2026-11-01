@@ -1,0 +1,499 @@
+{
+  "order_number": "DO-174-17",
+  "title": "RULES IMPLEMENTING ARTICLES 106 TO 109 OF THE LABOR CODE, AS AMENDED",
+  "source_url": "https://www.dole.gov.ph/php_assets/uploads/2017/07/DO-174-17-Rules-Implementing-Articles-106-to-109-of-the-Labor-Code-As-Amended1.pdf",
+  "provenance": {
+    "source_sha256": "8d1b8827aac41d5be16546107dcd9f18ea9dfe559b0dff308646f5eb4125da67",
+    "parser": "labor-ingestion 0.1.0"
+  },
+  "metadata": {
+    "issuing_authority": "SILVESTRE H. BELLO III, Secretary",
+    "supersedes": [],
+    "related_laws": [
+      "PD 442 (Labor Code)"
+    ],
+    "tags": [
+      "contracting",
+      "wages",
+      "termination",
+      "labor_relations"
+    ],
+    "signed_date": "2017-03-16",
+    "effectivity_clause": "This Department Order shall be effective fifteen (15) days after completion of its publication in a newspaper of general circulation.",
+    "ocr_text": true
+  },
+  "sections": [
+    {
+      "section_number": "Section 1",
+      "content": "Guiding Principle. Non-permissible forms of contracting and\nsubcontracting arrangements undermine the Constitutional and statutory right to\nsecurity of tenure of workers."
+    },
+    {
+      "section_number": "Section 2",
+      "content": "Coverage. These Rules shall apply to all parties in an arrangement where\nemployer-employee relationship exists.\nContractors and subcontractors referred to in these Rules are prohibited from\nengaging in recruitment and placement activities as defined in Article 13(b) of the\nLabor Code, whether local or overseas employment."
+    },
+    {
+      "section_number": "Section 3",
+      "content": "Definition of terms. The following terms, as used in these Rules, shall\nmean:\n\na) “Bond” — refers to the bond under Article 108 of the Labor Code that the\nprincipal may require from the contractor to be posted equal to the cost of labor\nunder contract.\n\nb) “Cabo” — refers to a person or group of persons or to a labor group which,\nunder the guise of a labor organization, cooperative or any entity, supplies\nworkers to an employer, with or without any monetary or other consideration,\nwhether in the capacity of an agent of the employer or as an ostensible\nindependent contractor.\n\nc) “Contracting” or “Subcontracting” — refers to an arrangement whereby a\nprincipal agrees to farm out to a contractor the performance or completion of a\nspecific job or work within a definite or predetermined period, regardless of\nwhether such job or work is to be performed or completed within or outside the\npremises of the principal.\n\nd) “Contractor” — refers to any person or entity engaged in a legitimate\ncontracting or subcontracting arrangement providing services for a specific job\nor undertaking farmed out by principal under a Service Agreement.\ne) “Contractor’s employee” — refers to employee of the contractor hired to\nperform or complete a job or work farmed out by the principal pursuant to a\nService Agreement with the latter.\n\nf) “In-house agency” — refers to a contractor which is owned, managed, or\ncontrolled directly or indirectly by the principal or one where the principal\nowns/represents any share of stock, and which operates solely or mainly for\nthe principal.\n\ng) “In-house cooperative” — refers to a cooperative which is managed, or\ncontrolled directly or indirectly by the principal or one where the principal or any\nof its officers owns/represents any equity or interest, and which operates solely\nor mainly for the principal.\n\nh) “Labor-only contracting” - refers to arrangement where the contractor or\nsubcontractor merely recruits, supplies or places workers to perform a job or\nwork for a principal, and the elements enumerated in Section 5 hereunder are\npresent.\n\ni) “Principal” — refers to any natural or juridical entity, whether an employer or\nnot, who puts out or farms out a job or work to a contractor.\n\nj) “Service Agreement” — refers to the contract between the principal and\ncontractor containing the terms and conditions governing the performance or\ncompletion of a specific job or work being farmed out for a definite or\npredetermined period.\n\nk) “Solidary liability” — refers to the liability of the principal, pursuant to the\n\nprovision of Article 109 of the Labor Code, as direct employer together with the\ncontractor for any violation of any provision of the Labor Code.\nIt also refers to the liability of the principal, in the same manner and extent that\nhe/she is liable to his/her direct employees, to the extent of the work performed\nunder the contract when the contractor fails to pay the waged of his/her\nemployees, as provided in Article 106 of the Labor Code, as amended.\n\n1) “Substantial capital” — refers to paid-up capital stock/shares at least Five\nMillion Pesos (P5,000,000.00) in the case of corporations, partnerships and\ncooperatives; in the case of single proprietorship, a net worth of at least Five\nMillion Pesos (P5,000,000.00).",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "“Bond” — refers to the bond under Article 108 of the Labor Code that the\nprincipal may require from the contractor to be posted equal to the cost of labor\nunder contract."
+        },
+        {
+          "label": "b",
+          "content": "“Cabo” — refers to a person or group of persons or to a labor group which,\nunder the guise of a labor organization, cooperative or any entity, supplies\nworkers to an employer, with or without any monetary or other consideration,\nwhether in the capacity of an agent of the employer or as an ostensible\nindependent contractor."
+        },
+        {
+          "label": "c",
+          "content": "“Contracting” or “Subcontracting” — refers to an arrangement whereby a\nprincipal agrees to farm out to a contractor the performance or completion of a\nspecific job or work within a definite or predetermined period, regardless of\nwhether such job or work is to be performed or completed within or outside the\npremises of the principal."
+        },
+        {
+          "label": "d",
+          "content": "“Contractor” — refers to any person or entity engaged in a legitimate\ncontracting or subcontracting arrangement providing services for a specific job\nor undertaking farmed out by principal under a Service Agreement."
+        },
+        {
+          "label": "e",
+          "content": "“Contractor’s employee” — refers to employee of the contractor hired to\nperform or complete a job or work farmed out by the principal pursuant to a\nService Agreement with the latter."
+        },
+        {
+          "label": "f",
+          "content": "“In-house agency” — refers to a contractor which is owned, managed, or\ncontrolled directly or indirectly by the principal or one where the principal\nowns/represents any share of stock, and which operates solely or mainly for\nthe principal."
+        },
+        {
+          "label": "g",
+          "content": "“In-house cooperative” — refers to a cooperative which is managed, or\ncontrolled directly or indirectly by the principal or one where the principal or any\nof its officers owns/represents any equity or interest, and which operates solely\nor mainly for the principal."
+        },
+        {
+          "label": "h",
+          "content": "“Labor-only contracting” - refers to arrangement where the contractor or\nsubcontractor merely recruits, supplies or places workers to perform a job or\nwork for a principal, and the elements enumerated in Section 5 hereunder are\npresent."
+        },
+        {
+          "label": "i",
+          "content": "“Principal” — refers to any natural or juridical entity, whether an employer or\nnot, who puts out or farms out a job or work to a contractor."
+        },
+        {
+          "label": "j",
+          "content": "“Service Agreement” — refers to the contract between the principal and\ncontractor containing the terms and conditions governing the performance or\ncompletion of a specific job or work being farmed out for a definite or\npredetermined period."
+        },
+        {
+          "label": "k",
+          "content": "“Solidary liability” — refers to the liability of the principal, pursuant to the\n\nprovision of Article 109 of the Labor Code, as direct employer together with the\ncontractor for any violation of any provision of the Labor Code.\nIt also refers to the liability of the principal, in the same manner and extent that\nhe/she is liable to his/her direct employees, to the extent of the work performed\nunder the contract when the contractor fails to pay the waged of his/her\nemployees, as provided in Article 106 of the Labor Code, as amended.",
+          "subsections": [
+            {
+              "label": "1",
+              "content": "“Substantial capital” — refers to paid-up capital stock/shares at least Five\nMillion Pesos (P5,000,000.00) in the case of corporations, partnerships and\ncooperatives; in the case of single proprietorship, a net worth of at least Five\nMillion Pesos (P5,000,000.00)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_number": "Section 4",
+      "content": "Regulation of Contracting or Subcontracting. The Secretary of Labor\nand Employment shall regulate contracting and subcontracting arrangement by\nabsolutely prohibiting labor-only contracting, and restricting job contracting allowed\nunder the provisions of the Labor Code, as amended."
+    },
+    {
+      "section_number": "Section 5",
+      "content": "Absolute Prohibition against Labor-only Contracting. Labor-only\ncontracting, which is totally prohibited, refers to an arrangement where:\n\na) i. The contractor or subcontractor doeg not have substantial capital, or\n\n-\npe\nii. The contractor or subcontractor does not have investments in the form\nof tools, equipment, machineries, supervision, work premises, among\nothers,\nand\n\niii. The contractor's or subcontractor’s employees recruited and placed are\nperforming activities which are directly related to the main business\noperation of the principal;\nor\n\nb) The contractor or subcontractor does not exercise the right to control over\n\nthe performance of the work of the employee.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "i. The contractor or subcontractor doeg not have substantial capital, or\n\n-\npe\nii. The contractor or subcontractor does not have investments in the form\nof tools, equipment, machineries, supervision, work premises, among\nothers,\nand\n\niii. The contractor's or subcontractor’s employees recruited and placed are\nperforming activities which are directly related to the main business\noperation of the principal;\nor"
+        },
+        {
+          "label": "b",
+          "content": "The contractor or subcontractor does not exercise the right to control over\n\nthe performance of the work of the employee."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 6",
+      "content": "Other Illicit Forms of Employment Arrangements. In addition to Section\n5 of these Rules, the following are hereby declared prohibited for being contrary to the\nlaw or public policy:\n\na) When the principal farms out work to a “Cabo”.\n\nb) Contracting out of job or work through an in-house agency.\n\nc) Contracting out of job or work through an in-house cooperative which merely\nsupplies workers to the principal.\n\nd) Contracting out of a job or work by reason of a strike or lockout whether actual\nor imminent.\n\ne) Contracting out of a job or work being performed by union members and such\nwill interfere with, restrain or coerce employees in the exercise of their rights to\nself-organization as provided in Article 259 of the Labor Code, as amended.\n\nf) Requiring the contractor’s/subcontractor’s employees to perform functions\nwhich are currently being performed by the regular employees of the principal.\n\ng) Requiring the contractor’s/subcontractor’s employees to sign, as a precondition\nto employment or continued employment, an antedated resignation letter; a\nblank payroll; a waiver of labor standards including minimum wages and social\nor welfare benefits; or a quitclaim releasing the principal or contractor from\nliability as to payment of future claims; or require the employee to become\nmember of a cooperative.\n\nh) Repeated hiring by the contractor/subcontractor of employees under an\nemployment contract of short duration.\n\ni) Requiring employees under a contracting/subcontracting arrangement to sign\na contract fixing the period of employment to a term shorter than the term of the\nService Agreement, unless the contract is divisible into phases for which\nsubstantially different skills are required and this is made known to the\nemployee at the time of engagement.\n\nj) Such other practices, schemes or employment arrangements designed to\ncircumvent the right of workers to security of tenure.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "When the principal farms out work to a “Cabo”."
+        },
+        {
+          "label": "b",
+          "content": "Contracting out of job or work through an in-house agency."
+        },
+        {
+          "label": "c",
+          "content": "Contracting out of job or work through an in-house cooperative which merely\nsupplies workers to the principal."
+        },
+        {
+          "label": "d",
+          "content": "Contracting out of a job or work by reason of a strike or lockout whether actual\nor imminent."
+        },
+        {
+          "label": "e",
+          "content": "Contracting out of a job or work being performed by union members and such\nwill interfere with, restrain or coerce employees in the exercise of their rights to\nself-organization as provided in Article 259 of the Labor Code, as amended."
+        },
+        {
+          "label": "f",
+          "content": "Requiring the contractor’s/subcontractor’s employees to perform functions\nwhich are currently being performed by the regular employees of the principal."
+        },
+        {
+          "label": "g",
+          "content": "Requiring the contractor’s/subcontractor’s employees to sign, as a precondition\nto employment or continued employment, an antedated resignation letter; a\nblank payroll; a waiver of labor standards including minimum wages and social\nor welfare benefits; or a quitclaim releasing the principal or contractor from\nliability as to payment of future claims; or require the employee to become\nmember of a cooperative."
+        },
+        {
+          "label": "h",
+          "content": "Repeated hiring by the contractor/subcontractor of employees under an\nemployment contract of short duration."
+        },
+        {
+          "label": "i",
+          "content": "Requiring employees under a contracting/subcontracting arrangement to sign\na contract fixing the period of employment to a term shorter than the term of the\nService Agreement, unless the contract is divisible into phases for which\nsubstantially different skills are required and this is made known to the\nemployee at the time of engagement."
+        },
+        {
+          "label": "j",
+          "content": "Such other practices, schemes or employment arrangements designed to\ncircumvent the right of workers to security of tenure."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 7",
+      "content": "When principal is deemed the direct employer of the contractor’s or\nsubcontractor’s employees. In the event that there is a finding that the contractor or\n\nsubcontractor is engaged in labor-only contracting under Section 5 and other illicit\neh\nforms of employment arrangements under Section 6 of these Rules, the principal\nshall be deemed the direct employer of the contractors or subcontractors\nemployees."
+    },
+    {
+      "section_number": "Section 8",
+      "title": "Permissible Contracting or Subcontracting Arrangements",
+      "content": "Notwithstanding Sections 5 and 6 hereof, contracting or subcontracting shall only be\nallowed if all the following circumstances concur:\n\na) The contractor or subcontractor is engaged in a distinct and independent\nbusiness and undertakes to perform the job or work on its own responsibility,\naccording to its own manner and method;\n\nb) The contractor or subcontractor has substantial capital to carry out the job\nfarmed out by the principal on his account, manner and method, investment in\nthe form of tools, equipment, machinery and supervision;\n\nc) In performing the work farmed out, the contractor or subcontractor is free from\nthe control and/or direction of the principal in all matters connected with the\nperformance of the work except as to the result thereto; and\n\nd) The Service Agreement ensures compliance with all the rights and benefits for\nall the employees of the contractor or subcontractor under the labor laws.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "The contractor or subcontractor is engaged in a distinct and independent\nbusiness and undertakes to perform the job or work on its own responsibility,\naccording to its own manner and method;"
+        },
+        {
+          "label": "b",
+          "content": "The contractor or subcontractor has substantial capital to carry out the job\nfarmed out by the principal on his account, manner and method, investment in\nthe form of tools, equipment, machinery and supervision;"
+        },
+        {
+          "label": "c",
+          "content": "In performing the work farmed out, the contractor or subcontractor is free from\nthe control and/or direction of the principal in all matters connected with the\nperformance of the work except as to the result thereto; and"
+        },
+        {
+          "label": "d",
+          "content": "The Service Agreement ensures compliance with all the rights and benefits for\nall the employees of the contractor or subcontractor under the labor laws."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 9",
+      "content": "Solidary Liability. In the event of violation of any provision of the Labor\nCode, including the failure to pay wages, there exists a solidary liability on the part of\n\nthe principal and the contractor for purposes of enforcing the provisions of the Labor\n\nCode and other social legislations, to the extent of the work performed under the\nemployment contract."
+    },
+    {
+      "section_number": "Section 10",
+      "content": "Rights of Contractor’s/ Subcontractor’s Employees. All\ncontractor’s/subcontractor’s employees, shall be entitled to security of tenure and all\n\nthe rights and privileges as provided for in the Labor Code, as amended, to include\n\nthe following:\n\na) Safe and healthful working conditions;\n\nb) Labor standards such as but not limited to service incentive leave, rest days,\novertime pay, holiday pay, 13\" month pay, and separation pay;\n\nc) Retirement benefits under the SSS or retirement plans of the\ncontractor/subcontractor;\n\nd) Social security and welfare benefits; and\n\ne) Self-organization, collective bargaining and peaceful concerted activities\nincluding the right to strike.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Safe and healthful working conditions;"
+        },
+        {
+          "label": "b",
+          "content": "Labor standards such as but not limited to service incentive leave, rest days,\novertime pay, holiday pay, 13\" month pay, and separation pay;"
+        },
+        {
+          "label": "c",
+          "content": "Retirement benefits under the SSS or retirement plans of the\ncontractor/subcontractor;"
+        },
+        {
+          "label": "d",
+          "content": "Social security and welfare benefits; and"
+        },
+        {
+          "label": "e",
+          "content": "Self-organization, collective bargaining and peaceful concerted activities\nincluding the right to strike."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 11",
+      "content": "Required Contracts under these Rules. .\na) Employment contract between the contractor/subcontractor and _ its\nemployees. Notwithstanding any oral or written stipulations to the contrary,\nthe contract between the contractor/subcontractor and its employees shall be\ngoverned by the provisions of Articles 294 and 295 of the Labor Code, as\namended, including the provisions on general labor standards. It shall include .\nthe following stipulations: .\ni. The specific description of the job or work to be performed by the\n\nemployee; and\nZz\nii. The place of work and terms and condition of employment, including a\nstatement of the wage rate applicable to the individual employee.\n\nThe contractor/subcontractor shall inform the employee of the foregoing\n\nstipulations in writing on or before the first day of his/her employment.\n\nb) Service Agreement between the principal and the contractor. The Service\n\nAgreement shall include the following:\n\ni. The specific description of the job or work being subcontracted, including\nits term or duration;\n\nii. The place or work and terms and conditions governing the contracting\narrangement, to include the agreed amount of the contracted job or work\nas well as the standard administrative fee of not less than ten percent\n(10%) of the total contract cost; and\n\niii. A provision on the issuance of the bond/s as defined in Section 3(a)\nrenewable every year.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Employment contract between the contractor/subcontractor and _ its\nemployees. Notwithstanding any oral or written stipulations to the contrary,\nthe contract between the contractor/subcontractor and its employees shall be\ngoverned by the provisions of Articles 294 and 295 of the Labor Code, as\namended, including the provisions on general labor standards. It shall include .\nthe following stipulations: .",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "The specific description of the job or work to be performed by the\n\nemployee; and\nZz\nii. The place of work and terms and condition of employment, including a\nstatement of the wage rate applicable to the individual employee.\n\nThe contractor/subcontractor shall inform the employee of the foregoing\n\nstipulations in writing on or before the first day of his/her employment."
+            }
+          ]
+        },
+        {
+          "label": "b",
+          "content": "Service Agreement between the principal and the contractor. The Service\n\nAgreement shall include the following:",
+          "subsections": [
+            {
+              "label": "i",
+              "content": "The specific description of the job or work being subcontracted, including\nits term or duration;\n\nii. The place or work and terms and conditions governing the contracting\narrangement, to include the agreed amount of the contracted job or work\nas well as the standard administrative fee of not less than ten percent\n(10%) of the total contract cost; and\n\niii. A provision on the issuance of the bond/s as defined in Section 3(a)\nrenewable every year."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_number": "Section 12",
+      "content": "Effect of Violation of the Provisions on the Rights of Contractor’s\nEmployees and Required Contracts. A finding of violation of either Sections 10 or\n11 hereof, shall render the principal the direct employer of the employees of the\ncontractor or subcontractor, pursuant to Article 109 of the Labor Code, as amended."
+    },
+    {
+      "section_number": "Section 13",
+      "content": "Effect of Termination of Employment. The termination of employment\nof the contractor’s/subcontractor’s employee prior to the expiration of the Service\nAgreement shall be governed by Articles 297, 298 and 299 of the Labor Code.\nIn case the termination of employment is caused by the pre-termination of the Service\nAgreement not due to authorized causes under Article 298, the right of the\ncontractor’s/subcontractor’s employee to unpaid wages and other unpaid benefits\nincluding unremitted legal mandatory contributions, e.g., SSS, PhilHealth, Pag-IBIG,\nECC, shall be borne by the party at fault, without prejudice to the solidary liability of\nthe parties to the Service Agreement.\nWhere the termination results from the expiration of the Service Agreement, or from\nthe completion of the phase of the job or work for which the employee is engaged, the\nlatter may opt to wait for re-employment within three (3) months to resign and transfer\nto another contractor-employer. Failure of the contractor to provide new employment\nfor the employee shall entitle the latter to payment of separation benefits as may be\nprovided by law or the Service Agreement, whichever is higher, without prejudice to\nhis/her entitlement to completion bonuses or other emoluments, including retirement\nbenefits whenever applicable. The mere expiration of the Service Agreement shall not\nbe deemed as a termination of employment of the contractor’s/subcontractor’s\nemployees who are regular employees of the latter."
+    },
+    {
+      "section_number": "Section 14",
+      "title": "Mandatory Registration and Registry of Legitimate Contractors",
+      "content": "Consistent with the authority of the Secretary of Labor and Employment to restrict or\nprohibit the contracting out of labor to protect the rights of workers, it shall be\nmandatory for all persons or entities acting as contractors to register with the Regional\nOffice of the Department of Labor and Employment (DOLE) where it principally\noperates. /\n\nZ un “a4 h 5\nFailure to register shall give rise to the presumption that the contractor is engaged in\nlabor-only contracting.\n\nAccordingly, the registration system, governing contracting arrangements and\nimplemented by the Regional Offices of the DOLE is hereby established, with the\nBureau of Working Conditions (BWC) as the central registry."
+    },
+    {
+      "section_number": "Section 15",
+      "content": "Requirements for Registration. The verified application for registration\nas a contractor shall be filed at the DOLE Regional Office in the region where it seeks\nto principally operate. Whenever applicable, the applicant shall provide in the\napplication form the following information:\n\na) The name and business address of the applicant and the areas where it seeks\nto operate;\n\nb) The names and addresses of officers, if the applicant is a corporation,\npartnership, cooperative or a labor organization;\n\nc) The nature of the applicant's business and the industry or industries where the\napplicant seeks to operate;\n\nd) The number of regular workers and the total workforce;\n\ne) The list of clients, if any, the number of personnel assigned to each client, if\nany, and the services provided to the client;\n\nf) The description of the phases of the contract, including the number of\nemployees covered in each phase, where appropriate; and\n\ng) Proof of compliance with substantial capital requirement as defined in Section\n3(j) of these Rules.\n\nThe application shall be supported by:\n\na) A certified true copy of a certificate of registration of firm or business name\nfrom the Securities and Exchange Commission (SEC), Department of Trade\nand Industry (DTI), Cooperative Development Authority (CDA), or from the\nDOLE if the applicant is a labor organization;\n\nb) A certified true copy of the license or business permit issued by the local\ngovernment unit or units where the contractor operates;\n\nc) Acertified listing, with proof of ownership or lease contract, of facilities, tools,\nequipment, premises implements, machineries and work premises, that are\nactually and directly used by the contractor in the performance or completion\nof the specific job or work contracted out. In addition, the applicant shall\nsubmit a photo of the office building and premises where it holds office;\n\nd) A copy of audited financial statements if the applicant is a corporation,\npartnership, cooperative or a labor organization, or a copy of the latest ITR\nif the applicant is a sole proprietorship; and\n\ne) A sworn disclosure that the registrant, its officers and owners or principal\nstockholders or any one of them, has not been operating or previously\noperating as a contractor under a different business name or entity or with\npending cases of violations of these Rules and/or labor standards, or with a\ncancelled registration. In case any of the foregoing has a pending case, a\ncopy of the complaint and the latest status of the case shall be attached.\n\n- v 6\na A",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "The name and business address of the applicant and the areas where it seeks\nto operate;"
+        },
+        {
+          "label": "b",
+          "content": "The names and addresses of officers, if the applicant is a corporation,\npartnership, cooperative or a labor organization;"
+        },
+        {
+          "label": "c",
+          "content": "The nature of the applicant's business and the industry or industries where the\napplicant seeks to operate;"
+        },
+        {
+          "label": "d",
+          "content": "The number of regular workers and the total workforce;"
+        },
+        {
+          "label": "e",
+          "content": "The list of clients, if any, the number of personnel assigned to each client, if\nany, and the services provided to the client;"
+        },
+        {
+          "label": "f",
+          "content": "The description of the phases of the contract, including the number of\nemployees covered in each phase, where appropriate; and"
+        },
+        {
+          "label": "g",
+          "content": "Proof of compliance with substantial capital requirement as defined in Section\n3(j) of these Rules.\n\nThe application shall be supported by:"
+        },
+        {
+          "label": "a",
+          "content": "A certified true copy of a certificate of registration of firm or business name\nfrom the Securities and Exchange Commission (SEC), Department of Trade\nand Industry (DTI), Cooperative Development Authority (CDA), or from the\nDOLE if the applicant is a labor organization;"
+        },
+        {
+          "label": "b",
+          "content": "A certified true copy of the license or business permit issued by the local\ngovernment unit or units where the contractor operates;"
+        },
+        {
+          "label": "c",
+          "content": "Acertified listing, with proof of ownership or lease contract, of facilities, tools,\nequipment, premises implements, machineries and work premises, that are\nactually and directly used by the contractor in the performance or completion\nof the specific job or work contracted out. In addition, the applicant shall\nsubmit a photo of the office building and premises where it holds office;"
+        },
+        {
+          "label": "d",
+          "content": "A copy of audited financial statements if the applicant is a corporation,\npartnership, cooperative or a labor organization, or a copy of the latest ITR\nif the applicant is a sole proprietorship; and"
+        },
+        {
+          "label": "e",
+          "content": "A sworn disclosure that the registrant, its officers and owners or principal\nstockholders or any one of them, has not been operating or previously\noperating as a contractor under a different business name or entity or with\npending cases of violations of these Rules and/or labor standards, or with a\ncancelled registration. In case any of the foregoing has a pending case, a\ncopy of the complaint and the latest status of the case shall be attached.\n\n- v 6\na A"
+        }
+      ]
+    },
+    {
+      "section_number": "Section 16",
+      "content": "Filing and Processing of Application. The application, with all\nsupporting documents, shall be filed in triplicate in the Regional Office where the\napplicant principally operates. No application for registration shall be accepted unless\nall the requirements in the preceding Section are complied with."
+    },
+    {
+      "section_number": "Section 17",
+      "content": "Verification Inspection. Within two (2) working days upon receipt of the\napplication with complete supporting documents, the authorized representative of the\nRegional Director shall conduct a verification inspection on the facilities, tools,\nequipment, and work premises of the applicant."
+    },
+    {
+      "section_number": "Section 18",
+      "content": "Approval or Denial of the Application. The Regional Office shall deny\nor approve the application within three (3) working day after the verification\ninspection.\nApplications that fail to meet the requirements set forth in Section 15 of these Rules\nshall be denied."
+    },
+    {
+      "section_number": "Section 19",
+      "content": "Registration Fee. Payment of registration fee of One Hundred\nThousand Pesos (P100,000.00) shall be required upon approval of the application.\nUpon registration, the Regional Office shall return one set of the duly-stamped\napplication documents to the applicant and retain one set for its file, and transmit the\nremaining set to the Bureau of Working Conditions (BWC) within five (5) days from\nregistration."
+    },
+    {
+      "section_number": "Section 20",
+      "content": "Validity of Certificate of Registration. The contractor shall be deemed\nregistered only on the date of issuance of its Certificate of Registration.\nThe Certificate of Registration shall be effective for two (2) years, unless cancelled\nafter due process. The same shall be valid in the region where it is registered.\nIn case the contractor has Service Agreements or operates outside the jurisdiction of\nthe Regional Office where it is registered, it shall request a duly authenticated copy\nof its Certificate of Registration from the registering Regional Office and submit the\nsame to the DOLE Regional Office where it seeks to operate together with a copy of\nits Service Agreement/s in the area, for purposes of monitoring compliance with these\nRules."
+    },
+    {
+      "section_number": "Section 21",
+      "content": "Renewal of Registration. All registered contractors shall apply for\nrenewal of their Certificates of Registration thirty (30) days before the expiration of\ntheir registration to remain in the roster of legitimate service contractors. The\napplicant shall pay a registration renewal fee of One Hundred Thousand Pesos\n(P100,000.00) to the DOLE Regional Office.\nCopies of all the updated supporting documents in letters (a) to (e) of Section 15\nhereof shall be attached to the duly accomplished application form, including the\nfollowing: .\n\na) Certificate of membership and proof of payment of SSS, PhilHealth, BIR, ECC\n\nand Pag-IBIG contributions for the last three (3) years, as well as loan\namortization; and\n\nb) Certificate of pending or no pending labor standards violation case/s with the\nNational Labor Relations Commission (NLRC) and Department of Labor and\nEmployment (DOLE). The pendency of a case will not prejudice the renewal\nof the registration, unless there is a finding of violation of labor standards by\nthe DOLE Regional Director.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Certificate of membership and proof of payment of SSS, PhilHealth, BIR, ECC\n\nand Pag-IBIG contributions for the last three (3) years, as well as loan\namortization; and"
+        },
+        {
+          "label": "b",
+          "content": "Certificate of pending or no pending labor standards violation case/s with the\nNational Labor Relations Commission (NLRC) and Department of Labor and\nEmployment (DOLE). The pendency of a case will not prejudice the renewal\nof the registration, unless there is a finding of violation of labor standards by\nthe DOLE Regional Director."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 22",
+      "content": "Semi-Annual Reporting. The contractor shall submit in triplicate its\nsubscribed semi-annual report using a prescribed form to appropriate Regional\nOffice. The report shall include:\n\na) Alist of contracts entered with the principal during the subject reporting period;\n\nb) The number of workers covered by each contract with the principal;\n\nc) Proof of payment of the Social Security System (SSS), the Pag-IBIG Fund,\nPhilHealth, Employees Compensation Commission (ECC), and Bureau of\nInternal Revenue (BIR) remittances due its employees during the subject\nreporting period and of amortization of declared loans due from its employees;\nand\n\nd) A certified list of all cases filed against the contractor before the NLRC and\nDOLE.\n\nThe Regional Office shall return one set of the duly-stamped report to the contractor,\nretain one set for its file, and transmit the remaining set to the BWC within five (5)\ndays from receipt thereof.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Alist of contracts entered with the principal during the subject reporting period;"
+        },
+        {
+          "label": "b",
+          "content": "The number of workers covered by each contract with the principal;"
+        },
+        {
+          "label": "c",
+          "content": "Proof of payment of the Social Security System (SSS), the Pag-IBIG Fund,\nPhilHealth, Employees Compensation Commission (ECC), and Bureau of\nInternal Revenue (BIR) remittances due its employees during the subject\nreporting period and of amortization of declared loans due from its employees;\nand"
+        },
+        {
+          "label": "d",
+          "content": "A certified list of all cases filed against the contractor before the NLRC and\nDOLE.\n\nThe Regional Office shall return one set of the duly-stamped report to the contractor,\nretain one set for its file, and transmit the remaining set to the BWC within five (5)\ndays from receipt thereof."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 23",
+      "content": "Grounds for Cancellation of Registration. The Regional Director\nshall, upon a verified complaint, cancel or revoke the registration of a contractor after\ndue process, based on any of the following grounds:\n\na. Misrepresentation of facts in the application;\n\nb. Submission of falsified or tampered application or supporting documents to\nthe application for registration;\n\nc. Non-submission of Service Agreement between the principal and the\ncontractor when required to do so;\n\nd. Non-submission of the required semi-annual report as provided in Section 22\n(Semi-Annual reporting) thereof;\n\ne. Final findings that the contractor has engaged in labor-only contracting and/or\nother illicit forms of employment arrangements as provided in Section 6 hereof;\n\nf. Non-compliance with labor standards and working conditions;\n\ng. Findings of violation of Section 10 (Rights of contractor's employees), and\nSection 11 (Required contracts);\n\nh. Non-compliance with SSS, the HDMF, Pag-IBIG, PhilHealth, and ECC Laws;\n\ni. Collecting any fees not authorized by law and other applicable rules and\nregulations; and\n\nj. Violations of any provisions of the Labor Code.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Misrepresentation of facts in the application;"
+        },
+        {
+          "label": "b",
+          "content": "Submission of falsified or tampered application or supporting documents to\nthe application for registration;"
+        },
+        {
+          "label": "c",
+          "content": "Non-submission of Service Agreement between the principal and the\ncontractor when required to do so;"
+        },
+        {
+          "label": "d",
+          "content": "Non-submission of the required semi-annual report as provided in Section 22\n(Semi-Annual reporting) thereof;"
+        },
+        {
+          "label": "e",
+          "content": "Final findings that the contractor has engaged in labor-only contracting and/or\nother illicit forms of employment arrangements as provided in Section 6 hereof;"
+        },
+        {
+          "label": "f",
+          "content": "Non-compliance with labor standards and working conditions;"
+        },
+        {
+          "label": "g",
+          "content": "Findings of violation of Section 10 (Rights of contractor's employees), and\nSection 11 (Required contracts);"
+        },
+        {
+          "label": "h",
+          "content": "Non-compliance with SSS, the HDMF, Pag-IBIG, PhilHealth, and ECC Laws;"
+        },
+        {
+          "label": "i",
+          "content": "Collecting any fees not authorized by law and other applicable rules and\nregulations; and"
+        },
+        {
+          "label": "j",
+          "content": "Violations of any provisions of the Labor Code."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 24",
+      "content": "Due Process in Cancellation of Registration. Complaint/s based on\nany of the grounds enumerated in the preceding Section against the contractor shall\nbe filed in writing and under oath with the Regional Office which issued the Certificate\nof Registration.\nThe complaint/s shall state the following:\n\n(a) The name/s and address/es of the complainant/s;\n\n(b) Name and address of the contractor;\n\n(c) The grounds;\n\n(d) When and where the action complained of happened;\n\n(e) The amount of claim if any; and\n\n(f) The relief sought.\nUpon receipt of the complaint, the Regional Director shall direct, with notice to the\ncomplainant to file a verified answer/counter affidavit within seven (7) working\ndays without extension, incorporating therein all pertinent documents in support of\nhis or her defense, with proof of service of a copy to the complainant. Failure to file\nan answer/counter affidavit shall constitute a waiver on the part of the respondent.\nNo motion to dismiss shall be entertained.\nThe Regional Director or his or her duly authorized representative may conduct a\nclarificatory hearing within seven (7) calendar days within which to file a verified\nanswer/counter affidavit.\nWithin the said seven (7) calendar days period, the contractor shall make necessary\ncorrections/rectifications on the violations that are immediately rectifiable upon its\ninitiative in order to be fully compliant.\nThe Regional Director may avail himself of all reasonable means to ascertain the\nfacts of the case, including conduct of inspection, where appropriate, and\nexamination of informed persons.\nThe proceedings before the Regional Office shall be summary in nature.\nThe conduct of hearings shall be terminated within ten (10) calendar days from the\nfirst scheduled clarificatory hearing. The Regional Director shall resolve the case\nwithin seven (7) working days from the date of the last hearing. If there is no necessity\nto conduct a hearing, the case shall be resolved with seven (7) working days from\nreceipt of the verified answer/counter affidavit.\nAny motion for reconsideration from the Order of the Regional Director shall be\ntreated as an appeal.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "The name/s and address/es of the complainant/s;"
+        },
+        {
+          "label": "b",
+          "content": "Name and address of the contractor;"
+        },
+        {
+          "label": "c",
+          "content": "The grounds;"
+        },
+        {
+          "label": "d",
+          "content": "When and where the action complained of happened;"
+        },
+        {
+          "label": "e",
+          "content": "The amount of claim if any; and"
+        },
+        {
+          "label": "f",
+          "content": "The relief sought.\nUpon receipt of the complaint, the Regional Director shall direct, with notice to the\ncomplainant to file a verified answer/counter affidavit within seven (7) working\ndays without extension, incorporating therein all pertinent documents in support of\nhis or her defense, with proof of service of a copy to the complainant. Failure to file\nan answer/counter affidavit shall constitute a waiver on the part of the respondent.\nNo motion to dismiss shall be entertained.\nThe Regional Director or his or her duly authorized representative may conduct a\nclarificatory hearing within seven (7) calendar days within which to file a verified\nanswer/counter affidavit.\nWithin the said seven (7) calendar days period, the contractor shall make necessary\ncorrections/rectifications on the violations that are immediately rectifiable upon its\ninitiative in order to be fully compliant.\nThe Regional Director may avail himself of all reasonable means to ascertain the\nfacts of the case, including conduct of inspection, where appropriate, and\nexamination of informed persons.\nThe proceedings before the Regional Office shall be summary in nature.\nThe conduct of hearings shall be terminated within ten (10) calendar days from the\nfirst scheduled clarificatory hearing. The Regional Director shall resolve the case\nwithin seven (7) working days from the date of the last hearing. If there is no necessity\nto conduct a hearing, the case shall be resolved with seven (7) working days from\nreceipt of the verified answer/counter affidavit.\nAny motion for reconsideration from the Order of the Regional Director shall be\ntreated as an appeal."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 25",
+      "content": "Appeal. The Order of the Regional Director is appealable to the\nSecretary within ten (10) working days from receipt of the copy of the Order. The\nappeal shall be filed with the Regional Office which issued the cancellation Order.\nThe Office of the Secretary shall have thirty (30) working days from receipt of the\nrecords of the case to resolve the appeal. The Decision of the Secretary shall be final\nand executory after ten (10) days from the receipt thereof by the parties. No motion\nfor reconsideration of the Decision shall be entertained."
+    },
+    {
+      "section_number": "Section 26",
+      "content": "Effects of Cancellation of Registration. A final Order of cancellation\nshall divest the contractor of its legitimate status to engage in\ncontracting/subcontracting.\nSuch Order of cancellation shall be a ground to deny registration an application for\nrenewal of registration to a contractor under the Rules.\n\nNo contractor whose registration is cancelled under these Rules or any of its officers\nshall be allowed to operate, and apply for new registration as contractor under either\nthe same or different name.\n\nThe cancellation of the registration of the contractor for engaging in labor-only\ncontracting or for violation of any of the provisions of these Rules involving a\nparticular service agreement will not, however, impair the validity of existing\nlegitimate job-contracting arrangements the contractor may have entered into with\nother principal prior to the cancellation of its registration. Any valid and subsisting\nService Agreement shall be respected until its expiration; thereafter, contracting with\na delisted contractor shall make the principal direct employer of all employees under\nthe Service Agreement pursuant to Articles 106 and 109 of the Labor Code, as\namended."
+    },
+    {
+      "section_number": "Section 27",
+      "content": "Retaliatory Measures. Pursuant to Article 118 of the Labor Code, as\namended, it shall be unlawful for the principal, contractor, or any party privy to the\ncontract or services provided to refuse to pay or reduce the wages and benefits, and\ndischarge or in any manner discriminate against any worker who has filed any\ncomplaint or instituted any proceeding on wages (under Title II, Book Ill of the Labor\nCode), labor standards violation, or has testified or is about to testify in such\nproceedings."
+    },
+    {
+      "section_number": "Section 28",
+      "content": "Enforcement of Labor Standards and Working Conditions. Consistent\nwith Article 128 of the Labor Code, as amended, the Regional Director through his/her\nduly authorized representatives, shall conduct routine inspection of establishments\nengaged in contracting arrangement regardless of the number of employees engaged\nby the principal or by the contractor. They shall have access to employer’s records\nand premises at any time of the day or night whenever work is being undertaken\ntherein, and the right to copy therefrom, to question any employee and investigate any\nfact, condition or matter which may be necessary to determine violations or which may\naid in the enforcement of the Labor Code and of any labor law, wage order, or rules\nand regulations issued pursuant thereto.\n\nThe findings of the duly authorized representative shall be referred to the Regional\nDirector for appropriate action as provided for in Article 128, and shall be furnished the\ncollective bargaining agent, if any.\n\nBased on the visitorial and enforcement power of the Secretary of Labor and\nEmployment in Article 128 (a), (b), (c), and (d), the Regional Director shall issue\ncompliance orders to give effect to the labor standards provisions of the Labor Code\nother labor legislation, and these Rules."
+    },
+    {
+      "section_number": "Section 29",
+      "content": "Duty to Produce Copy of Contract between the Principal and the\nContractor. The principal or the contractor shall be under an obligation to produce a\ncopy of the Service Agreement in the ordinary course of inspection. The contractor\nshall likewise be under an obligation to produce a copy of any contract of employment\nwhen directed to do so by the Regional Office Director or his/her authorized\nrepresentative."
+    },
+    {
+      "section_number": "Section 30",
+      "content": "Tripartite Implementation and Monitoring of Compliance. A regionbased tripartite monitoring team on the observance of labor standards in contracting\nand subcontracting arrangements shall be constituted as a subcommittee of the\nRegional Tripartite Industrial Peace Council (RTIPC) within fifteen (15) days from the\neffectivity of these Rules. It shall submit a quarterly regional monitoring report to the\nDOLE Secretary and to the National Tripartite Industrial Peace Council (NTIPC). The\nBureau of Working Conditions (BWC) shall ensure the implementation of this\nprovision, and shall conduct capacity building to the members of the regional tripartite\nmonitoring team."
+    },
+    {
+      "section_number": "Section 31",
+      "content": "Financial Relief Program; Tripartite Co-Regulation Engagement. A\nFinancial Relief Program or Unemployment Assistance Fund shail be established for\nemployees under a Service Agreement or employees in transition from one Service\nAgreement to the next. For this purpose, the National Tripartite Industrial Peace\nCouncil (NTIPC), upon the effectivity of this issuance, shall constitute a Local Service\nProvider Tripartite Working Group (LSP-TWG) composed of representatives of the\nstakeholders in the industry. The LSP-TWG shall:\n\na) Recommend the mechanics and details in setting up the Financial Relief Program\nor Unemployment Assistance Fund with proposed funding sources before end of\nJune 2018; and\n\na) Draw-up the terms of a Tripartite Co-Regulation Engagement in ensuring full\ncompliance with labor laws for approval/endorsement by the NTIPC, including a\nproposed Table of Progressive Rate of Increases in the minimum capitalization\nrequirement at reasonable intervals to ensure that only legitimate contractors can\nengage in subcontracting arrangement.",
+      "subsections": [
+        {
+          "label": "a",
+          "content": "Recommend the mechanics and details in setting up the Financial Relief Program\nor Unemployment Assistance Fund with proposed funding sources before end of\nJune 2018; and"
+        },
+        {
+          "label": "a",
+          "content": "Draw-up the terms of a Tripartite Co-Regulation Engagement in ensuring full\ncompliance with labor laws for approval/endorsement by the NTIPC, including a\nproposed Table of Progressive Rate of Increases in the minimum capitalization\nrequirement at reasonable intervals to ensure that only legitimate contractors can\nengage in subcontracting arrangement."
+        }
+      ]
+    },
+    {
+      "section_number": "Section 32",
+      "content": "Enrollment in DOLE Programs on Improving Compliance with Labor\nStandards. For purposes of ensuring compliance with labor standards, the principal\nand subcontractors covered by these Rules are mandatorily required to enroll and\nparticipate in the DOLE programs such as the Incentivizing Compliance Program\n(Department Order No. 115-11)."
+    },
+    {
+      "section_number": "Section 33",
+      "content": "Contracting or Subcontracting in the Construction and Other\nIndustries. Contracting or subcontracting arrangements in the Construction\n\nIndustry, under the licensing coverage of the Philippine Construction Accreditation\n\nBoard (PCAB), shall not be covered by the provisions of these Rules and shall\n\ncontinue to be governed by Department Order No. 19, Series of 1993 (Guidelines\n\nGoverning the Employment of Workers in the Construction Industry) and\n\nDepartment Order No. 13, Series of 1998 (Guidelines Governing the Occupational\n\nSafety and Health in the Construction Industry); and DOLE-DPWH-DILG-DTI and\n\nPCAB Memorandum of Agreement-Joint Administrative Order No. 1, Series of\n\n2011(on coordination and harmonization of policies and programs on occupational\n\nsafety and health in the construction industry).\n\nIn industries covered by a separate regulation of the DOLE or other government\n\nagency, contracting therein shall be governed by these Rules unless ,expressly\n\nprovided otherwise."
+    },
+    {
+      "section_number": "Section 34",
+      "content": "Prohibition on DOLE officials or employees. Any official or employee\nof the DOLE or its attached agencies is prohibited from engaging or having any\ninterest in any contracting or subcontracting business."
+    },
+    {
+      "section_number": "Section 35",
+      "content": "Supersession. All rules and regulations issued by the Secretary of\nLabor and Employment inconsistent with the provision of these Rules are hereby\nsuperseded."
+    },
+    {
+      "section_number": "Section 36",
+      "content": "Separability Clause. If any provision or portion of these Rules are\ndeclared void or unconstitutional, the remaining portions or provisions hereof shall\ncontinue to be valid and effective."
+    },
+    {
+      "section_number": "Section 37",
+      "content": "Effectivity. This Department Order shall be effective fifteen (15) days\nafter completion of its publication in a newspaper of general circulation."
+    }
+  ]
+}

@@ -118,6 +118,7 @@ Every binary accepts `--help`.
 - 🟡 **Phase 2: Data Ingestion Pipeline**: Tooling complete; Labor Code ingested
   - ✅ `parse-dole`, `parse-labor-code`, `validate`
   - ✅ Source manifest and `fetch` (hash-pinned; the Labor Code is pinned)
+  - ✅ 7 Department Orders processed in [`data/processed/`](data/processed/). Six come from OCR of scans (`metadata.ocr_text`), so check them against the PDF before you rely on a specific figure. DO-252-25 is still missing.
   - ✅ Labor Code processed: [`data/processed/labor_code.json`](data/processed/labor_code.json) (317 articles, with editorial footnotes, amendment history and reviewed legal status)
   - 🔲 Department Orders (PDFs must be downloaded by hand; see `fetch`)
   - 🔲 OCR for scanned PDFs
