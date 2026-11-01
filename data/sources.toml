@@ -25,9 +25,10 @@
 id = "labor-code-renumbered"
 kind = "labor_code"
 title = "Labor Code of the Philippines (Presidential Decree No. 442), as amended and renumbered"
-# ILO NATLEX hosts the DOLE renumbered edition and allows direct download.
+# ILO NATLEX hosts the DOLE renumbered edition but refuses datacenter clients
+# (CI gets HTTP 403), so downloads use a Wayback Machine snapshot of its PDF.
 source_url = "https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=15242"
-download_url = "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/15242/PHL15242%202022.pdf"
+download_url = "https://web.archive.org/web/20251206133529id_/https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/15242/PHL15242%202022.pdf"
 sha256 = "d9abd6f8eb3fb329456e926aa46ce05fbfe75f562f8aa6a60e7f421de97295c6"
 
 # --- Tier 1 Department Orders (see DATA_SOURCES.md) -------------------------

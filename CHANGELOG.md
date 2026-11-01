@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`metadata.legal_status`** on Labor Code articles: `superseded` (33), `partly_superseded` (20) or `no_change_noted` (264), with the notes behind it in `changes`. It comes from a hand review of the edition's footnotes (`data/labor_code_status.toml`, `engine/ingestion/src/status.rs`) tied to the PDF's SHA-256. `parse-labor-code` fails on a status-like footnote that has not been reviewed; a PDF outside the review gets no `legal_status`. `no_change_noted` is not a finding that an article is in force.
 - **`metadata.heading_footnotes`**: notes on Title and Chapter headings now reach every article under the heading. They were dropped before, which hid the express repeal of Arts. 139–150 (R.A. No. 10361) and the Title-wide note on Arts. 43–56 (R.A. No. 7796).
-- **CI** (`.github/workflows/ci.yml`): format, clippy and tests, plus a rebuild of `labor_code.json` from the pinned PDF that fails on any difference from the committed file.
+- **CI** (`.github/workflows/ci.yml`): format, clippy and tests, plus a rebuild of `labor_code.json` from the pinned PDF that fails on any difference from the committed file. NATLEX returns 403 to CI runners, so the Labor Code `download_url` now points at a Wayback Machine snapshot with the same pinned SHA-256.
 
 ### Fixed
 
