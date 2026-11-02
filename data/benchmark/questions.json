@@ -1,0 +1,2422 @@
+[
+  {
+    "id": "wages_001",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "What are the normal hours of work of an employee in the Philippines?",
+    "expected_answer": "The normal hours of work shall not exceed eight hours a day under Labor Code Art. 83.",
+    "citations": [
+      "Labor Code Art. 83"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 83",
+        "quote": "The normal hours of work of any employee shall not exceed eight (8) hours a day."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "eight hours a day",
+        "any_of": [
+          "eight (8) hours",
+          "8 hours",
+          "eight hours"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_002",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "What is the night shift differential and which hours does it cover?",
+    "expected_answer": "Not less than 10% of the regular wage for each hour worked between 10 in the evening and 6 in the morning, under Labor Code Art. 86.",
+    "citations": [
+      "Labor Code Art. 86"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 86",
+        "quote": "not less than ten percent (10%) of his regular wage for each hour of work performed between ten o’clock in the evening and six o’clock in the morning"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "ten percent",
+        "any_of": [
+          "10%",
+          "ten percent",
+          "10 percent"
+        ]
+      },
+      {
+        "label": "from 10 in the evening",
+        "any_of": [
+          "ten o'clock",
+          "10 in the evening",
+          "10 pm",
+          "10 p.m.",
+          "10:00 pm",
+          "10:00 p.m.",
+          "10pm"
+        ]
+      },
+      {
+        "label": "to 6 in the morning",
+        "any_of": [
+          "six o'clock",
+          "6 in the morning",
+          "6 am",
+          "6 a.m.",
+          "6:00 am",
+          "6:00 a.m.",
+          "6am"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_003",
+    "category": "wages",
+    "difficulty": "medium",
+    "question": "How much overtime pay is due for work beyond eight hours, on an ordinary day and on a holiday or rest day?",
+    "expected_answer": "On an ordinary day, the regular wage plus at least 25%. On a holiday or rest day, the rate of the first eight hours plus at least 30%. See Labor Code Art. 87.",
+    "citations": [
+      "Labor Code Art. 87"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 87",
+        "quote": "an additional compensation equivalent to his regular wage plus at least twenty-five percent (25%) thereof"
+      },
+      {
+        "citation": "Labor Code Art. 87",
+        "quote": "the rate of the first eight hours on a holiday or rest day plus at least thirty percent (30%) thereof"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "25 percent on ordinary days",
+        "any_of": [
+          "25%",
+          "twenty-five percent",
+          "25 percent"
+        ]
+      },
+      {
+        "label": "30 percent on a holiday or rest day",
+        "any_of": [
+          "30%",
+          "thirty percent",
+          "30 percent"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": [
+        "Using 30% for ordinary overtime"
+      ]
+    }
+  },
+  {
+    "id": "wages_004",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "How long must the meal period be for regular meals?",
+    "expected_answer": "Not less than 60 minutes of time-off, under Labor Code Art. 85.",
+    "citations": [
+      "Labor Code Art. 85"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 85",
+        "quote": "not less than sixty (60) minutes time-off for their regular meals"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "sixty minutes",
+        "any_of": [
+          "sixty (60) minutes",
+          "60 minutes",
+          "sixty minutes",
+          "one hour"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_005",
+    "category": "wages",
+    "difficulty": "medium",
+    "question": "What premium is due for work on a scheduled rest day, and for work on a special holiday that falls on the scheduled rest day?",
+    "expected_answer": "At least 30% of the regular wage for a scheduled rest day, and at least 50% where special holiday work falls on the scheduled rest day, under Labor Code Art. 93.",
+    "citations": [
+      "Labor Code Art. 93"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 93",
+        "quote": "he shall be paid an additional compensation of at least thirty percent (30%) of his regular wage"
+      },
+      {
+        "citation": "Labor Code Art. 93",
+        "quote": "he shall be entitled to an additional compensation of at least fifty per cent (50%) of his regular wage"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "30 percent on a rest day",
+        "any_of": [
+          "30%",
+          "thirty percent",
+          "30 percent"
+        ]
+      },
+      {
+        "label": "50 percent on a special holiday on a rest day",
+        "any_of": [
+          "50%",
+          "fifty percent",
+          "fifty per cent",
+          "50 percent"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_006",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "How much must an employee be paid for working on a regular holiday?",
+    "expected_answer": "Twice the regular rate, under Labor Code Art. 94(b).",
+    "citations": [
+      "Labor Code Art. 94"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 94",
+        "quote": "such employee shall be paid a compensation equivalent to twice his regular rate"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "twice the regular rate",
+        "any_of": [
+          "twice",
+          "200%",
+          "double"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_007",
+    "category": "wages",
+    "difficulty": "medium",
+    "question": "Which establishments are exempt from paying the regular daily wage during regular holidays?",
+    "expected_answer": "Retail and service establishments regularly employing less than ten workers, under Labor Code Art. 94(a).",
+    "citations": [
+      "Labor Code Art. 94"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 94",
+        "quote": "except in retail and service establishments regularly employing less than ten (10) workers"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "retail and service establishments",
+        "any_of": [
+          "retail and service"
+        ]
+      },
+      {
+        "label": "less than ten workers",
+        "any_of": [
+          "less than ten",
+          "fewer than ten",
+          "less than 10",
+          "fewer than 10"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_008",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "How often must wages be paid?",
+    "expected_answer": "At least once every two weeks or twice a month, at intervals not exceeding 16 days, under Labor Code Art. 103.",
+    "citations": [
+      "Labor Code Art. 103"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 103",
+        "quote": "Wages shall be paid at least once every two (2) weeks or twice a month at intervals not exceeding sixteen (16) days."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "twice a month or every two weeks",
+        "any_of": [
+          "twice a month",
+          "two (2) weeks",
+          "two weeks"
+        ]
+      },
+      {
+        "label": "intervals of at most 16 days",
+        "any_of": [
+          "sixteen (16) days",
+          "16 days",
+          "sixteen days"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_009",
+    "category": "wages",
+    "difficulty": "medium",
+    "question": "When may an employer deduct from an employee's wages?",
+    "expected_answer": "Only where the worker is insured with consent and the deduction recompenses the premium, for union dues where check-off is recognized or authorized, and where authorized by law or by regulations of the Secretary of Labor and Employment, under Labor Code Art. 113.",
+    "citations": [
+      "Labor Code Art. 113"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 113",
+        "quote": "In cases where the worker is insured with his consent by the employer"
+      },
+      {
+        "citation": "Labor Code Art. 113",
+        "quote": "For union dues"
+      },
+      {
+        "citation": "Labor Code Art. 113",
+        "quote": "In cases where the employer is authorized by law or regulations issued by the Secretary of Labor and Employment"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "insurance premium with consent",
+        "any_of": [
+          "insured",
+          "insurance"
+        ]
+      },
+      {
+        "label": "union dues",
+        "any_of": [
+          "union dues"
+        ]
+      },
+      {
+        "label": "authorized by law or regulations",
+        "any_of": [
+          "authorized by law",
+          "required by law",
+          "allowed by law"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "wages_010",
+    "category": "wages",
+    "difficulty": "easy",
+    "question": "Can undertime on one day be offset by overtime on another day?",
+    "expected_answer": "No. Undertime on any particular day shall not be offset by overtime on any other day, under Labor Code Art. 88.",
+    "citations": [
+      "Labor Code Art. 88"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 88",
+        "quote": "Undertime work on any particular day shall not be offset by overtime work on any other day."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "no offset",
+        "any_of": [
+          "shall not be offset",
+          "not be offset",
+          "cannot be offset",
+          "cannot offset",
+          "may not be offset"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "leave_001",
+    "category": "leave",
+    "difficulty": "easy",
+    "question": "Who is entitled to service incentive leave and how long is it?",
+    "expected_answer": "Every employee who has rendered at least one year of service is entitled to five days of leave with pay a year, under Labor Code Art. 95.",
+    "citations": [
+      "Labor Code Art. 95"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 95",
+        "quote": "Every employee who has rendered at least one year of service shall be entitled to a yearly service incentive leave of five days with pay."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "one year of service",
+        "any_of": [
+          "one year of service",
+          "1 year of service",
+          "one (1) year of service"
+        ]
+      },
+      {
+        "label": "five days with pay",
+        "any_of": [
+          "five days",
+          "5 days",
+          "five (5) days"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "leave_002",
+    "category": "leave",
+    "difficulty": "medium",
+    "question": "Which employees are not covered by service incentive leave?",
+    "expected_answer": "Those already enjoying the benefit, those with vacation leave with pay of at least five days, those in establishments regularly employing less than ten employees, and those in establishments exempted by the Secretary of Labor and Employment, under Labor Code Art. 95.",
+    "citations": [
+      "Labor Code Art. 95"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 95",
+        "quote": "those enjoying vacation leave with pay of at least five days and those employed in establishments regularly employing less than ten employees"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "vacation leave of at least five days",
+        "any_of": [
+          "vacation leave"
+        ]
+      },
+      {
+        "label": "establishments with less than ten employees",
+        "any_of": [
+          "less than ten",
+          "fewer than ten",
+          "less than 10",
+          "fewer than 10"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "benefits_001",
+    "category": "benefits",
+    "difficulty": "hard",
+    "question": "At what age may an employee retire when there is no retirement plan, and how is retirement pay computed?",
+    "expected_answer": "Without a plan, an employee aged 60 or more, up to the compulsory retirement age of 65, who has served at least five years may retire and receives at least one-half month salary for every year of service, under Labor Code Art. 302.",
+    "citations": [
+      "Labor Code Art. 302"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 302",
+        "quote": "an employee upon reaching the age of sixty (60) years or more, but not beyond sixty-five (65) years which is hereby declared the compulsory retirement age, who has served at least five (5) years in the said establishment, may retire and shall be entitled to retirement pay equivalent to at least one-half (1/2) month salary for every year of service"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "optional at 60",
+        "any_of": [
+          "sixty (60)",
+          "60",
+          "sixty"
+        ]
+      },
+      {
+        "label": "compulsory at 65",
+        "any_of": [
+          "sixty-five (65)",
+          "65",
+          "sixty-five"
+        ]
+      },
+      {
+        "label": "five years of service",
+        "any_of": [
+          "five (5) years",
+          "five years",
+          "5 years"
+        ]
+      },
+      {
+        "label": "half a month per year of service",
+        "any_of": [
+          "one-half (1/2) month",
+          "one-half month",
+          "half month",
+          "half a month",
+          "1/2 month"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "probationary_001",
+    "category": "probationary",
+    "difficulty": "easy",
+    "question": "How long can probationary employment last?",
+    "expected_answer": "It shall not exceed six months from the date the employee started working, unless an apprenticeship agreement stipulates longer, under Labor Code Art. 296.",
+    "citations": [
+      "Labor Code Art. 296"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 296",
+        "quote": "Probationary employment shall not exceed six (6) months from the date the employee started working"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "six months",
+        "any_of": [
+          "six (6) months",
+          "six months",
+          "6 months"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "probationary_002",
+    "category": "probationary",
+    "difficulty": "medium",
+    "question": "On what grounds can a probationary employee be terminated?",
+    "expected_answer": "For a just cause, or for failing to qualify as a regular employee under reasonable standards made known at the time of engagement, under Labor Code Art. 296.",
+    "citations": [
+      "Labor Code Art. 296"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 296",
+        "quote": "may be terminated for a just cause or when he fails to qualify as a regular employee in accordance with reasonable standards made known by the employer to the employee at the time of his engagement"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "just cause",
+        "any_of": [
+          "just cause"
+        ]
+      },
+      {
+        "label": "failure to qualify under reasonable standards",
+        "any_of": [
+          "reasonable standards"
+        ]
+      },
+      {
+        "label": "standards made known at engagement",
+        "any_of": [
+          "time of his engagement",
+          "time of engagement",
+          "at engagement",
+          "time of hiring",
+          "upon hiring",
+          "start of employment"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "probationary_003",
+    "category": "probationary",
+    "difficulty": "easy",
+    "question": "What happens to an employee who is allowed to keep working after the probationary period?",
+    "expected_answer": "The employee is considered a regular employee under Labor Code Art. 296.",
+    "citations": [
+      "Labor Code Art. 296"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 296",
+        "quote": "An employee who is allowed to work after a probationary period shall be considered a regular employee."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "becomes regular",
+        "any_of": [
+          "regular employee"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "contracts_001",
+    "category": "contracts",
+    "difficulty": "medium",
+    "question": "When does a casual employee become a regular employee?",
+    "expected_answer": "After at least one year of service, continuous or broken, with respect to the activity in which the employee is employed, under Labor Code Art. 295.",
+    "citations": [
+      "Labor Code Art. 295"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 295",
+        "quote": "any employee who has rendered at least one year of service, whether such service is continuous or broken, shall be considered a regular employee with respect to the activity in which he is employed"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "one year of service",
+        "any_of": [
+          "one year of service",
+          "1 year of service"
+        ]
+      },
+      {
+        "label": "continuous or broken",
+        "any_of": [
+          "continuous or broken",
+          "broken or continuous"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_001",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "What is an unjustly dismissed regular employee entitled to?",
+    "expected_answer": "Reinstatement without loss of seniority rights and privileges, and full backwages inclusive of allowances and other benefits, under Labor Code Art. 294.",
+    "citations": [
+      "Labor Code Art. 294"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 294",
+        "quote": "entitled to reinstatement without loss of seniority rights and other privileges and to his full backwages"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "reinstatement",
+        "any_of": [
+          "reinstatement"
+        ]
+      },
+      {
+        "label": "seniority kept",
+        "any_of": [
+          "seniority"
+        ]
+      },
+      {
+        "label": "full backwages",
+        "any_of": [
+          "backwages",
+          "back wages"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_002",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "What are the just causes for terminating an employee?",
+    "expected_answer": "Serious misconduct or willful disobedience, gross and habitual neglect of duties, fraud or willful breach of trust, commission of a crime or offense against the employer or the employer's immediate family or representatives, and analogous causes, under Labor Code Art. 297.",
+    "citations": [
+      "Labor Code Art. 297"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 297",
+        "quote": "Serious misconduct or willful disobedience"
+      },
+      {
+        "citation": "Labor Code Art. 297",
+        "quote": "Gross and habitual neglect"
+      },
+      {
+        "citation": "Labor Code Art. 297",
+        "quote": "Fraud or willful breach"
+      },
+      {
+        "citation": "Labor Code Art. 297",
+        "quote": "Commission of a crime or offense"
+      },
+      {
+        "citation": "Labor Code Art. 297",
+        "quote": "Other causes analogous"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "serious misconduct",
+        "any_of": [
+          "serious misconduct"
+        ]
+      },
+      {
+        "label": "gross and habitual neglect",
+        "any_of": [
+          "gross and habitual neglect",
+          "habitual neglect"
+        ]
+      },
+      {
+        "label": "fraud or breach of trust",
+        "any_of": [
+          "fraud"
+        ]
+      },
+      {
+        "label": "crime or offense",
+        "any_of": [
+          "crime or offense",
+          "commission of a crime"
+        ]
+      },
+      {
+        "label": "analogous causes",
+        "any_of": [
+          "analogous"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_003",
+    "category": "termination",
+    "difficulty": "hard",
+    "question": "How much separation pay is due for redundancy, and what notice is required?",
+    "expected_answer": "At least one month pay or one month pay for every year of service, whichever is higher, with written notice to the workers and the labor department at least one month before the intended date, under Labor Code Art. 298.",
+    "citations": [
+      "Labor Code Art. 298"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 298",
+        "quote": "separation pay equivalent to at least his one (1) month pay or to at least one (1) month pay for every year of service, whichever is higher"
+      },
+      {
+        "citation": "Labor Code Art. 298",
+        "quote": "by serving a written notice on the workers and the Ministry of Labor and Employment at least one (1) month before the intended date thereof"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "one month pay per year of service",
+        "any_of": [
+          "one (1) month pay for every year",
+          "one month pay for every year",
+          "one month's pay for every year",
+          "one month of pay for every year",
+          "one month per year",
+          "1 month pay for every year"
+        ]
+      },
+      {
+        "label": "notice one month before",
+        "any_of": [
+          "one (1) month before",
+          "one month before",
+          "30 days before",
+          "at least one month",
+          "at least 30 days"
+        ]
+      },
+      {
+        "label": "written notice to workers",
+        "any_of": [
+          "written notice"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "Using the half-month rate that applies to retrenchment"
+      ]
+    }
+  },
+  {
+    "id": "termination_004",
+    "category": "termination",
+    "difficulty": "hard",
+    "question": "How much separation pay is due for retrenchment to prevent losses?",
+    "expected_answer": "One month pay or at least one-half month pay for every year of service, whichever is higher, under Labor Code Art. 298.",
+    "citations": [
+      "Labor Code Art. 298"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 298",
+        "quote": "the separation pay shall be equivalent to one (1) month pay or at least one-half (1/2) month pay for every year of service, whichever is higher"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "half month per year of service",
+        "any_of": [
+          "one-half (1/2) month",
+          "one-half month",
+          "half month",
+          "half a month",
+          "1/2 month"
+        ]
+      },
+      {
+        "label": "whichever is higher",
+        "any_of": [
+          "whichever is higher",
+          "whichever is greater"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "Using the one-month rate that applies to redundancy"
+      ]
+    }
+  },
+  {
+    "id": "termination_005",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "What separation pay is due when an employee is terminated because of disease?",
+    "expected_answer": "At least one month salary or one-half month salary for every year of service, whichever is greater, a fraction of at least six months counting as one year, under Labor Code Art. 299.",
+    "citations": [
+      "Labor Code Art. 299"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 299",
+        "quote": "separation pay equivalent to at least one (1) month salary or to one-half (1/2) month salary for every year of service, whichever is greater"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "half month per year of service",
+        "any_of": [
+          "one-half (1/2) month",
+          "one-half month",
+          "half month",
+          "half a month",
+          "1/2 month"
+        ]
+      },
+      {
+        "label": "whichever is greater",
+        "any_of": [
+          "whichever is greater",
+          "whichever is higher"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_006",
+    "category": "termination",
+    "difficulty": "easy",
+    "question": "How much notice must an employee give to resign without just cause?",
+    "expected_answer": "Written notice at least one month in advance, under Labor Code Art. 300.",
+    "citations": [
+      "Labor Code Art. 300"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 300",
+        "quote": "by serving a written notice on the employer at least one (1) month in advance"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "one month",
+        "any_of": [
+          "one (1) month",
+          "one month",
+          "30 days"
+        ]
+      },
+      {
+        "label": "written notice",
+        "any_of": [
+          "written notice"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_007",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "When may an employee resign without serving any notice?",
+    "expected_answer": "For serious insult on the employee's honor and person, inhuman and unbearable treatment, commission of a crime or offense against the employee or the employee's immediate family, and analogous causes, under Labor Code Art. 300(b).",
+    "citations": [
+      "Labor Code Art. 300"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 300",
+        "quote": "Serious insult by the employer or his representative"
+      },
+      {
+        "citation": "Labor Code Art. 300",
+        "quote": "Inhuman and unbearable treatment"
+      },
+      {
+        "citation": "Labor Code Art. 300",
+        "quote": "Commission of a crime or offense by the employer"
+      },
+      {
+        "citation": "Labor Code Art. 300",
+        "quote": "Other causes analogous"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "serious insult",
+        "any_of": [
+          "serious insult"
+        ]
+      },
+      {
+        "label": "inhuman and unbearable treatment",
+        "any_of": [
+          "inhuman and unbearable",
+          "inhuman"
+        ]
+      },
+      {
+        "label": "crime or offense",
+        "any_of": [
+          "crime or offense",
+          "commission of a crime"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_008",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "For how long can a business suspend operations without terminating employment?",
+    "expected_answer": "A bona fide suspension not exceeding six months does not terminate employment, under Labor Code Art. 301.",
+    "citations": [
+      "Labor Code Art. 301"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 301",
+        "quote": "The bona fide suspension of the operation of a business or undertaking for a period not exceeding six (6) months"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "six months",
+        "any_of": [
+          "six (6) months",
+          "six months",
+          "6 months"
+        ]
+      },
+      {
+        "label": "bona fide suspension",
+        "any_of": [
+          "bona fide",
+          "genuine"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_009",
+    "category": "termination",
+    "difficulty": "hard",
+    "question": "Under the DOLE rules, how long must an employee be given to answer the first written notice in a just cause dismissal?",
+    "expected_answer": "At least five calendar days from receipt of the notice, under DO-147-15, Rule I-A, Section 5.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 5"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 5",
+        "quote": "“Reasonable period” should be construed as a period of at least five (5) calendar days from receipt of the notice"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "five calendar days",
+        "any_of": [
+          "five (5) calendar days",
+          "five calendar days",
+          "5 calendar days"
+        ]
+      },
+      {
+        "label": "from receipt",
+        "any_of": [
+          "from receipt",
+          "after receipt",
+          "upon receipt",
+          "of receipt"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "Twenty-four hours",
+        "Stating five working days"
+      ]
+    }
+  },
+  {
+    "id": "termination_010",
+    "category": "termination",
+    "difficulty": "hard",
+    "question": "Is a formal hearing always required before dismissing an employee for just cause?",
+    "expected_answer": "No. Under DO-147-15, Rule I-A, Section 5, a formal hearing or conference becomes mandatory only when the employee requests it in writing, when substantial evidentiary disputes exist, or when a company rule or practice requires it.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 5"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 5",
+        "quote": "A formal hearing or conference becomes mandatory only when requested by the employee in writing or substantial evidentiary disputes exist or a company rule or practice requires it"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "requested in writing",
+        "any_of": [
+          "in writing"
+        ]
+      },
+      {
+        "label": "substantial evidentiary disputes",
+        "any_of": [
+          "evidentiary disputes",
+          "evidentiary dispute"
+        ]
+      },
+      {
+        "label": "company rule or practice",
+        "any_of": [
+          "company rule or practice",
+          "company rule",
+          "company practice"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "A formal hearing is always mandatory"
+      ]
+    }
+  },
+  {
+    "id": "termination_011",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "What is the four-fold test for an employer-employee relationship?",
+    "expected_answer": "Selection and engagement of the employee, payment of wages, power of dismissal, and power to control the employee's conduct, the control test being the most crucial, under DO-147-15, Rule I-A, Section 3.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 3"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 3",
+        "quote": "(1) the selection and engagement of the employee; (2) the payment of wages; (3) the power of dismissal; and (4) the power to control the employee's conduct"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "selection and engagement",
+        "any_of": [
+          "selection and engagement"
+        ]
+      },
+      {
+        "label": "payment of wages",
+        "any_of": [
+          "payment of wages"
+        ]
+      },
+      {
+        "label": "power of dismissal",
+        "any_of": [
+          "power of dismissal"
+        ]
+      },
+      {
+        "label": "power of control",
+        "any_of": [
+          "power to control",
+          "power of control",
+          "control test"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_012",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "Can an employee be dismissed because of HIV status?",
+    "expected_answer": "No. An employee shall not be terminated based on actual, perceived or suspected HIV status, under DO-147-15, Rule I-A, Section 6.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 6"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 6",
+        "quote": "An employee shall not be terminated from work based on actual, perceived or suspected HIV status."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "not terminated",
+        "any_of": [
+          "shall not be terminated",
+          "cannot be terminated",
+          "may not be terminated",
+          "not be dismissed",
+          "cannot be dismissed"
+        ]
+      },
+      {
+        "label": "actual, perceived or suspected",
+        "any_of": [
+          "actual, perceived or suspected"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_013",
+    "category": "termination",
+    "difficulty": "hard",
+    "question": "What is the difference between just causes and authorized causes?",
+    "expected_answer": "Just causes, under Labor Code Art. 297, are directly attributable to the fault or negligence of the employee. Authorized causes, under Labor Code Art. 298 and Art. 299, arise from business necessity, changing economic conditions and illness of the employee. See DO-147-15, Rule I-A, Section 4.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 4"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 4",
+        "quote": "These are causes directly attributable to the fault or negligence of the employee."
+      },
+      {
+        "citation": "DO-147-15 Rule I-A, Section 4",
+        "quote": "“Authorized Causes” refer to those instances enumerated under Articles 298 [Closure of Establishment and Reduction of Personnel] and 299"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "fault or negligence of the employee",
+        "any_of": [
+          "fault or negligence"
+        ]
+      },
+      {
+        "label": "authorized causes are in Arts. 298 and 299",
+        "any_of": [
+          "298"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "termination_014",
+    "category": "termination",
+    "difficulty": "medium",
+    "question": "What happens to a termination dispute before a Labor Arbiter can take the complaint?",
+    "expected_answer": "It must go through mandatory conciliation-mediation, and no Labor Arbiter takes cognizance of an illegal dismissal complaint without a referral from the Desk Officer, under DO-147-15, Rule I-A, Sections 8 and 10.",
+    "citations": [
+      "DO-147-15 Rule I-A, Section 8",
+      "DO-147-15 Rule I-A, Section 10"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-147-15 Rule I-A, Section 8",
+        "quote": "All disputes arising out of termination of employment shall be subject to mandatory conciliation-mediation"
+      },
+      {
+        "citation": "DO-147-15 Rule I-A, Section 10",
+        "quote": "unless there is a referral from the Desk Officer"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "mandatory conciliation-mediation",
+        "any_of": [
+          "conciliation-mediation",
+          "conciliation and mediation"
+        ]
+      },
+      {
+        "label": "referral from the Desk Officer",
+        "any_of": [
+          "desk officer"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_001",
+    "category": "other",
+    "difficulty": "medium",
+    "question": "When do money claims from employer-employee relations prescribe?",
+    "expected_answer": "Within three years from the time the cause of action accrued, under Labor Code Art. 306.",
+    "citations": [
+      "Labor Code Art. 306"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 306",
+        "quote": "shall be filed within three (3) years from the time the cause of action accrued"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "three years",
+        "any_of": [
+          "three (3) years",
+          "three years",
+          "3 years"
+        ]
+      },
+      {
+        "label": "from accrual",
+        "any_of": [
+          "cause of action accrued",
+          "accrual",
+          "accrued"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_002",
+    "category": "other",
+    "difficulty": "hard",
+    "question": "What are the prescriptive periods for offenses under the Labor Code and for unfair labor practices?",
+    "expected_answer": "Offenses penalized under the Code prescribe in three years. Unfair labor practices must be filed within one year from accrual. See Labor Code Art. 305.",
+    "citations": [
+      "Labor Code Art. 305"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 305",
+        "quote": "Offenses penalized under this Code and the rules and regulations issued pursuant thereto shall prescribe in three (3) years."
+      },
+      {
+        "citation": "Labor Code Art. 305",
+        "quote": "All unfair labor practice arising from Book V shall be filed with the appropriate agency within one (1) year from accrual"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "three years for offenses",
+        "any_of": [
+          "three (3) years",
+          "three years",
+          "3 years"
+        ]
+      },
+      {
+        "label": "one year for unfair labor practices",
+        "any_of": [
+          "one (1) year",
+          "one year",
+          "1 year"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "contracts_002",
+    "category": "contracts",
+    "difficulty": "medium",
+    "question": "What is the substantial capital requirement for a contractor?",
+    "expected_answer": "At least five million pesos, as paid-up capital for corporations, partnerships and cooperatives, or as net worth for a single proprietorship, under DO-174-17, Section 3.",
+    "citations": [
+      "DO-174-17 Section 3"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-174-17 Section 3",
+        "quote": "paid-up capital stock/shares at least Five Million Pesos (P5,000,000.00)"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "five million pesos",
+        "any_of": [
+          "five million",
+          "p5,000,000",
+          "php 5,000,000",
+          "₱5,000,000",
+          "5 million",
+          "5,000,000"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "P3 million, under the earlier rules"
+      ]
+    }
+  },
+  {
+    "id": "contracts_003",
+    "category": "contracts",
+    "difficulty": "hard",
+    "question": "What is labor-only contracting and what is the consequence if it is found?",
+    "expected_answer": "It is an arrangement where the contractor lacks substantial capital or investments and its employees perform activities directly related to the principal's main business, or where it does not control the work. The principal is then deemed the direct employer of the contractor's employees. See DO-174-17, Sections 5 and 7.",
+    "citations": [
+      "DO-174-17 Section 5",
+      "DO-174-17 Section 7"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-174-17 Section 5",
+        "quote": "not have substantial capital"
+      },
+      {
+        "citation": "DO-174-17 Section 5",
+        "quote": "directly related to the main business operation of the principal"
+      },
+      {
+        "citation": "DO-174-17 Section 5",
+        "quote": "does not exercise the right to control"
+      },
+      {
+        "citation": "DO-174-17 Section 7",
+        "quote": "the principal shall be deemed the direct employer"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "no substantial capital",
+        "any_of": [
+          "substantial capital"
+        ]
+      },
+      {
+        "label": "related to the main business",
+        "any_of": [
+          "main business"
+        ]
+      },
+      {
+        "label": "no control",
+        "any_of": [
+          "right to control",
+          "does not control"
+        ]
+      },
+      {
+        "label": "principal is direct employer",
+        "any_of": [
+          "direct employer"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "contracts_004",
+    "category": "contracts",
+    "difficulty": "medium",
+    "question": "What happens if a contractor fails to register with DOLE?",
+    "expected_answer": "Failure to register gives rise to the presumption that the contractor is engaged in labor-only contracting, under DO-174-17, Section 14.",
+    "citations": [
+      "DO-174-17 Section 14"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-174-17 Section 14",
+        "quote": "Failure to register shall give rise to the presumption that the contractor is engaged in labor-only contracting."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "presumed labor-only contracting",
+        "any_of": [
+          "labor-only contracting"
+        ]
+      },
+      {
+        "label": "presumption",
+        "any_of": [
+          "presumption",
+          "presumed"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "contracts_005",
+    "category": "contracts",
+    "difficulty": "easy",
+    "question": "How much is the DOLE registration fee for a contractor?",
+    "expected_answer": "One hundred thousand pesos, payable upon approval of the application, under DO-174-17, Section 19.",
+    "citations": [
+      "DO-174-17 Section 19"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-174-17 Section 19",
+        "quote": "Payment of registration fee of One Hundred Thousand Pesos (P100,000.00) shall be required upon approval of the application."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "P100,000",
+        "any_of": [
+          "one hundred thousand",
+          "100,000"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "P25,000, under the earlier rules"
+      ]
+    }
+  },
+  {
+    "id": "contracts_006",
+    "category": "contracts",
+    "difficulty": "medium",
+    "question": "Is a principal liable when a contractor fails to pay its employees' wages?",
+    "expected_answer": "Yes. The principal is jointly and severally liable with the contractor to the extent of the work performed, under Labor Code Art. 106, and is held responsible with the contractor for any violation of the Code under Labor Code Art. 109.",
+    "citations": [
+      "Labor Code Art. 106",
+      "Labor Code Art. 109"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 106",
+        "quote": "the employer shall be jointly and severally liable with his contractor or subcontractor"
+      },
+      {
+        "citation": "Labor Code Art. 109",
+        "quote": "every employer or indirect employer shall be held responsible with his contractor or subcontractor for any violation of any provision of this Code"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "jointly and severally liable",
+        "any_of": [
+          "jointly and severally",
+          "solidary",
+          "solidarily"
+        ]
+      },
+      {
+        "label": "responsible for any violation",
+        "any_of": [
+          "any violation"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "contracts_007",
+    "category": "contracts",
+    "difficulty": "medium",
+    "question": "Name arrangements that DOLE prohibits as illicit in addition to labor-only contracting.",
+    "expected_answer": "They include farming out work to a Cabo, contracting through an in-house agency or an in-house cooperative, and contracting out by reason of an actual or imminent strike or lockout, under DO-174-17, Section 6.",
+    "citations": [
+      "DO-174-17 Section 6"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-174-17 Section 6",
+        "quote": "When the principal farms out work to a “Cabo”."
+      },
+      {
+        "citation": "DO-174-17 Section 6",
+        "quote": "Contracting out of job or work through an in-house agency."
+      },
+      {
+        "citation": "DO-174-17 Section 6",
+        "quote": "Contracting out of a job or work by reason of a strike or lockout whether actual or imminent."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "Cabo",
+        "any_of": [
+          "cabo"
+        ]
+      },
+      {
+        "label": "in-house agency",
+        "any_of": [
+          "in-house agency"
+        ]
+      },
+      {
+        "label": "strike or lockout",
+        "any_of": [
+          "strike or lockout"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "telecommuting_001",
+    "category": "telecommuting",
+    "difficulty": "easy",
+    "question": "Can an employer impose telecommuting on its employees?",
+    "expected_answer": "It may offer telecommuting on a voluntary basis, or as a result of collective bargaining, on mutually agreed terms not less than the minimum labor standards, under DO-202-19, Section 3.",
+    "citations": [
+      "DO-202-19 Section 3"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-202-19 Section 3",
+        "quote": "may offer a telecommuting program to its employees on a voluntary basis or as a result of collective bargaining"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "voluntary",
+        "any_of": [
+          "voluntary"
+        ]
+      },
+      {
+        "label": "collective bargaining",
+        "any_of": [
+          "collective bargaining"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "telecommuting_002",
+    "category": "telecommuting",
+    "difficulty": "medium",
+    "question": "How must telecommuting employees be treated compared with employees on the employer's premises?",
+    "expected_answer": "They must get the same treatment as comparable employees at the employer's premises, and pay not lower than applicable laws or the CBA, under DO-202-19, Section 4.",
+    "citations": [
+      "DO-202-19 Section 4"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-202-19 Section 4",
+        "quote": "given the same treatment as that of comparable employees working at the employer's premises"
+      },
+      {
+        "citation": "DO-202-19 Section 4",
+        "quote": "Receive a rate of pay, including overtime and night shift differential, and other similar monetary benefits not lower than those provided in applicable laws"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "same treatment",
+        "any_of": [
+          "same treatment",
+          "fair treatment",
+          "treated the same"
+        ]
+      },
+      {
+        "label": "pay not lower",
+        "any_of": [
+          "not lower than",
+          "not less than"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "telecommuting_003",
+    "category": "telecommuting",
+    "difficulty": "medium",
+    "question": "Must an employer tell DOLE that it adopted a telecommuting arrangement?",
+    "expected_answer": "Yes. It must notify DOLE by submitting the prescribed report form to the nearest DOLE Field or Provincial Office, under DO-202-19, Section 7.",
+    "citations": [
+      "DO-202-19 Section 7"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-202-19 Section 7",
+        "quote": "The employer shall notify the DOLE on the adoption of a telecommuting work arrangement"
+      },
+      {
+        "citation": "DO-202-19 Section 7",
+        "quote": "to the nearest DOLE Field or Provincial Office"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "notify DOLE",
+        "any_of": [
+          "notify the dole",
+          "report to dole",
+          "report to the dole",
+          "notify dole",
+          "notice to dole",
+          "notify dole"
+        ]
+      },
+      {
+        "label": "field or provincial office",
+        "any_of": [
+          "field or provincial office",
+          "field office",
+          "provincial office"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "discrimination_001",
+    "category": "discrimination",
+    "difficulty": "medium",
+    "question": "Can an employer require a woman employee to stay single?",
+    "expected_answer": "No. It is unlawful to require as a condition of employment that a woman employee shall not get married, or to stipulate that she is deemed resigned upon marriage, under Labor Code Art. 134.",
+    "citations": [
+      "Labor Code Art. 134"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 134",
+        "quote": "It shall be unlawful for an employer to require as a condition of employment or continuation of employment that a woman employee shall not get married"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "unlawful",
+        "any_of": [
+          "unlawful",
+          "prohibited",
+          "illegal"
+        ]
+      },
+      {
+        "label": "condition of employment",
+        "any_of": [
+          "condition of employment"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "discrimination_002",
+    "category": "discrimination",
+    "difficulty": "medium",
+    "question": "Can an employer dismiss a woman because she is pregnant?",
+    "expected_answer": "No. It is unlawful to discharge a woman on account of her pregnancy, or while on leave or in confinement due to her pregnancy, under Labor Code Art. 135.",
+    "citations": [
+      "Labor Code Art. 135"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 135",
+        "quote": "It shall be unlawful for any employer"
+      },
+      {
+        "citation": "Labor Code Art. 135",
+        "quote": "To discharge such woman on account of her pregnancy, or while on leave or in confinement due to her pregnancy"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "unlawful",
+        "any_of": [
+          "unlawful",
+          "prohibited",
+          "illegal"
+        ]
+      },
+      {
+        "label": "also while on leave",
+        "any_of": [
+          "on leave"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "discrimination_003",
+    "category": "discrimination",
+    "difficulty": "medium",
+    "question": "Besides workers in the informal economy, who is covered by DOLE's guidelines on gender-based sexual harassment for such workers?",
+    "expected_answer": "Kasambahay under the Domestic Workers Act, those in the informal economy, and those in establishments with ten or fewer employees, under DO-230-21, Part I, Section 1.",
+    "citations": [
+      "DO-230-21 Part I, Section 1"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-230-21 Part I, Section 1",
+        "quote": "Domestic Workers Act"
+      },
+      {
+        "citation": "DO-230-21 Part I, Section 1",
+        "quote": "Those employed in the informal economy"
+      },
+      {
+        "citation": "DO-230-21 Part I, Section 1",
+        "quote": "Those employed in establishments with ten or fewer employees."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "domestic workers",
+        "any_of": [
+          "domestic workers",
+          "domestic worker",
+          "kasambahay"
+        ]
+      },
+      {
+        "label": "ten or fewer employees",
+        "any_of": [
+          "ten or fewer",
+          "10 or fewer"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_003",
+    "category": "other",
+    "difficulty": "medium",
+    "question": "How long must employment records be kept?",
+    "expected_answer": "At least three years, in and about the premises of all workplaces unless a centralized recording system is implemented, under DO-183-17, Rule IV, Section 2.",
+    "citations": [
+      "DO-183-17 Rule IV, Section 2"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-183-17 Rule IV, Section 2",
+        "quote": "keep and maintain employment records in and about the premises of all workplaces for at least three (3) years"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "three years",
+        "any_of": [
+          "three (3) years",
+          "three years",
+          "3 years"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "osh_001",
+    "category": "osh",
+    "difficulty": "medium",
+    "question": "When may DOLE issue a Work Stoppage Order?",
+    "expected_answer": "When non-compliance with occupational safety and health standards poses imminent danger to the health and safety of employees, under DO-183-17, Rule VIII, Section 1.",
+    "citations": [
+      "DO-183-17 Rule VIII, Section 1"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-183-17 Rule VIII, Section 1",
+        "quote": "when non-compliance with occupational safety and health standards poses imminent danger"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "imminent danger",
+        "any_of": [
+          "imminent danger"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_004",
+    "category": "other",
+    "difficulty": "medium",
+    "question": "Which establishments are the priority for routine labor inspection?",
+    "expected_answer": "Those engaged in hazardous work, those employing children, those in contracting or subcontracting arrangements, and those employing ten or more employees, under DO-183-17, Rule V, Section 2.",
+    "citations": [
+      "DO-183-17 Rule V, Section 2"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-183-17 Rule V, Section 2",
+        "quote": "Those engaged in hazardous work"
+      },
+      {
+        "citation": "DO-183-17 Rule V, Section 2",
+        "quote": "Those employing children"
+      },
+      {
+        "citation": "DO-183-17 Rule V, Section 2",
+        "quote": "Those engaged in contracting or subcontracting arrangements"
+      },
+      {
+        "citation": "DO-183-17 Rule V, Section 2",
+        "quote": "Those employing ten (10) or more employees"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "hazardous work",
+        "any_of": [
+          "hazardous"
+        ]
+      },
+      {
+        "label": "employing children",
+        "any_of": [
+          "children"
+        ]
+      },
+      {
+        "label": "contracting arrangements",
+        "any_of": [
+          "contracting"
+        ]
+      },
+      {
+        "label": "ten or more employees",
+        "any_of": [
+          "ten (10) or more",
+          "ten or more",
+          "10 or more"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_005",
+    "category": "other",
+    "difficulty": "medium",
+    "question": "What happens if an establishment refuses an inspector access to records or premises?",
+    "expected_answer": "It results in the filing of a criminal action against the responsible person or employer, under DO-183-17, Rule IX, Section 1.",
+    "citations": [
+      "DO-183-17 Rule IX, Section 1"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-183-17 Rule IX, Section 1",
+        "quote": "shall result in the filing of a criminal action"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "criminal action",
+        "any_of": [
+          "criminal action",
+          "criminal case",
+          "criminal complaint",
+          "criminal charge"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_006",
+    "category": "other",
+    "difficulty": "medium",
+    "question": "How is an employee who tests positive for dangerous drugs treated under DOLE rules?",
+    "expected_answer": "The employee is dealt with administratively, under DO-53-03, Section F.",
+    "citations": [
+      "DO-53-03 Section F"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-53-03 Section F",
+        "quote": "Any officer or employee found positive for use of dangerous drugs shall be dealt with administratively"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "dealt with administratively",
+        "any_of": [
+          "administratively",
+          "administrative"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "labor_relations_001",
+    "category": "labor_relations",
+    "difficulty": "hard",
+    "question": "How far ahead must a notice of strike be filed for a bargaining deadlock and for unfair labor practice?",
+    "expected_answer": "At least 30 days before the intended date for a bargaining deadlock, and 15 days for unfair labor practice, under Labor Code Art. 278.",
+    "citations": [
+      "Labor Code Art. 278"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 278",
+        "quote": "with the Ministry at least 30 days before the intended date thereof"
+      },
+      {
+        "citation": "Labor Code Art. 278",
+        "quote": "In cases of unfair labor practice, the period of notice shall be 15 days"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "30 days for a deadlock",
+        "any_of": [
+          "30 days",
+          "thirty days",
+          "thirty (30) days"
+        ]
+      },
+      {
+        "label": "15 days for unfair labor practice",
+        "any_of": [
+          "15 days",
+          "fifteen days",
+          "fifteen (15) days"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": false,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "labor_relations_002",
+    "category": "labor_relations",
+    "difficulty": "hard",
+    "question": "When must strike vote results be reported?",
+    "expected_answer": "At least seven days before the intended strike or lockout, subject to the cooling-off period, under Labor Code Art. 278.",
+    "citations": [
+      "Labor Code Art. 278"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 278",
+        "quote": "furnish the Ministry the results of the voting at least seven days before the intended strike or lockout"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "seven days before",
+        "any_of": [
+          "seven days",
+          "7 days",
+          "seven (7) days"
+        ]
+      }
+    ],
+    "tags": [],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "leave_003",
+    "category": "leave",
+    "difficulty": "hard",
+    "question": "How long is maternity leave for a private sector employee, and does Labor Code Art. 131 still govern it?",
+    "expected_answer": "No. Labor Code Art. 131 was superseded by R.A. No. 11210 (2019), which gives 105 days, with an option to extend for 30 days without pay and 15 more days for solo mothers.",
+    "citations": [
+      "Labor Code Art. 131"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 131",
+        "quote": "Superseded by R.A. No. 11210 (2019), “An Act Increasing the Maternity Leave Period to One Hundred Five (105) Days for Female Workers With an Option to Extend for an Additional Thirty (30) Days Without Pay, and Granting an Additional Fifteen (15) Days for Solo Mothers"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "superseded",
+        "any_of": [
+          "superseded",
+          "replaced"
+        ]
+      },
+      {
+        "label": "RA 11210",
+        "any_of": [
+          "11210"
+        ]
+      },
+      {
+        "label": "105 days",
+        "any_of": [
+          "105"
+        ]
+      }
+    ],
+    "tags": [
+      "legal_status"
+    ],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": [
+        "Sixty days, from the old text",
+        "Stating that Art. 131 still applies"
+      ]
+    }
+  },
+  {
+    "id": "other_007",
+    "category": "other",
+    "difficulty": "hard",
+    "question": "Do the Labor Code articles on househelpers still apply to domestic workers?",
+    "expected_answer": "No. R.A. No. 10361, the Domestic Workers Act or Batas Kasambahay, expressly repealed Chapter III of Book III, including Labor Code Art. 139.",
+    "citations": [
+      "Labor Code Art. 139"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 139",
+        "quote": "All articles or provisions of Chapter III (Employment of Househelpers) of Presidential Decree No. 442, as amended and renumbered by Republic Act No. 10151, are hereby expressly repealed."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "expressly repealed",
+        "any_of": [
+          "repealed"
+        ]
+      },
+      {
+        "label": "Chapter III on househelpers",
+        "any_of": [
+          "chapter iii",
+          "househelper"
+        ]
+      }
+    ],
+    "tags": [
+      "legal_status"
+    ],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_008",
+    "category": "other",
+    "difficulty": "hard",
+    "question": "Does the Secretary of Labor still have power to arrest illegal recruiters under Labor Code Art. 38?",
+    "expected_answer": "No. Paragraph (c) of Labor Code Art. 38 was declared unconstitutional by the Supreme Court in Salazar v. Achacoso.",
+    "citations": [
+      "Labor Code Art. 38"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 38",
+        "quote": "Article 38 par. (c) was declared unconstitutional by the Supreme Court in Salazar v. Achacoso"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "unconstitutional",
+        "any_of": [
+          "unconstitutional"
+        ]
+      },
+      {
+        "label": "Salazar v. Achacoso",
+        "any_of": [
+          "salazar"
+        ]
+      }
+    ],
+    "tags": [
+      "legal_status"
+    ],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "osh_002",
+    "category": "osh",
+    "difficulty": "hard",
+    "question": "Is DO-198-18 still the current set of rules implementing the OSH law?",
+    "expected_answer": "No. DO-198-18 was superseded by DO-252-25.",
+    "citations": [
+      "DO-198-18 Section 1"
+    ],
+    "evidence": [
+      {
+        "citation": "DO-198-18 Section 1",
+        "quote": "This order was superseded by DO-252-25."
+      }
+    ],
+    "key_points": [
+      {
+        "label": "superseded",
+        "any_of": [
+          "superseded",
+          "replaced"
+        ]
+      },
+      {
+        "label": "DO-252-25",
+        "any_of": [
+          "do-252-25",
+          "do 252-25",
+          "no. 252",
+          "order 252"
+        ]
+      }
+    ],
+    "tags": [
+      "legal_status"
+    ],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  },
+  {
+    "id": "other_009",
+    "category": "other",
+    "difficulty": "hard",
+    "question": "Which agency's law governs the training provisions of the Labor Code on manpower development?",
+    "expected_answer": "Labor Code Art. 43 and the Title on manpower development were substantively modified and superseded by R.A. No. 7796, the TESDA Act of 1994.",
+    "citations": [
+      "Labor Code Art. 43"
+    ],
+    "evidence": [
+      {
+        "citation": "Labor Code Art. 43",
+        "quote": "This Title was substantively modified and superseded by R.A. No. 7796, The TESDA Act of 1994"
+      }
+    ],
+    "key_points": [
+      {
+        "label": "superseded",
+        "any_of": [
+          "superseded"
+        ]
+      },
+      {
+        "label": "TESDA Act",
+        "any_of": [
+          "tesda"
+        ]
+      },
+      {
+        "label": "RA 7796",
+        "any_of": [
+          "7796"
+        ]
+      }
+    ],
+    "tags": [
+      "legal_status"
+    ],
+    "metadata": {
+      "source": "corpus_text",
+      "requires_context": true,
+      "common_mistakes": []
+    }
+  }
+]

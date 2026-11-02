@@ -8,7 +8,7 @@ Thank you for your interest in contributing to democratizing Philippine Labor La
 
 - **Source Documents**: Add new DOLE Department Orders or Labor Code amendments to `data/sources.toml` (official `source_url`, plus a `download_url` if the host allows automated downloads) and to `DATA_SOURCES.md`. Run `fetch`, check the PDF, then `fetch --pin` to record its hash. For a scan with no text layer, set `ocr = true`, run `ocr`, and correct `data/ocr/<id>.txt` against the PDF. `ocr` keeps an existing file unless you pass `--force`, so your corrections stay. Source PDFs stay local in `data/raw/` (gitignored); the manifest and the validated JSON in `data/processed/` are what get committed
 - **Validation**: Review parsed JSON outputs for accuracy against official sources
-- **Benchmarking**: Propose real-world labor law questions in an issue with the `benchmark` label, including the question, expected answer, and citations as described in `data/schemas/benchmark_question_schema.json`
+- **Benchmarking**: Propose real-world labor law questions in an issue with the `benchmark` label, including the question, expected answer, citations, evidence quotes and key points as described in `data/schemas/benchmark_question_schema.json`. Questions added to `data/benchmark/questions.json` must pass `evals check`
 
 ### 2. Code Contribution
 

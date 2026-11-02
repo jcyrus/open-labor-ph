@@ -33,8 +33,8 @@ jobs:
         with:
           path: data/raw/*.pdf
           key: sources-${{ hashFiles('data/sources.toml') }}
-      - run: cargo build --release --locked -p labor-ingestion
+      - run: cargo build --release --locked -p labor-ingestion -p labor-evals
       - run: target/release/fetch
       - run: scripts/rebuild-dataset.sh
-      - name: Fail if the committed dataset differs from the rebuild
-        run: git diff --exit-code -- data/processed
+      - name: Fail if the committed dataset or baseline differs from the rebuild
+        run: git diff --exit-code -- data/processed data/benchmark

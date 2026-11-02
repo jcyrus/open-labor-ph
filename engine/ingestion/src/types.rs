@@ -438,8 +438,14 @@ pub struct BenchmarkQuestion {
     /// Expected answer
     pub expected_answer: String,
 
-    /// Legal citations
+    /// Legal citations, each the id of a corpus passage
     pub citations: Vec<String>,
+
+    /// Corpus text that supports the answer
+    pub evidence: Vec<Evidence>,
+
+    /// Facts an answer must state to be correct
+    pub key_points: Vec<KeyPoint>,
 
     /// Tags for filtering
     #[serde(default)]
@@ -448,6 +454,26 @@ pub struct BenchmarkQuestion {
     /// Additional metadata
     #[serde(default)]
     pub metadata: QuestionMetadata,
+}
+
+/// A verbatim quote from a cited passage
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Evidence {
+    /// One of the question's citations
+    pub citation: String,
+
+    /// Text that must appear in that passage, ignoring case and whitespace
+    pub quote: String,
+}
+
+/// One fact an answer must state
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct KeyPoint {
+    /// What the fact is
+    pub label: String,
+
+    /// Phrasings that count as stating it
+    pub any_of: Vec<String>,
 }
 
 /// Question categories

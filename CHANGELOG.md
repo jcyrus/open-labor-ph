@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Benchmark of 57 questions** in `data/benchmark/questions.json`, written from the corpus text. No lawyer has reviewed them, and no model has been scored yet.
+- **`evals` binary**: `check` ties every question to the corpus, `retrieve` measures a BM25 baseline, `run` collects closed-book or RAG answers from Claude or any `/chat/completions` server and resumes after an interruption, and `score` grades answers with a fixed rubric.
+- **BM25 retrieval baseline** in `data/benchmark/results/retrieval-bm25.json`. CI rebuilds it and fails if it changes.
+- **`evidence` and `key_points`** on benchmark questions, required by the schema and `BenchmarkQuestion`.
 - **7 Department Orders**: DO-147-15, DO-174-17, DO-183-17, DO-202-19, DO-53-03, DO-230-21 and, as history, DO-198-18. All are downloaded from pinned Wayback Machine snapshots. `effective_date` stays unset on all of them: each runs from a publication date that is not yet verified.
 - **OCR text as a committed input**: the new `ocr` binary writes scans to `data/ocr/<id>.txt` and never replaces a file without `--force`. `parse-dole` reads that text and still hashes the PDF, so rebuilds are exact and need no OCR engine. Records carry `metadata.ocr_text`. Order numbers, signing dates and signatories were corrected against the scans.
 - **`metadata.superseded_by`** from the new manifest field of the same name.

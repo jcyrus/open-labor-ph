@@ -17,7 +17,7 @@ _Note: This is the open-research arm of [hipstaff.asia](https://hipstaff.asia)._
   - `/data/processed`: Validated JSON outputs (committed)
 - `/engine`: The Rust workspace for ingestion and evaluation pipelines.
   - `/engine/ingestion`: Source fetcher (`fetch`), PDF parsers (`parse-dole`, `parse-labor-code`), and the schema validator (`validate`)
-  - `/engine/evals`: RAG evaluation framework (Phase 3, not yet implemented)
+  - `/engine/evals`: Benchmark checks, BM25 retrieval baseline, model runner and scoring
 
 ## 🚀 Getting Started
 
@@ -120,11 +120,49 @@ Every binary accepts `--help`.
   - ✅ Source manifest and `fetch` (hash-pinned; the Labor Code is pinned)
   - ✅ 7 Department Orders processed in [`data/processed/`](data/processed/). Six come from OCR of scans (`metadata.ocr_text`), so check them against the PDF before you rely on a specific figure. DO-252-25 is still missing.
   - ✅ Labor Code processed: [`data/processed/labor_code.json`](data/processed/labor_code.json) (317 articles, with editorial footnotes, amendment history and reviewed legal status)
-  - 🔲 Department Orders (PDFs must be downloaded by hand; see `fetch`)
-  - 🔲 OCR for scanned PDFs
-- 🔲 **Phase 3: Evaluation Framework**: Not started
+- 🟡 **Phase 3: Evaluation Framework**: Tooling and benchmark complete; no model has been scored yet
+  - ✅ 57 questions in [`data/benchmark/questions.json`](data/benchmark/questions.json), checked against the corpus in CI
+  - ✅ BM25 retrieval baseline in [`data/benchmark/results/`](data/benchmark/results/)
+  - ✅ `evals run` and `evals score`
+  - 🔲 Published model results
 - 🔲 **Phase 4: Documentation & Community**: Not started (Python bindings via PyO3 are planned here)
 - 🔲 **Phase 5: Initial Release**: Not started
+
+## 🧪 Benchmark
+
+[`data/benchmark/questions.json`](data/benchmark/questions.json) holds 57 questions written from the text of this dataset. No lawyer has reviewed them. Each one lists the passages it rests on, verbatim quotes from those passages, and the facts a correct answer must state.
+
+```bash
+cargo build --release -p labor-evals
+
+# Check questions against the corpus. Needs no API key.
+target/release/evals check
+
+# Measure the BM25 retrieval baseline. Needs no API key.
+target/release/evals retrieve
+
+# Ask a model. This calls a paid API. Each mode writes its own file, and an
+# interrupted run resumes where it stopped.
+export ANTHROPIC_API_KEY=...
+target/release/evals run --mode closed-book --out data/benchmark/results/opus-closed.jsonl
+target/release/evals run --mode rag --out data/benchmark/results/opus-rag.jsonl
+
+# Grade the answers.
+target/release/evals score data/benchmark/results/opus-rag.jsonl --csv opus-rag.csv
+```
+
+`evals run` defaults to `claude-opus-5-5` at `high` effort. Pass `--provider openai-compatible --base-url <url> --model <id>` for any server with a `/chat/completions` endpoint, and `--api-key-env <VAR>` if it needs a key. Use `--limit 3` to try a run cheaply first.
+
+`evals check` refuses a question if a citation does not resolve, a quote is not in the cited passage, a key point is not in the evidence or merely repeats the question, or the expected answer fails its own rubric. A question that rests on text no longer in force must carry the `legal_status` tag, so old wording cannot become an expected answer by accident.
+
+### How answers are scored
+
+- **Pass**: the answer states every key point and cites every source.
+- **Key points**: phrase matching, so "not 30 days" still counts as stating "30 days". Scores are a repeatable screen, not legal review.
+- **Citations**: Labor Code articles count under their current or pre-2015 number. Orders count by order number, not by section.
+- **Refusals** score as wrong and are counted separately. Claude runs send no refusal fallback, so every answer comes from the model named in the report.
+
+RAG mode shows the model the top 5 BM25 passages with their legal status, so superseded text is labelled. Compare closed-book and RAG results from the same model.
 
 ## 📊 Dataset Schema
 
