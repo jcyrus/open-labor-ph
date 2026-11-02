@@ -8,7 +8,9 @@
     "id",
     "question",
     "expected_answer",
-    "citations"
+    "citations",
+    "evidence",
+    "key_points"
   ],
   "properties": {
     "id": {
@@ -55,8 +57,59 @@
       "items": {
         "type": "string"
       },
-      "description": "Legal references that support the answer (e.g., 'Labor Code Art. 281', 'DO-147-15 Sec. 6')",
+      "description": "Corpus passages that support the answer, by passage id (e.g. 'Labor Code Art. 297', 'DO-147-15 Rule I-A, Section 5')",
       "minItems": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Verbatim quotes that `evals check` finds in the cited passages",
+      "items": {
+        "type": "object",
+        "required": [
+          "citation",
+          "quote"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "citation": {
+            "type": "string",
+            "description": "One of this question's citations"
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Text in that passage, ignoring case and whitespace"
+          }
+        }
+      }
+    },
+    "key_points": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Facts an answer must state; scoring checks each one by phrase match",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "any_of"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "What the fact is"
+          },
+          "any_of": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Phrasings that count as stating the fact"
+          }
+        }
+      }
     },
     "tags": {
       "type": "array",

@@ -1,0 +1,473 @@
+{
+  "retriever": "bm25",
+  "passages": 540,
+  "questions": 57,
+  "recall_at": {
+    "01": 0.5877,
+    "03": 0.7632,
+    "05": 0.8421,
+    "10": 0.9386
+  },
+  "mrr": 0.6998,
+  "per_question": [
+    {
+      "id": "wages_001",
+      "citations": [
+        "Labor Code Art. 83"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_002",
+      "citations": [
+        "Labor Code Art. 86"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_003",
+      "citations": [
+        "Labor Code Art. 87"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_004",
+      "citations": [
+        "Labor Code Art. 85"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_005",
+      "citations": [
+        "Labor Code Art. 93"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_006",
+      "citations": [
+        "Labor Code Art. 94"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_007",
+      "citations": [
+        "Labor Code Art. 94"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "wages_008",
+      "citations": [
+        "Labor Code Art. 103"
+      ],
+      "first_hit_rank": 10,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "wages_009",
+      "citations": [
+        "Labor Code Art. 113"
+      ],
+      "first_hit_rank": null,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "wages_010",
+      "citations": [
+        "Labor Code Art. 88"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "leave_001",
+      "citations": [
+        "Labor Code Art. 95"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "leave_002",
+      "citations": [
+        "Labor Code Art. 95"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "benefits_001",
+      "citations": [
+        "Labor Code Art. 302"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "probationary_001",
+      "citations": [
+        "Labor Code Art. 296"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "probationary_002",
+      "citations": [
+        "Labor Code Art. 296"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "probationary_003",
+      "citations": [
+        "Labor Code Art. 296"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "contracts_001",
+      "citations": [
+        "Labor Code Art. 295"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_001",
+      "citations": [
+        "Labor Code Art. 294"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_002",
+      "citations": [
+        "Labor Code Art. 297"
+      ],
+      "first_hit_rank": 8,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "termination_003",
+      "citations": [
+        "Labor Code Art. 298"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_004",
+      "citations": [
+        "Labor Code Art. 298"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_005",
+      "citations": [
+        "Labor Code Art. 299"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_006",
+      "citations": [
+        "Labor Code Art. 300"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_007",
+      "citations": [
+        "Labor Code Art. 300"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_008",
+      "citations": [
+        "Labor Code Art. 301"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_009",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 5"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_010",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 5"
+      ],
+      "first_hit_rank": 9,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "termination_011",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 3"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_012",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 6"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "termination_013",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 4"
+      ],
+      "first_hit_rank": null,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "termination_014",
+      "citations": [
+        "DO-147-15 Rule I-A, Section 8",
+        "DO-147-15 Rule I-A, Section 10"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_001",
+      "citations": [
+        "Labor Code Art. 306"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_002",
+      "citations": [
+        "Labor Code Art. 305"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "contracts_002",
+      "citations": [
+        "DO-174-17 Section 3"
+      ],
+      "first_hit_rank": 4,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "contracts_003",
+      "citations": [
+        "DO-174-17 Section 5",
+        "DO-174-17 Section 7"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 0.5
+    },
+    {
+      "id": "contracts_004",
+      "citations": [
+        "DO-174-17 Section 14"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "contracts_005",
+      "citations": [
+        "DO-174-17 Section 19"
+      ],
+      "first_hit_rank": 5,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "contracts_006",
+      "citations": [
+        "Labor Code Art. 106",
+        "Labor Code Art. 109"
+      ],
+      "first_hit_rank": 2,
+      "recall_at_5": 0.5
+    },
+    {
+      "id": "contracts_007",
+      "citations": [
+        "DO-174-17 Section 6"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "telecommuting_001",
+      "citations": [
+        "DO-202-19 Section 3"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "telecommuting_002",
+      "citations": [
+        "DO-202-19 Section 4"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "telecommuting_003",
+      "citations": [
+        "DO-202-19 Section 7"
+      ],
+      "first_hit_rank": 2,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "discrimination_001",
+      "citations": [
+        "Labor Code Art. 134"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "discrimination_002",
+      "citations": [
+        "Labor Code Art. 135"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "discrimination_003",
+      "citations": [
+        "DO-230-21 Part I, Section 1"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_003",
+      "citations": [
+        "DO-183-17 Rule IV, Section 2"
+      ],
+      "first_hit_rank": 4,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "osh_001",
+      "citations": [
+        "DO-183-17 Rule VIII, Section 1"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_004",
+      "citations": [
+        "DO-183-17 Rule V, Section 2"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_005",
+      "citations": [
+        "DO-183-17 Rule IX, Section 1"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_006",
+      "citations": [
+        "DO-53-03 Section F"
+      ],
+      "first_hit_rank": 2,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "labor_relations_001",
+      "citations": [
+        "Labor Code Art. 278"
+      ],
+      "first_hit_rank": 2,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "labor_relations_002",
+      "citations": [
+        "Labor Code Art. 278"
+      ],
+      "first_hit_rank": 4,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "leave_003",
+      "citations": [
+        "Labor Code Art. 131"
+      ],
+      "first_hit_rank": 3,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "other_007",
+      "citations": [
+        "Labor Code Art. 139"
+      ],
+      "first_hit_rank": 10,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "other_008",
+      "citations": [
+        "Labor Code Art. 38"
+      ],
+      "first_hit_rank": 1,
+      "recall_at_5": 1.0
+    },
+    {
+      "id": "osh_002",
+      "citations": [
+        "DO-198-18 Section 1"
+      ],
+      "first_hit_rank": null,
+      "recall_at_5": 0.0
+    },
+    {
+      "id": "other_009",
+      "citations": [
+        "Labor Code Art. 43"
+      ],
+      "first_hit_rank": 6,
+      "recall_at_5": 0.0
+    }
+  ]
+}
